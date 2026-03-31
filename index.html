@@ -711,25 +711,17 @@ function runGD(){
   const h=(Math.random()*.18+.04).toFixed(2);
   const alert=lat>2200?'<span style="color:#e08080;">LATENCY_HIGH</span>':h>.18?'<span style="color:#e08080;">HALLUCINATION_RISK</span>':'<span style="color:#a8c4a0;">null</span>';
   document.getElementById("gd-out").innerHTML=
-    '<span style="color:rgba(245,230,227,.25);"># Event logged to AI Guardian</span>
-{
-'+
-    '  <span style="color:#c9a0a8;">"model"</span>: <span style="color:#e8c4c0;">"'+m+'"</span>,
-'+
-    '  <span style="color:#c9a0a8;">"latency_ms"</span>: <span style="color:#e8c4c0;">'+lat+'</span>,
-'+
-    '  <span style="color:#c9a0a8;">"tokens"</span>: <span style="color:#e8c4c0;">'+(pt+ct)+'</span>,
-'+
-    '  <span style="color:#c9a0a8;">"cost_usd"</span>: <span style="color:#e8c4c0;">'+cost+'</span>,
-'+
-    '  <span style="color:#c9a0a8;">"quality_score"</span>: <span style="color:#e8c4c0;">'+q+'</span>,
-'+
-    '  <span style="color:#c9a0a8;">"hallucination_risk"</span>: <span style="color:#e8c4c0;">'+h+'</span>,
-'+
-    '  <span style="color:#c9a0a8;">"alert"</span>: '+alert+'
-'+
-    '}
-<span style="color:#a8c4a0;">✓ Stored · Dashboard updated</span>';
+    "<span style=\"color:rgba(245,230,227,.25)\"># Event logged to AI Guardian</span>\n"+
+    "{\n"+
+    "  <span style=\"color:#c9a0a8\">\"model\"</span>: <span style=\"color:#e8c4c0\">\""+ m +"</span>,\n"+
+    "  <span style=\"color:#c9a0a8\">\"latency_ms\"</span>: <span style=\"color:#e8c4c0\">"+lat+"</span>,\n"+
+    "  <span style=\"color:#c9a0a8\">\"tokens\"</span>: <span style=\"color:#e8c4c0\">"+(pt+ct)+"</span>,\n"+
+    "  <span style=\"color:#c9a0a8\">\"cost_usd\"</span>: <span style=\"color:#e8c4c0\">"+cost+"</span>,\n"+
+    "  <span style=\"color:#c9a0a8\">\"quality_score\"</span>: <span style=\"color:#e8c4c0\">"+q+"</span>,\n"+
+    "  <span style=\"color:#c9a0a8\">\"hallucination_risk\"</span>: <span style=\"color:#e8c4c0\">"+h+"</span>,\n"+
+    "  <span style=\"color:#c9a0a8\">\"alert\"</span>: <span style=\"color:"+(lat>2200||h>.18?"#e08080":"#a8c4a0")+"\">"+(lat>2200?"LATENCY_HIGH":h>.18?"HALLUCINATION_RISK":"null")+"</span>\n"+
+    "}\n"+
+    "<span style=\"color:#a8c4a0\">✓ Stored · Dashboard updated</span>"
 }
 
 /* AGENTS */
@@ -773,19 +765,12 @@ function runCNN(ch,el){
   const r3=(Math.random()*.02+.005).toFixed(3);
   const w1=Math.round(parseFloat(conf)*100),w2=Math.round(parseFloat(r2)*100),w3=Math.round(parseFloat(r3)*100);
   document.getElementById("cnn-out").innerHTML=
-    '<span style="color:#c9a0a8;">char:</span> <span style="color:#e8c4c0;">'+ch+'</span>  <span style="color:#c9a0a8;">prediction:</span> <span style="color:#a8c4a0;">'+ch+' ✓</span>
-
-'+
-    '<span style="color:rgba(245,230,227,.35);">top-3 confidence:</span>
-'+
-    '  '+ch+'  <span style="display:inline-block;height:7px;background:var(--rose);border-radius:1px;width:'+w1+'px;vertical-align:middle;"></span> <span style="color:#e8c4c0;">'+conf+'</span>
-'+
-    '  ·   <span style="display:inline-block;height:7px;background:rgba(232,196,192,.25);border-radius:1px;width:'+w2+'px;vertical-align:middle;"></span> <span style="color:rgba(245,230,227,.35);">'+r2+'</span>
-'+
-    '  ·   <span style="display:inline-block;height:7px;background:rgba(232,196,192,.12);border-radius:1px;width:'+w3+'px;vertical-align:middle;"></span> <span style="color:rgba(245,230,227,.25);">'+r3+'</span>
-
-'+
-    '<span style="color:#a8c4a0;">✓ Classified · 92% test accuracy · PyTorch CNN</span>';
+    "<span style=\"color:#c9a0a8\">char:</span> <span style=\"color:#e8c4c0\">"+ch+"</span>  <span style=\"color:#c9a0a8\">prediction:</span> <span style=\"color:#a8c4a0\">"+ch+" ✓</span>\n\n"+
+    "<span style=\"color:rgba(245,230,227,.35)\">top-3 confidence:</span>\n"+
+    "  "+ch+"  <span style=\"display:inline-block;height:7px;background:var(--rose);width:"+w1+"px;vertical-align:middle\"></span> <span style=\"color:#e8c4c0\">"+conf+"</span>\n"+
+    "  ·   <span style=\"display:inline-block;height:7px;background:rgba(232,196,192,.25);width:"+w2+"px;vertical-align:middle\"></span> <span style=\"color:rgba(245,230,227,.35)\">"+r2+"</span>\n"+
+    "  ·   <span style=\"display:inline-block;height:7px;background:rgba(232,196,192,.12);width:"+w3+"px;vertical-align:middle\"></span> <span style=\"color:rgba(245,230,227,.25)\">"+r3+"</span>\n\n"+
+    "<span style=\"color:#a8c4a0\">✓ Classified · 92% test accuracy · PyTorch CNN</span>"
 }
 
 /* CHATBOT */
