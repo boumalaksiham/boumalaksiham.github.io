@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siham Boumalak – Applied ML Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky:       #E6F1FB;
+    --sky-mid:   #B5D4F4;
+    --blue:      #378ADD;
+    --blue-deep: #185FA5;
+    --navy:      #0C447C;
+    --ink:       #042C53;
+    --muted:     #4A6FA5;
+    --cream:     #F5F9FF;
+    --white:     #FFFFFF;
+    --border:    #C8DEFA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); overflow-x:hidden; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0;
+    padding:1.1rem 4rem;
+    display:flex; justify-content:space-between; align-items:center;
+    background:rgba(245,249,255,0.95);
+    border-bottom:1px solid var(--border);
+    z-index:100;
+    font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;
+    backdrop-filter:blur(8px);
+  }
+  nav a { color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  nav a:hover { color:var(--blue); }
+  .nav-links { display:flex; gap:2.5rem; }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:17px; text-transform:none; letter-spacing:0; color:var(--ink); }
+
+  /* HERO */
+  .hero {
+    padding:9rem 4rem 6rem;
+    display:grid; grid-template-columns:1.1fr 0.9fr;
+    gap:4rem; align-items:center; min-height:100vh;
+  }
+  .hero-tag {
+    display:inline-block;
+    background:var(--blue); color:var(--white);
+    font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:4px 14px; border-radius:2px; margin-bottom:1.5rem;
+  }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.6rem,4.5vw,4rem);
+    line-height:1.1; color:var(--ink); margin-bottom:1.5rem;
+  }
+  .hero h1 em { font-style:italic; color:var(--blue); }
+  .hero-sub { font-size:16px; font-weight:300; color:var(--muted); line-height:1.75; max-width:440px; margin-bottom:2.5rem; }
+  .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn { padding:11px 26px; border-radius:3px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.05em; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s; }
+  .btn-primary { background:var(--blue); color:var(--white); }
+  .btn-primary:hover { background:var(--navy); }
+  .btn-outline { background:transparent; color:var(--ink); border:1px solid var(--border); }
+  .btn-outline:hover { border-color:var(--blue); color:var(--blue); }
+
+  /* CHAT CARD */
+  .chat-card { background:var(--white); border:1px solid var(--border); border-radius:8px; overflow:hidden; box-shadow:6px 6px 0 var(--sky-mid); }
+  .chat-header { background:var(--sky); padding:1rem 1.25rem; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
+  .chat-avatar { width:32px; height:32px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:14px; color:var(--white); font-weight:700; }
+  .chat-name { font-size:13px; font-weight:500; color:var(--ink); }
+  .chat-status { font-size:11px; color:var(--muted); }
+  .chat-dot { width:7px; height:7px; background:#4CAF50; border-radius:50%; display:inline-block; margin-right:4px; }
+  .chat-msgs { padding:1.25rem; min-height:240px; max-height:280px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
+  .msg { max-width:84%; font-size:13.5px; line-height:1.55; padding:10px 14px; border-radius:12px; }
+  .msg.bot { background:var(--sky); color:var(--ink); border-radius:2px 12px 12px 12px; align-self:flex-start; }
+  .msg.user { background:var(--blue); color:var(--white); border-radius:12px 2px 12px 12px; align-self:flex-end; }
+  .msg.thinking { opacity:0.6; font-style:italic; }
+  .chat-sugs { padding:0 1rem 0.8rem; display:flex; flex-wrap:wrap; gap:6px; }
+  .sug { font-size:11.5px; padding:5px 10px; border:1px solid var(--border); border-radius:20px; background:var(--cream); color:var(--muted); cursor:pointer; transition:all 0.15s; font-family:'DM Sans',sans-serif; }
+  .sug:hover { border-color:var(--blue); color:var(--blue); }
+  .chat-input-row { padding:0.8rem 1rem; border-top:1px solid var(--border); display:flex; gap:8px; }
+  .chat-input { flex:1; padding:9px 12px; border-radius:3px; border:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:13px; background:var(--cream); color:var(--ink); outline:none; }
+  .chat-input:focus { border-color:var(--blue); }
+  .chat-send { padding:9px 16px; background:var(--blue); color:var(--white); border:none; border-radius:3px; cursor:pointer; font-size:13px; transition:background 0.2s; }
+  .chat-send:hover { background:var(--navy); }
+
+  /* SECTIONS */
+  section { padding:6rem 4rem; }
+  .section-label { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--blue); font-weight:500; margin-bottom:0.75rem; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3vw,2.8rem); line-height:1.15; margin-bottom:3rem; color:var(--ink); }
+  .section-title em { font-style:italic; color:var(--blue); }
+
+  /* ABOUT */
+  .about { background:var(--sky); }
+  .about-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:5rem; align-items:start; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:2.8rem; color:var(--blue); line-height:1; }
+  .stat-label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  .stat { margin-bottom:2rem; }
+  .about-body { font-size:15.5px; line-height:1.85; color:var(--ink); font-weight:300; }
+  .about-body p { margin-bottom:1.2rem; }
+  .hl { color:var(--blue-deep); font-weight:500; }
+
+  /* PROJECTS — 4 column grid */
+  .projects-section { background:var(--white); }
+  .projects-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.75rem; }
+  .pcard {
+    border:1px solid var(--border); border-radius:6px; padding:1.75rem;
+    background:var(--white); transition:all 0.22s; position:relative; overflow:hidden;
+  }
+  .pcard::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--blue); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+  .pcard:hover::before { transform:scaleX(1); }
+  .pcard:hover { box-shadow:4px 4px 0 var(--sky-mid); transform:translate(-2px,-2px); }
+  .pcard-category { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--blue); font-weight:500; margin-bottom:0.6rem; }
+  .pcard-title { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.65rem; color:var(--ink); }
+  .pcard-desc { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:1.1rem; }
+  .pcard-metrics { display:flex; gap:1rem; margin-bottom:1rem; }
+  .metric { font-size:11.5px; background:var(--sky); color:var(--navy); padding:3px 10px; border-radius:20px; font-weight:500; }
+  .pcard-stack { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1rem; }
+  .badge { font-size:11px; padding:3px 8px; background:var(--sky); color:var(--blue-deep); border-radius:2px; font-weight:500; }
+  .pcard-link { font-size:12px; color:var(--blue); text-decoration:none; font-weight:500; }
+  .pcard-link:hover { text-decoration:underline; }
+
+  /* SKILLS */
+  .skills-section { background:var(--ink); }
+  .skills-section .section-title { color:var(--sky); }
+  .skills-section .section-label { color:var(--sky-mid); }
+  .skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; }
+  .skill-block { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:1.75rem; }
+  .skill-block-title { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--sky-mid); margin-bottom:1.2rem; font-weight:500; }
+  .skill-pill { display:inline-block; font-size:12px; color:var(--sky); margin:3px; padding:4px 10px; background:rgba(255,255,255,0.09); border-radius:2px; }
+
+  /* EXPERIENCE */
+  .exp-section { background:var(--cream); }
+  .timeline { position:relative; padding-left:0; }
+  .timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--border); }
+  .titem { padding:0 0 2.8rem 2.5rem; position:relative; }
+  .titem::before { content:''; position:absolute; left:-4px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--blue); }
+  .tdate { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.35rem; }
+  .trole { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--ink); margin-bottom:0.2rem; }
+  .tcompany { font-size:13px; color:var(--blue); font-weight:500; margin-bottom:0.65rem; }
+  .tbody { font-size:13.5px; color:var(--muted); line-height:1.7; max-width:540px; }
+
+  /* CONTACT */
+  .contact-section { background:var(--sky); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+  .contact-blurb { font-family:'Playfair Display',serif; font-size:1.7rem; line-height:1.4; color:var(--ink); margin-bottom:2rem; }
+  .contact-links { display:flex; flex-direction:column; gap:1rem; }
+  .clink { display:flex; align-items:center; gap:12px; font-size:14px; color:var(--ink); text-decoration:none; transition:color 0.2s; }
+  .clink:hover { color:var(--blue); }
+  .clink-icon { width:36px; height:36px; background:var(--white); border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:500; color:var(--blue-deep); }
+
+  footer { padding:2rem 4rem; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); }
+  .divider { height:1px; background:var(--border); margin:0 4rem; }
+
+  @media(max-width:900px){
+    nav{padding:1rem 1.5rem;}
+    .nav-links{display:none;}
+    .hero{grid-template-columns:1fr;padding:7rem 1.5rem 4rem;min-height:auto;}
+    section{padding:4rem 1.5rem;}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:2rem;}
+    .projects-grid{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:1fr;}
+    .divider{margin:0 1.5rem;}
+    footer{padding:1.5rem;flex-direction:column;gap:0.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Siham Boumalak</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <span class="hero-tag">Open to Applied Research Roles · 2025</span>
+    <h1>Building ML systems<br>that <em>understand</em><br>products at scale.</h1>
+    <p class="hero-sub">Applied ML researcher specializing in NLP and computer vision for e-commerce. Entity resolution, taxonomy classification, NER, image quality scoring. M.S. AI at Northeastern.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">See my work</a>
+      <a href="https://github.com/boumalaksiham" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    </div>
+  </div>
+
+  <div class="chat-card">
+    <div class="chat-header">
+      <div class="chat-avatar">S</div>
+      <div>
+        <div class="chat-name">Chat with Siham's AI</div>
+        <div class="chat-status"><span class="chat-dot"></span>Ask me anything about her work</div>
+      </div>
+    </div>
+    <div class="chat-msgs" id="chat-msgs">
+      <div class="msg bot">Hi! I know all about Siham's projects and background. Ask me anything — I'll answer as her.</div>
+    </div>
+    <div class="chat-sugs" id="chat-sugs"></div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Ask something..." onkeydown="if(event.key==='Enter')sendChat()"/>
+      <button class="chat-send" onclick="sendChat()">→</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">Who I am</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">Research meets<br><em>engineering.</em></h2>
+      <div style="display:flex;gap:3rem;margin-top:1rem;">
+        <div class="stat"><div class="stat-num">92%</div><div class="stat-label">NER Brand F1</div></div>
+        <div class="stat"><div class="stat-num">81%</div><div class="stat-label">Taxonomy L3 Acc.</div></div>
+        <div class="stat"><div class="stat-num">8</div><div class="stat-label">ML Projects</div></div>
+      </div>
+    </div>
+    <div class="about-body">
+      <p>I'm a <span class="hl">M.S. Artificial Intelligence student at Northeastern's Khoury College</span> (expected 2027), building systems that solve real e-commerce problems — the kind eBay, Amazon, and Shopify face at millions-of-listings scale.</p>
+      <p>My e-commerce ML portfolio covers <span class="hl">entity resolution</span> (matching product listings that describe the same item), <span class="hl">hierarchical taxonomy classification</span> (automatically categorizing listings into 3-level paths), <span class="hl">named entity recognition</span> (extracting brand, model, color, size from raw titles), and <span class="hl">image quality scoring</span> (rating product photos and diagnosing specific issues for sellers).</p>
+      <p>I also build <span class="hl">LLM observability infrastructure</span> (AI Guardian) and multi-agent NLP systems. Previously built and evaluated multi-agent pipelines at <span class="hl">Schneider Electric</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="section-label">What I've built</div>
+  <h2 class="section-title">Projects</h2>
+
+  <div style="margin-bottom:2rem;">
+    <div style="font-size:13px;font-weight:500;color:var(--blue);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">E-Commerce ML Portfolio</div>
+  </div>
+
+  <div class="projects-grid" style="margin-bottom:2.5rem;">
+
+    <div class="pcard">
+      <div class="pcard-category">Entity Resolution · NLP</div>
+      <div class="pcard-title">Product Matching Pipeline</div>
+      <p class="pcard-desc">Two-stage pipeline: Sentence Transformer (all-MiniLM-L6-v2) for semantic similarity + Attribute Guard that detects model code, storage, and size conflicts. Solved the key failure: Sony XM5 vs XM4 scored 0.97 similarity — penalized to 0.49 after conflict detection.</p>
+      <div class="pcard-metrics">
+        <span class="metric">92%+ accuracy</span>
+        <span class="metric">78% → 92% improvement</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">Sentence Transformers</span><span class="badge">PyTorch</span><span class="badge">scikit-learn</span><span class="badge">Cosine Similarity</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Entity-Resolution-Product-Matching-Pipeline" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-category">Text Classification · DistilBERT</div>
+      <div class="pcard-title">Hierarchical Taxonomy Classifier</div>
+      <p class="pcard-desc">Fine-tuned DistilBERT with 3 simultaneous classification heads (5 / 12 / 18 classes) trained end-to-end. Shared encoder learns features for broad and fine-grained taxonomy simultaneously. 100% Level 1 accuracy by Epoch 7, 81% Level 3 after 15 epochs.</p>
+      <div class="pcard-metrics">
+        <span class="metric">100% L1 accuracy</span>
+        <span class="metric">81% L3 accuracy</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">HuggingFace</span><span class="badge">DistilBERT</span><span class="badge">PyTorch</span><span class="badge">Multi-task Learning</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Taxonomy-Classifier-DistilBERT" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-category">Named Entity Recognition · BIO Tagging</div>
+      <div class="pcard-title">Product Attribute Extractor (NER)</div>
+      <p class="pcard-desc">BIO-tagged NER system extracting 9 attribute types from raw product titles: BRAND, MODEL, COLOR, STORAGE, SIZE, MATERIAL, NETWORK, GENERATION, COUNT. Handles multi-word entities like "Le Creuset", "Deep Purple", "Cast Iron". Feeds directly into the Entity Resolution pipeline.</p>
+      <div class="pcard-metrics">
+        <span class="metric">F1=1.00 on BRAND</span>
+        <span class="metric">F1=0.86 on STORAGE</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">DistilBERT</span><span class="badge">BIO Tagging</span><span class="badge">seqeval</span><span class="badge">Token Classification</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Product-NER-Attribute-Extraction" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-category">Computer Vision · EfficientNet</div>
+      <div class="pcard-title">Product Image Quality Scorer</div>
+      <p class="pcard-desc">Two-stage scorer combining EfficientNet-B0 (4.3M params, ImageNet pretrained, MSE regression head) with 7 classical CV signals: Laplacian sharpness, brightness, contrast, Hasler-Susstrunk colorfulness, Canny edge density, resolution, noise. Generates actionable seller feedback.</p>
+      <div class="pcard-metrics">
+        <span class="metric">7 CV signals</span>
+        <span class="metric">Correct ranking on all test images</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">EfficientNet-B0</span><span class="badge">OpenCV</span><span class="badge">torchvision</span><span class="badge">MSE Regression</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Product-Image-Quality-Scorer" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+  </div>
+
+  <div style="margin-bottom:2rem;margin-top:3rem;">
+    <div style="font-size:13px;font-weight:500;color:var(--blue);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">Additional Projects</div>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="pcard">
+      <div class="pcard-category">LLM Observability · Full-stack</div>
+      <div class="pcard-title">AI Guardian</div>
+      <p class="pcard-desc">Event-driven LLM observability platform with a Python SDK (@track_llm_call) that captures latency, token usage, cost, quality scores, and hallucination risk for every LLM call without changing application code. Threshold-based alerting, multi-step trace tracking for RAG pipelines, React dashboard with live WebSocket updates.</p>
+      <div class="pcard-metrics">
+        <span class="metric">Real-time monitoring</span>
+        <span class="metric">Any LLM provider</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">React</span><span class="badge">Python SDK</span><span class="badge">LangChain</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/AI-Guardian" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-category">Multi-Agent · NLP Research</div>
+      <div class="pcard-title">Scientific Paper Analysis Agents</div>
+      <p class="pcard-desc">5-agent pipeline analyzing arXiv papers: Summarization (BART), Citation Analysis (NetworkX knowledge graph), Methodology Extractor (spaCy NER), Critical Analysis, Coordinator. Ablation studies confirmed each agent's contribution. The Methodology Extractor was highest-impact: removing it caused the largest ROUGE drop.</p>
+      <div class="pcard-metrics">
+        <span class="metric">+0.31 ROUGE-1 vs baseline</span>
+        <span class="metric">Model F1: 1.00 vs 0.55</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">BART</span><span class="badge">spaCy</span><span class="badge">NetworkX</span><span class="badge">HuggingFace</span><span class="badge">ROUGE</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Final-Project-AI" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-category">Computer Vision · Senior Thesis</div>
+      <div class="pcard-title">Nexus-AI Attendance System</div>
+      <p class="pcard-desc">Real-time multi-agent facial recognition attendance system using dlib HOG + 128D face embeddings. Three dashboards (Admin, Professor, Student). OpenAI-powered absence reports and AI chatbot. Reduced manual attendance tracking to zero at The College of Wooster. Awarded departmental Honors.</p>
+      <div class="pcard-metrics">
+        <span class="metric">Departmental Honors</span>
+        <span class="metric">Zero manual tracking</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">OpenCV</span><span class="badge">dlib</span><span class="badge">Flask</span><span class="badge">OpenAI API</span><span class="badge">WebSockets</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Nexus-AI-Attendance" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-category">Deep Learning · CNN</div>
+      <div class="pcard-title">Arabic Handwriting Recognition</div>
+      <p class="pcard-desc">CNN trained from scratch on 13,440 labeled images across all 28 Arabic characters. Goal: verify a custom CNN can compete with transfer learning on a low-resource task. Data augmentation (rotation, shear, zoom) to address class imbalance. Confusion matrix analysis identified the 3 character pairs with highest confusion rates.</p>
+      <div class="pcard-metrics">
+        <span class="metric">92.4% test accuracy</span>
+        <span class="metric">28 character classes</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">PyTorch</span><span class="badge">CNN</span><span class="badge">Data Augmentation</span><span class="badge">Dropout</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Arabic-Handwriting-CNN" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-label">What I work with</div>
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <div class="skill-block-title">NLP & Deep Learning</div>
+      <span class="skill-pill">BERT / DistilBERT</span>
+      <span class="skill-pill">Sentence Transformers</span>
+      <span class="skill-pill">HuggingFace</span>
+      <span class="skill-pill">PyTorch</span>
+      <span class="skill-pill">Fine-tuning</span>
+      <span class="skill-pill">BIO Tagging / NER</span>
+      <span class="skill-pill">seqeval</span>
+      <span class="skill-pill">BART</span>
+      <span class="skill-pill">spaCy</span>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-title">Computer Vision & ML</div>
+      <span class="skill-pill">EfficientNet</span>
+      <span class="skill-pill">ResNet / CNNs</span>
+      <span class="skill-pill">OpenCV</span>
+      <span class="skill-pill">torchvision</span>
+      <span class="skill-pill">scikit-learn</span>
+      <span class="skill-pill">XGBoost</span>
+      <span class="skill-pill">F1 / AUC-ROC</span>
+      <span class="skill-pill">ROUGE / Ablation</span>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-title">LLM, Infra & Data</div>
+      <span class="skill-pill">LangChain</span>
+      <span class="skill-pill">AutoGen</span>
+      <span class="skill-pill">LlamaIndex</span>
+      <span class="skill-pill">OpenAI API</span>
+      <span class="skill-pill">RAG</span>
+      <span class="skill-pill">FastAPI</span>
+      <span class="skill-pill">PostgreSQL</span>
+      <span class="skill-pill">React</span>
+      <span class="skill-pill">Python / SQL</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-section" id="experience">
+  <div class="section-label">Where I've been</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="timeline">
+    <div class="titem">
+      <div class="tdate">2025 – Present</div>
+      <div class="trole">M.S. Artificial Intelligence</div>
+      <div class="tcompany">Northeastern University · Khoury College of Computer Sciences · Boston, MA</div>
+      <p class="tbody">Machine Learning concentration. Coursework: Artificial Intelligence, Machine Learning, Deep Learning. Built 4-project e-commerce ML portfolio targeting applied research roles at eBay, Amazon, and Shopify-scale systems.</p>
+    </div>
+    <div class="titem">
+      <div class="tdate">May – Jul 2024</div>
+      <div class="trole">Data Scientist & Research Assistant</div>
+      <div class="tcompany">Schneider Electric (via The College of Wooster) · Remote</div>
+      <p class="tbody">Built and evaluated multi-agent LLM pipelines (AutoGen, LangChain, LlamaIndex) with GPT-4, Claude, and Gemini to automate document summarization and compliance reporting. Designed role-specific agents and evaluated frameworks across accuracy, latency, and cost. Delivered findings to Schneider AI leadership to inform their 2025 automation roadmap.</p>
+    </div>
+    <div class="titem">
+      <div class="tdate">Mar – May 2024</div>
+      <div class="trole">Business Analyst</div>
+      <div class="tcompany">CaffeBerry.co · Remote</div>
+      <p class="tbody">Integrated 10+ datasets using R and Python; applied clustering, regression, and A/B testing to inform a data-backed product launch strategy. Built Tableau dashboards for the executive team. One product variant greenlit for launch based on the analysis.</p>
+    </div>
+    <div class="titem">
+      <div class="tdate">May – Jul 2023</div>
+      <div class="trole">Web Developer & Research Assistant</div>
+      <div class="tcompany">Vivi Dynamics (via The College of Wooster) · Remote</div>
+      <p class="tbody">Rebuilt platform features in Ruby on Rails using AI coding tools; validated outputs through unit testing. Ran controlled experiments comparing AI coding tools on error rate and velocity; findings published in a Vivi Engineering technical report.</p>
+    </div>
+    <div class="titem">
+      <div class="tdate">Jun – Aug 2022</div>
+      <div class="trole">Data Analyst</div>
+      <div class="tcompany">Preflet · Remote</div>
+      <p class="tbody">Built Random Forest, XGBoost, and regression models to forecast transmission line performance and detect anomalies. Developed an OpenCV computer vision prototype classifying infrastructure images by tower type — my first CV project, which motivated the image quality scoring work in my e-commerce portfolio.</p>
+    </div>
+    <div class="titem">
+      <div class="tdate">2021 – 2025</div>
+      <div class="trole">B.A. Computer Science & Data Science</div>
+      <div class="tcompany">The College of Wooster · OH</div>
+      <p class="tbody">Senior thesis (Nexus-AI) awarded departmental Honors; presented at college-wide Senior Research Symposium.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label">Let's talk</div>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-blurb">"Looking for applied research roles in NLP, computer vision, and e-commerce ML."</p>
+      <p style="color:var(--muted);font-size:14px;line-height:1.7;">Based in Boston, MA. Open to F-1 CPT opportunities. Responds within 24 hours.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:boumalak.s@northeastern.edu" class="clink">
+        <div class="clink-icon">✉</div>boumalak.s@northeastern.edu
+      </a>
+      <a href="https://linkedin.com/in/siham-boumalak-11014b210" target="_blank" class="clink">
+        <div class="clink-icon">in</div>linkedin.com/in/siham-boumalak-11014b210
+      </a>
+      <a href="https://github.com/boumalaksiham" target="_blank" class="clink">
+        <div class="clink-icon">gh</div>github.com/boumalaksiham
+      </a>
+      <a href="https://boumalaksiham.github.io" target="_blank" class="clink">
+        <div class="clink-icon">↗</div>boumalaksiham.github.io
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Siham Boumalak</span>
+  <span>Built with intention, not a template.</span>
+</footer>
+
+<script>
+const CONTEXT = `You are an AI assistant on Siham Boumalak's portfolio. Answer AS Siham in first person, concisely and warmly. Keep answers to 2-4 sentences max.
+
+Key facts:
+- M.S. AI at Northeastern Khoury College (Machine Learning, expected 2027). Seeking applied research roles.
+- E-Commerce ML Portfolio (4 projects built for eBay-type roles):
+  1. Entity Resolution: Sentence Transformers + Attribute Guard. 78% to 92%+ accuracy. Fixes XM5 vs XM4 problem.
+  2. Hierarchical Taxonomy Classifier: DistilBERT 3 heads. 100% L1, 81% L3 accuracy.
+  3. Product NER: BIO tagging, F1=1.00 on BRAND, 9 entity types, feeds into entity resolution.
+  4. Image Quality Scorer: EfficientNet-B0 + 7 CV signals (Laplacian sharpness, Canny edges, etc.). Actionable seller feedback.
+- AI Guardian: LLM observability platform. Python SDK captures latency, tokens, cost, quality, hallucination risk in real time. FastAPI + PostgreSQL + React.
+- Scientific Paper Analysis: 5-agent system (BART, spaCy NER, NetworkX, critical analysis). +0.31 ROUGE-1 over baseline.
+- Nexus-AI: Facial recognition attendance, departmental Honors.
+- Arabic CNN: 92.4% accuracy, 28 characters.
+- Schneider Electric: built and evaluated multi-agent LLM pipelines (AutoGen, LangChain, LlamaIndex).
+- Skills: DistilBERT, Sentence Transformers, HuggingFace, PyTorch, OpenCV, EfficientNet, seqeval, LangChain, FastAPI, PostgreSQL, React.
+- Languages: English, French, Arabic.`;
+
+let history = [];
+
+async function callClaude(msg) {
+  const messages = [...history, {role:'user', content:msg}];
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:CONTEXT,
+        messages
+      })
+    });
+    const data = await res.json();
+    return data.content?.[0]?.text || "Sorry, try again!";
+  } catch(e) { return "Something went wrong. Try again!"; }
+}
+
+function addMsg(role, text) {
+  const c = document.getElementById('chat-msgs');
+  const d = document.createElement('div');
+  d.className = 'msg ' + role;
+  d.textContent = text;
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+  return d;
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  document.getElementById('chat-sugs').style.display = 'none';
+  addMsg('user', text);
+  const thinking = addMsg('bot thinking', 'thinking...');
+  const reply = await callClaude(text);
+  thinking.remove();
+  history.push({role:'user', content:text});
+  history.push({role:'assistant', content:reply});
+  addMsg('bot', reply);
+}
+
+const suggestions = [
+  "What's your most impressive project?",
+  "Tell me about your eBay portfolio",
+  "What is AI Guardian?",
+  "What are you looking for?",
+  "What's your tech stack?"
+];
+
+window.addEventListener('load', () => {
+  const sugs = document.getElementById('chat-sugs');
+  suggestions.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'sug';
+    btn.textContent = s;
+    btn.onclick = () => { document.getElementById('chat-input').value = s; sendChat(); };
+    sugs.appendChild(btn);
+  });
+});
+</script>
+</body>
+</html>
