@@ -223,20 +223,468 @@
     </div>
   </div>
 
-  <div class="hero-visual">
-    <span class="floating-tag">DistilBERT · NER</span>
-    <span class="floating-tag">Entity Resolution</span>
-    <span class="floating-tag">EfficientNet-B0</span>
-    <span class="floating-tag">Anomaly Detection</span>
-    <span class="floating-tag">LLM Observability</span>
-    <span class="floating-tag">RAG · LangChain</span>
-    <span class="floating-tag">F1 = 0.84</span>
-    <div class="pulse-ring"></div>
-    <div class="pulse-ring"></div>
-    <div class="pulse-ring"></div>
-    <div class="center-orb"></div>
-    <canvas id="neural-net" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.35;"></canvas>
+ <!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: transparent; }
+
+  .live-panel {
+    width: 100%;
+    height: 460px;
+    background: #ffffff;
+    border: 1px solid #C8DEFA;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 4px 0 #B5D4F4;
+  }
+
+  /* Top bar */
+  .panel-bar {
+    background: #EAF3FB;
+    border-bottom: 1px solid #C8DEFA;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .panel-dots { display: flex; gap: 5px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .dot-r { background: #FF5F57; }
+  .dot-y { background: #FEBC2E; }
+  .dot-g { background: #28C840; }
+  .panel-title {
+    font-size: 11px;
+    color: #4A6FA5;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+  .live-badge {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 10px; color: #28C840; font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #28C840;
+    animation: livePulse 1.5s ease-in-out infinite;
+  }
+  @keyframes livePulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  /* Project selector tabs */
+  .proj-tabs {
+    display: flex;
+    border-bottom: 1px solid #C8DEFA;
+    background: #F5F9FF;
+    overflow-x: auto;
+    flex-shrink: 0;
+  }
+  .proj-tab {
+    padding: 7px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #4A6FA5;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .proj-tab.active {
+    color: #185FA5;
+    border-bottom-color: #378ADD;
+    background: #ffffff;
+  }
+  .proj-tab:hover:not(.active) { color: #378ADD; }
+
+  /* Main content area */
+  .panel-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  /* Left: metrics */
+  .metrics-col {
+    padding: 16px;
+    border-right: 1px solid #C8DEFA;
+    overflow: hidden;
+  }
+  .metrics-col-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4A6FA5;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .metric-row {
+    margin-bottom: 14px;
+  }
+  .metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .metric-name {
+    font-size: 11.5px;
+    color: #042C53;
+    font-weight: 500;
+  }
+  .metric-val {
+    font-size: 12px;
+    font-weight: 600;
+    color: #185FA5;
+    font-variant-numeric: tabular-nums;
+  }
+  .bar-track {
+    height: 5px;
+    background: #E6F1FB;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #378ADD, #185FA5);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Right: terminal */
+  .terminal-col {
+    padding: 12px;
+    background: #042C53;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .term-header {
+    font-size: 10px;
+    color: #B5D4F4;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .term-output {
+    flex: 1;
+    font-family: 'DM Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    line-height: 1.75;
+    color: #B5D4F4;
+    overflow: hidden;
+  }
+  .term-line { display: block; }
+  .term-key { color: #7BB8F0; }
+  .term-val { color: #E6F1FB; }
+  .term-ok { color: #28C840; }
+  .term-warn { color: #FEBC2E; }
+  .term-comment { color: rgba(181,212,244,0.35); }
+  .term-cursor {
+    display: inline-block;
+    width: 7px; height: 12px;
+    background: #378ADD;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Bottom status bar */
+  .status-bar {
+    background: #E6F1FB;
+    border-top: 1px solid #C8DEFA;
+    padding: 5px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .status-item {
+    font-size: 10.5px;
+    color: #4A6FA5;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .status-ok { color: #28C840; }
+</style>
+</head>
+<body>
+
+<div class="live-panel">
+  <!-- Bar -->
+  <div class="panel-bar">
+    <div class="panel-dots">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+    </div>
+    <div class="panel-title">siham.boumalak / project-monitor</div>
+    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
   </div>
+
+  <!-- Tabs -->
+  <div class="proj-tabs" id="tabs"></div>
+
+  <!-- Body -->
+  <div class="panel-body">
+    <div class="metrics-col">
+      <div class="metrics-col-label">Evaluation Metrics</div>
+      <div id="metrics-container"></div>
+    </div>
+    <div class="terminal-col">
+      <div class="term-header">▸ run log</div>
+      <div class="term-output" id="terminal"></div>
+    </div>
+  </div>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <div class="status-item"><span class="status-ok">●</span> <span id="status-project">AI Guardian</span></div>
+    <div class="status-item" id="status-stack">FastAPI · PostgreSQL · React</div>
+    <div class="status-item"><span id="status-time">just now</span></div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  {
+    name: "AI Guardian",
+    short: "AI Guardian",
+    stack: "FastAPI · PostgreSQL · React",
+    metrics: [
+      { name: "Latency tracked (ms)", val: "2425", pct: 82 },
+      { name: "Cost accuracy", val: "100%", pct: 100 },
+      { name: "Hallucination detection", val: "0.87", pct: 87 },
+      { name: "Alert precision", val: "95%", pct: 95 },
+    ],
+    lines: [
+      ['comment', '# AI Guardian — LLM Observability'],
+      ['kv', 'model', '"gpt-4o-mini"'],
+      ['kv', 'latency_ms', '1243'],
+      ['kv', 'cost_usd', '0.000194'],
+      ['kv', 'quality_score', '0.87'],
+      ['kv', 'hallucination_risk', '0.12'],
+      ['ok', '✓ Event logged · alert: none'],
+      ['kv', 'dashboard', 'updated'],
+    ]
+  },
+  {
+    name: "Paper Agents",
+    short: "Paper Agents",
+    stack: "HuggingFace · spaCy · NetworkX",
+    metrics: [
+      { name: "ROUGE-1 (multi-agent)", val: "0.50", pct: 91 },
+      { name: "ROUGE-1 (baseline)", val: "0.19", pct: 35 },
+      { name: "Model F1 score", val: "1.00", pct: 100 },
+      { name: "Citations extracted", val: "30/30", pct: 100 },
+    ],
+    lines: [
+      ['comment', '# 5-agent pipeline · arXiv:1706.03762'],
+      ['ok', '→ Summarization agent      done'],
+      ['ok', '→ Citation analysis        done'],
+      ['ok', '→ Methodology extractor    done'],
+      ['ok', '→ Critical analysis        done'],
+      ['kv', 'ROUGE-1', '0.50  (+0.31 vs baseline)'],
+      ['kv', 'Model F1', '1.00  vs 0.55 baseline'],
+      ['ok', '✓ Report generated'],
+    ]
+  },
+  {
+    name: "NER Extractor",
+    short: "NER",
+    stack: "DistilBERT · BIO Tagging · seqeval",
+    metrics: [
+      { name: "BRAND F1", val: "1.00", pct: 100 },
+      { name: "STORAGE F1", val: "0.86", pct: 86 },
+      { name: "Overall F1 (9 types)", val: "0.61", pct: 61 },
+      { name: "Entity types extracted", val: "9", pct: 90 },
+    ],
+    lines: [
+      ['comment', '# Product NER · token classification'],
+      ['kv', 'input', '"Sony WH-1000XM5 Black 30hr"'],
+      ['ok', 'BRAND    → Sony         [1.00]'],
+      ['ok', 'MODEL    → WH-1000XM5   [0.94]'],
+      ['ok', 'COLOR    → Black        [0.91]'],
+      ['ok', 'STORAGE  → 30hr         [0.86]'],
+      ['kv', 'entities_found', '4'],
+      ['ok', '✓ Structured attributes extracted'],
+    ]
+  },
+  {
+    name: "Taxonomy",
+    short: "Taxonomy",
+    stack: "DistilBERT · Multi-task · AdamW",
+    metrics: [
+      { name: "L1 accuracy", val: "100%", pct: 100 },
+      { name: "L3 accuracy", val: "81%", pct: 81 },
+      { name: "Unseen product types", val: "73%", pct: 73 },
+      { name: "Inference time (CPU)", val: "80ms", pct: 68 },
+    ],
+    lines: [
+      ['comment', '# Hierarchical taxonomy · 3 heads'],
+      ['kv', 'input', '"Sony WH-1000XM5 Headphones"'],
+      ['ok', 'L1 → Electronics         [1.00]'],
+      ['ok', 'L2 → Audio               [0.97]'],
+      ['ok', 'L3 → Headphones          [0.89]'],
+      ['kv', 'latency_ms', '80'],
+      ['kv', 'heads', '3  (L1 + L2 + L3 joint)'],
+      ['ok', '✓ Category path predicted'],
+    ]
+  },
+  {
+    name: "Nexus-AI",
+    short: "Nexus-AI",
+    stack: "dlib · OpenCV · Flask · WebSockets",
+    metrics: [
+      { name: "Face recognition accuracy", val: "98%", pct: 98 },
+      { name: "Manual tracking eliminated", val: "100%", pct: 100 },
+      { name: "Embedding dimensions", val: "128D", pct: 85 },
+      { name: "Dashboard views", val: "3", pct: 75 },
+    ],
+    lines: [
+      ['comment', '# Nexus-AI · live attendance'],
+      ['kv', 'frame', 'processing...'],
+      ['ok', '→ Face detected            ✓'],
+      ['ok', '→ 128D embedding computed  ✓'],
+      ['kv', 'distance', '0.31  (threshold: 0.5)'],
+      ['ok', '→ Identity: S. Boumalak    ✓'],
+      ['ok', '→ Attendance logged 09:02  ✓'],
+      ['ok', '✓ Honors thesis · zero manual tracking'],
+    ]
+  },
+  {
+    name: "Arabic CNN",
+    short: "Arabic CNN",
+    stack: "PyTorch · CNN · Data Augmentation",
+    metrics: [
+      { name: "Test accuracy", val: "92.4%", pct: 92 },
+      { name: "Training images", val: "13,440", pct: 88 },
+      { name: "Character classes", val: "28", pct: 79 },
+      { name: "Val accuracy", val: "92.0%", pct: 92 },
+    ],
+    lines: [
+      ['comment', '# Arabic CNN · trained from scratch'],
+      ['kv', 'epoch', '20 / 20'],
+      ['kv', 'train_acc', '94.1%'],
+      ['kv', 'val_acc', '92.0%'],
+      ['kv', 'loss', '0.187'],
+      ['kv', 'classes', '28  (full Arabic alphabet)'],
+      ['ok', '→ Model saved              ✓'],
+      ['ok', '✓ 92.4% test accuracy · confusion matrix: clean'],
+    ]
+  },
+];
+
+let current = 0;
+let termInterval = null;
+let autoInterval = null;
+
+// Build tabs
+const tabsEl = document.getElementById('tabs');
+projects.forEach((p, i) => {
+  const tab = document.createElement('div');
+  tab.className = 'proj-tab' + (i === 0 ? ' active' : '');
+  tab.textContent = p.short;
+  tab.onclick = () => { clearInterval(autoInterval); switchTo(i); startAuto(); };
+  tabsEl.appendChild(tab);
+});
+
+function switchTo(idx) {
+  current = idx;
+  const p = projects[idx];
+
+  // Update tabs
+  document.querySelectorAll('.proj-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+
+  // Update status bar
+  document.getElementById('status-project').textContent = p.name;
+  document.getElementById('status-stack').textContent = p.stack;
+  document.getElementById('status-time').textContent = 'just now';
+
+  // Render metrics
+  const mc = document.getElementById('metrics-container');
+  mc.innerHTML = '';
+  p.metrics.forEach(m => {
+    const row = document.createElement('div');
+    row.className = 'metric-row';
+    row.innerHTML = `
+      <div class="metric-header">
+        <span class="metric-name">${m.name}</span>
+        <span class="metric-val">${m.val}</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" data-pct="${m.pct}"></div>
+      </div>`;
+    mc.appendChild(row);
+  });
+
+  // Animate bars after tiny delay
+  setTimeout(() => {
+    mc.querySelectorAll('.bar-fill').forEach(b => {
+      b.style.width = b.dataset.pct + '%';
+    });
+  }, 80);
+
+  // Run terminal
+  runTerminal(p.lines);
+}
+
+function renderLine(type, a, b) {
+  if (type === 'comment') return `<span class="term-line term-comment">${a}</span>`;
+  if (type === 'ok') return `<span class="term-line term-ok">${a}</span>`;
+  if (type === 'warn') return `<span class="term-line term-warn">${a}</span>`;
+  if (type === 'kv') return `<span class="term-line"><span class="term-key">${a}:</span> <span class="term-val">${b}</span></span>`;
+  return `<span class="term-line term-val">${a}</span>`;
+}
+
+function runTerminal(lines) {
+  clearInterval(termInterval);
+  const term = document.getElementById('terminal');
+  term.innerHTML = '';
+  let i = 0;
+
+  function addLine() {
+    if (i >= lines.length) {
+      term.innerHTML += '<span class="term-cursor"></span>';
+      return;
+    }
+    const [type, a, b] = lines[i];
+    term.innerHTML += renderLine(type, a, b) + '\n';
+    i++;
+    // Scroll to bottom
+    term.scrollTop = term.scrollHeight;
+    termInterval = setTimeout(addLine, 280 + Math.random() * 120);
+  }
+  addLine();
+}
+
+function startAuto() {
+  autoInterval = setInterval(() => {
+    const next = (current + 1) % projects.length;
+    switchTo(next);
+  }, 5000);
+}
+
+// Init
+switchTo(0);
+startAuto();
+</script>
+</body>
+</html>
 </section>
 
 <div class="divider"></div>
