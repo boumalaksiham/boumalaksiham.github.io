@@ -41,9 +41,55 @@
   /* HERO */
   .hero {
     padding:9rem 4rem 6rem;
-    display:grid; grid-template-columns:1fr;
-    gap:4rem; align-items:center; min-height:70vh;
-    max-width:860px;
+    display:grid; grid-template-columns:1.1fr 0.9fr;
+    gap:4rem; align-items:center; min-height:100vh;
+  }
+  .hero-visual {
+    position:relative; width:100%; height:460px;
+  }
+  .floating-tag {
+    position:absolute;
+    background:var(--white); border:1px solid var(--border);
+    border-radius:4px; padding:6px 12px;
+    font-size:11px; font-weight:500; color:var(--blue-deep);
+    box-shadow:2px 2px 0 var(--sky-mid); white-space:nowrap;
+    animation:floatTag 6s ease-in-out infinite;
+  }
+  .floating-tag:nth-child(1){ top:4%;   left:6%;  animation-delay:0s;   animation-duration:7s; }
+  .floating-tag:nth-child(2){ top:16%;  right:5%; animation-delay:1.2s; animation-duration:6s; }
+  .floating-tag:nth-child(3){ top:36%;  left:0%;  animation-delay:2.1s; animation-duration:8s; }
+  .floating-tag:nth-child(4){ top:60%;  right:3%; animation-delay:0.7s; animation-duration:7s; }
+  .floating-tag:nth-child(5){ bottom:10%; left:10%; animation-delay:3s; animation-duration:6.5s; }
+  .floating-tag:nth-child(6){ bottom:24%; right:8%; animation-delay:1.8s; animation-duration:7.5s; }
+  .floating-tag:nth-child(7){ top:50%; left:22%; animation-delay:2.8s; animation-duration:6.8s; }
+  @keyframes floatTag {
+    0%,100% { transform:translateY(0px); }
+    50%      { transform:translateY(-12px); }
+  }
+  .pulse-ring {
+    position:absolute; border-radius:50%;
+    border:1.5px solid var(--blue); opacity:0;
+    animation:pulseRing 3.5s ease-out infinite;
+    top:50%; left:50%;
+  }
+  .pulse-ring:nth-child(8)  { width:80px;  height:80px;  margin:-40px 0 0 -40px;  animation-delay:0s; }
+  .pulse-ring:nth-child(9)  { width:150px; height:150px; margin:-75px 0 0 -75px;  animation-delay:0.7s; }
+  .pulse-ring:nth-child(10) { width:220px; height:220px; margin:-110px 0 0 -110px; animation-delay:1.4s; }
+  @keyframes pulseRing {
+    0%   { opacity:0.7; transform:scale(0.7); }
+    100% { opacity:0;   transform:scale(1.5); }
+  }
+  .center-orb {
+    position:absolute; top:50%; left:50%;
+    margin:-11px 0 0 -11px;
+    width:22px; height:22px; border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 24px rgba(55,138,221,0.6);
+    animation:orbPulse 2.5s ease-in-out infinite; z-index:2;
+  }
+  @keyframes orbPulse {
+    0%,100% { box-shadow:0 0 12px rgba(55,138,221,0.4); transform:scale(1); }
+    50%      { box-shadow:0 0 32px rgba(55,138,221,0.9); transform:scale(1.18); }
   }
   .hero-tag {
     display:inline-block;
@@ -142,7 +188,7 @@
   @media(max-width:900px){
     nav{padding:1rem 1.5rem;}
     .nav-links{display:none;}
-    .hero{padding:7rem 1.5rem 4rem;min-height:auto;}
+    .hero{grid-template-columns:1fr;padding:7rem 1.5rem 4rem;min-height:auto;} .hero-visual{height:260px;}
     section{padding:4rem 1.5rem;}
     .about-grid,.contact-grid{grid-template-columns:1fr;gap:2rem;}
     .projects-grid{grid-template-columns:1fr;}
@@ -175,6 +221,21 @@
       <a href="#projects" class="btn btn-primary">See my work</a>
       <a href="https://github.com/boumalaksiham" target="_blank" class="btn btn-outline">GitHub ↗</a>
     </div>
+  </div>
+
+  <div class="hero-visual">
+    <span class="floating-tag">DistilBERT · NER</span>
+    <span class="floating-tag">Entity Resolution</span>
+    <span class="floating-tag">EfficientNet-B0</span>
+    <span class="floating-tag">Anomaly Detection</span>
+    <span class="floating-tag">LLM Observability</span>
+    <span class="floating-tag">RAG · LangChain</span>
+    <span class="floating-tag">F1 = 0.84</span>
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="center-orb"></div>
+    <canvas id="neural-net" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.35;"></canvas>
   </div>
 </section>
 
@@ -547,5 +608,79 @@
   <span>Built with intention, not a template.</span>
 </footer>
 
+
+<script>
+// Animated neural network canvas
+(function(){
+  const canvas = document.getElementById('neural-net');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const blue = '#378ADD';
+  const skyMid = '#B5D4F4';
+
+  function resize(){
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Nodes
+  const nodes = [];
+  const N = 18;
+  for(let i=0;i<N;i++){
+    nodes.push({
+      x: Math.random()*0.8+0.1,
+      y: Math.random()*0.8+0.1,
+      vx: (Math.random()-0.5)*0.0008,
+      vy: (Math.random()-0.5)*0.0008,
+      r: Math.random()*3+2
+    });
+  }
+
+  function draw(){
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+
+    // Draw edges between nearby nodes
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a = nodes[i], b = nodes[j];
+        const dx = (a.x-b.x)*w, dy = (a.y-b.y)*h;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist < 160){
+          ctx.beginPath();
+          ctx.strokeStyle = skyMid;
+          ctx.globalAlpha = (1 - dist/160)*0.6;
+          ctx.lineWidth = 0.8;
+          ctx.moveTo(a.x*w, a.y*h);
+          ctx.lineTo(b.x*w, b.y*h);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    ctx.globalAlpha = 1;
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x*w, n.y*h, n.r, 0, Math.PI*2);
+      ctx.fillStyle = blue;
+      ctx.globalAlpha = 0.5;
+      ctx.fill();
+    });
+
+    // Move nodes
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if(n.x < 0.05 || n.x > 0.95) n.vx *= -1;
+      if(n.y < 0.05 || n.y > 0.95) n.vy *= -1;
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
 </body>
 </html>
