@@ -41,8 +41,9 @@
   /* HERO */
   .hero {
     padding:9rem 4rem 6rem;
-    display:grid; grid-template-columns:1.1fr 0.9fr;
-    gap:4rem; align-items:center; min-height:100vh;
+    display:grid; grid-template-columns:1fr;
+    gap:4rem; align-items:center; min-height:70vh;
+    max-width:860px;
   }
   .hero-tag {
     display:inline-block;
@@ -56,34 +57,13 @@
     line-height:1.1; color:var(--ink); margin-bottom:1.5rem;
   }
   .hero h1 em { font-style:italic; color:var(--blue); }
-  .hero-sub { font-size:16px; font-weight:300; color:var(--muted); line-height:1.75; max-width:440px; margin-bottom:2.5rem; }
+  .hero-sub { font-size:16px; font-weight:300; color:var(--muted); line-height:1.75; max-width:560px; margin-bottom:2.5rem; }
   .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; }
   .btn { padding:11px 26px; border-radius:3px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.05em; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s; }
   .btn-primary { background:var(--blue); color:var(--white); }
   .btn-primary:hover { background:var(--navy); }
   .btn-outline { background:transparent; color:var(--ink); border:1px solid var(--border); }
   .btn-outline:hover { border-color:var(--blue); color:var(--blue); }
-
-  /* CHAT CARD */
-  .chat-card { background:var(--white); border:1px solid var(--border); border-radius:8px; overflow:hidden; box-shadow:6px 6px 0 var(--sky-mid); }
-  .chat-header { background:var(--sky); padding:1rem 1.25rem; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--border); }
-  .chat-avatar { width:32px; height:32px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:14px; color:var(--white); font-weight:700; }
-  .chat-name { font-size:13px; font-weight:500; color:var(--ink); }
-  .chat-status { font-size:11px; color:var(--muted); }
-  .chat-dot { width:7px; height:7px; background:#4CAF50; border-radius:50%; display:inline-block; margin-right:4px; }
-  .chat-msgs { padding:1.25rem; min-height:240px; max-height:280px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
-  .msg { max-width:84%; font-size:13.5px; line-height:1.55; padding:10px 14px; border-radius:12px; }
-  .msg.bot { background:var(--sky); color:var(--ink); border-radius:2px 12px 12px 12px; align-self:flex-start; }
-  .msg.user { background:var(--blue); color:var(--white); border-radius:12px 2px 12px 12px; align-self:flex-end; }
-  .msg.thinking { opacity:0.6; font-style:italic; }
-  .chat-sugs { padding:0 1rem 0.8rem; display:flex; flex-wrap:wrap; gap:6px; }
-  .sug { font-size:11.5px; padding:5px 10px; border:1px solid var(--border); border-radius:20px; background:var(--cream); color:var(--muted); cursor:pointer; transition:all 0.15s; font-family:'DM Sans',sans-serif; }
-  .sug:hover { border-color:var(--blue); color:var(--blue); }
-  .chat-input-row { padding:0.8rem 1rem; border-top:1px solid var(--border); display:flex; gap:8px; }
-  .chat-input { flex:1; padding:9px 12px; border-radius:3px; border:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:13px; background:var(--cream); color:var(--ink); outline:none; }
-  .chat-input:focus { border-color:var(--blue); }
-  .chat-send { padding:9px 16px; background:var(--blue); color:var(--white); border:none; border-radius:3px; cursor:pointer; font-size:13px; transition:background 0.2s; }
-  .chat-send:hover { background:var(--navy); }
 
   /* SECTIONS */
   section { padding:6rem 4rem; }
@@ -101,7 +81,7 @@
   .about-body p { margin-bottom:1.2rem; }
   .hl { color:var(--blue-deep); font-weight:500; }
 
-  /* PROJECTS — 4 column grid */
+  /* PROJECTS */
   .projects-section { background:var(--white); }
   .projects-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.75rem; }
   .pcard {
@@ -114,12 +94,15 @@
   .pcard-category { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--blue); font-weight:500; margin-bottom:0.6rem; }
   .pcard-title { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.65rem; color:var(--ink); }
   .pcard-desc { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:1.1rem; }
-  .pcard-metrics { display:flex; gap:1rem; margin-bottom:1rem; }
+  .pcard-detail { font-size:12.5px; color:var(--ink); line-height:1.7; margin-bottom:1rem; background:var(--sky); border-left:3px solid var(--blue); padding:0.75rem 1rem; border-radius:0 4px 4px 0; }
+  .pcard-detail strong { color:var(--blue-deep); font-weight:500; }
+  .pcard-metrics { display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap; }
   .metric { font-size:11.5px; background:var(--sky); color:var(--navy); padding:3px 10px; border-radius:20px; font-weight:500; }
   .pcard-stack { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1rem; }
   .badge { font-size:11px; padding:3px 8px; background:var(--sky); color:var(--blue-deep); border-radius:2px; font-weight:500; }
   .pcard-link { font-size:12px; color:var(--blue); text-decoration:none; font-weight:500; }
   .pcard-link:hover { text-decoration:underline; }
+  .pcard-impact { font-size:12px; color:var(--muted); font-style:italic; margin-bottom:0.75rem; padding:0.5rem 0; border-top:1px solid var(--border); }
 
   /* SKILLS */
   .skills-section { background:var(--ink); }
@@ -139,7 +122,9 @@
   .tdate { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.35rem; }
   .trole { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--ink); margin-bottom:0.2rem; }
   .tcompany { font-size:13px; color:var(--blue); font-weight:500; margin-bottom:0.65rem; }
-  .tbody { font-size:13.5px; color:var(--muted); line-height:1.7; max-width:540px; }
+  .tbody { font-size:13.5px; color:var(--muted); line-height:1.7; max-width:600px; }
+  .tbody ul { padding-left:1.2rem; margin-top:0.5rem; }
+  .tbody ul li { margin-bottom:0.4rem; }
 
   /* CONTACT */
   .contact-section { background:var(--sky); }
@@ -152,11 +137,12 @@
 
   footer { padding:2rem 4rem; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); }
   .divider { height:1px; background:var(--border); margin:0 4rem; }
+  .portfolio-group-label { font-size:13px; font-weight:500; color:var(--blue); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
 
   @media(max-width:900px){
     nav{padding:1rem 1.5rem;}
     .nav-links{display:none;}
-    .hero{grid-template-columns:1fr;padding:7rem 1.5rem 4rem;min-height:auto;}
+    .hero{padding:7rem 1.5rem 4rem;min-height:auto;}
     section{padding:4rem 1.5rem;}
     .about-grid,.contact-grid{grid-template-columns:1fr;gap:2rem;}
     .projects-grid{grid-template-columns:1fr;}
@@ -182,30 +168,12 @@
 <!-- HERO -->
 <section class="hero">
   <div>
-    <span class="hero-tag">Open to Applied Research Roles · 2025</span>
+    <span class="hero-tag">Open to Applied Research & Data Science Roles · 2025–2026</span>
     <h1>Building ML systems<br>that <em>understand</em><br>products at scale.</h1>
-    <p class="hero-sub">Applied ML researcher specializing in NLP and computer vision for e-commerce. Entity resolution, taxonomy classification, NER, image quality scoring. M.S. AI at Northeastern.</p>
+    <p class="hero-sub">M.S. Artificial Intelligence student at Northeastern University (Khoury College), specializing in NLP, computer vision, and generative AI. I build end-to-end ML pipelines — from fine-tuned transformers for entity extraction to anomaly detection systems for manufacturing quality control — with a consistent focus on systems that produce trustworthy, explainable, and measurable outcomes.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">See my work</a>
       <a href="https://github.com/boumalaksiham" target="_blank" class="btn btn-outline">GitHub ↗</a>
-    </div>
-  </div>
-
-  <div class="chat-card">
-    <div class="chat-header">
-      <div class="chat-avatar">S</div>
-      <div>
-        <div class="chat-name">Chat with Siham's AI</div>
-        <div class="chat-status"><span class="chat-dot"></span>Ask me anything about her work</div>
-      </div>
-    </div>
-    <div class="chat-msgs" id="chat-msgs">
-      <div class="msg bot">Hi! I know all about Siham's projects and background. Ask me anything — I'll answer as her.</div>
-    </div>
-    <div class="chat-sugs" id="chat-sugs"></div>
-    <div class="chat-input-row">
-      <input class="chat-input" id="chat-input" type="text" placeholder="Ask something..." onkeydown="if(event.key==='Enter')sendChat()"/>
-      <button class="chat-send" onclick="sendChat()">→</button>
     </div>
   </div>
 </section>
@@ -218,16 +186,17 @@
   <div class="about-grid">
     <div>
       <h2 class="section-title">Research meets<br><em>engineering.</em></h2>
-      <div style="display:flex;gap:3rem;margin-top:1rem;">
+      <div style="display:flex;gap:3rem;margin-top:1rem;flex-wrap:wrap;">
         <div class="stat"><div class="stat-num">92%</div><div class="stat-label">NER Brand F1</div></div>
         <div class="stat"><div class="stat-num">81%</div><div class="stat-label">Taxonomy L3 Acc.</div></div>
-        <div class="stat"><div class="stat-num">8</div><div class="stat-label">ML Projects</div></div>
+        <div class="stat"><div class="stat-num">9</div><div class="stat-label">ML Projects</div></div>
       </div>
     </div>
     <div class="about-body">
-      <p>I'm a <span class="hl">M.S. Artificial Intelligence student at Northeastern's Khoury College</span> (expected 2027), building systems that solve real e-commerce problems — the kind eBay, Amazon, and Shopify face at millions-of-listings scale.</p>
-      <p>My e-commerce ML portfolio covers <span class="hl">entity resolution</span> (matching product listings that describe the same item), <span class="hl">hierarchical taxonomy classification</span> (automatically categorizing listings into 3-level paths), <span class="hl">named entity recognition</span> (extracting brand, model, color, size from raw titles), and <span class="hl">image quality scoring</span> (rating product photos and diagnosing specific issues for sellers).</p>
-      <p>I also build <span class="hl">LLM observability infrastructure</span> (AI Guardian) and multi-agent NLP systems. Previously built and evaluated multi-agent pipelines at <span class="hl">Schneider Electric</span>.</p>
+      <p>I'm a <span class="hl">M.S. Artificial Intelligence student at Northeastern's Khoury College</span> (expected 2027), building systems that solve real problems at the intersection of NLP, computer vision, and generative AI.</p>
+      <p>My e-commerce ML portfolio covers <span class="hl">entity resolution</span> (matching product listings that describe the same item with semantic similarity + attribute conflict detection), <span class="hl">hierarchical taxonomy classification</span> (fine-tuned DistilBERT with 3 simultaneous classification heads for 3-level category prediction), <span class="hl">named entity recognition</span> (BIO-tagged token classification extracting 9 attribute types from raw product titles), and <span class="hl">image quality scoring</span> (EfficientNet-B0 combined with 7 classical CV signals for explainable, actionable feedback).</p>
+      <p>Beyond e-commerce, I build <span class="hl">manufacturing defect detection systems</span> (convolutional autoencoder on MVTec AD for anomaly-free training), <span class="hl">LLM observability infrastructure</span> (AI Guardian — real-time monitoring of latency, cost, quality, and hallucination risk), and multi-agent NLP pipelines. Previously built and evaluated multi-agent LLM pipelines at <span class="hl">Schneider Electric</span>.</p>
+      <p>Multilingual: <span class="hl">English, French, and Arabic</span>. Based in Boston, MA. Open to F-1 CPT opportunities.</p>
     </div>
   </div>
 </section>
@@ -237,128 +206,189 @@
   <div class="section-label">What I've built</div>
   <h2 class="section-title">Projects</h2>
 
-  <div style="margin-bottom:2rem;">
-    <div style="font-size:13px;font-weight:500;color:var(--blue);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">E-Commerce ML Portfolio</div>
+  <!-- E-Commerce ML Portfolio -->
+  <div style="margin-bottom:1.5rem;">
+    <div class="portfolio-group-label">E-Commerce ML Portfolio — targeting applied research roles at eBay, Amazon, Shopify-scale systems</div>
   </div>
 
-  <div class="projects-grid" style="margin-bottom:2.5rem;">
+  <div class="projects-grid" style="margin-bottom:3.5rem;">
 
     <div class="pcard">
-      <div class="pcard-category">Entity Resolution · NLP</div>
+      <div class="pcard-category">Entity Resolution · NLP · Semantic Search</div>
       <div class="pcard-title">Product Matching Pipeline</div>
-      <p class="pcard-desc">Two-stage pipeline: Sentence Transformer (all-MiniLM-L6-v2) for semantic similarity + Attribute Guard that detects model code, storage, and size conflicts. Solved the key failure: Sony XM5 vs XM4 scored 0.97 similarity — penalized to 0.49 after conflict detection.</p>
+      <p class="pcard-desc">Solves the core e-commerce problem: millions of sellers list the same product with different titles, abbreviations, and formats. The system identifies which listings refer to the same real-world product.</p>
+      <div class="pcard-detail">
+        <strong>The problem with vanilla transformers:</strong> "Sony XM5 Headphones" vs "Sony XM4 Headphones" scores 0.97 cosine similarity — nearly identical, but they're different products. A single digit difference gets drowned out by surrounding shared words.<br><br>
+        <strong>Two-stage solution:</strong> Sentence Transformer (all-MiniLM-L6-v2) for semantic similarity, followed by an Attribute Guard that detects model code, storage, and size conflicts using regex. Conflicts multiply the score by a penalty (0.40–0.50), collapsing the false match from 0.97 → 0.49.
+      </div>
       <div class="pcard-metrics">
-        <span class="metric">92%+ accuracy</span>
-        <span class="metric">78% → 92% improvement</span>
+        <span class="metric">78% → 92%+ accuracy</span>
+        <span class="metric">40-pair evaluation set</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">Sentence Transformers</span><span class="badge">PyTorch</span><span class="badge">scikit-learn</span><span class="badge">Cosine Similarity</span>
+        <span class="badge">Sentence Transformers</span><span class="badge">all-MiniLM-L6-v2</span><span class="badge">PyTorch</span><span class="badge">scikit-learn</span><span class="badge">Cosine Similarity</span><span class="badge">AUC-ROC</span>
       </div>
       <a href="https://github.com/boumalaksiham/Entity-Resolution-Product-Matching-Pipeline" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
 
     <div class="pcard">
-      <div class="pcard-category">Text Classification · DistilBERT</div>
+      <div class="pcard-category">Text Classification · DistilBERT · Multi-task Learning</div>
       <div class="pcard-title">Hierarchical Taxonomy Classifier</div>
-      <p class="pcard-desc">Fine-tuned DistilBERT with 3 simultaneous classification heads (5 / 12 / 18 classes) trained end-to-end. Shared encoder learns features for broad and fine-grained taxonomy simultaneously. 100% Level 1 accuracy by Epoch 7, 81% Level 3 after 15 epochs.</p>
+      <p class="pcard-desc">Automates product categorization for e-commerce listings. Given any product title, predicts the full 3-level category path (e.g., Electronics → Audio → Headphones) in under 100ms on CPU.</p>
+      <div class="pcard-detail">
+        <strong>Architecture:</strong> Fine-tuned DistilBERT with 3 simultaneous classification heads (5 / 12 / 18 classes) trained end-to-end. One shared encoder learns features for broad and fine-grained taxonomy simultaneously — the combined loss (L1 + L2 + L3) backpropagates through all three heads in a single step, forcing the encoder to learn representations useful at every level of the hierarchy.<br><br>
+        <strong>Why DistilBERT over BERT?</strong> 40% smaller, 60% faster, retains 97% performance — runs in ~80ms vs ~200ms per title on CPU, critical for listing ingestion pipelines.
+      </div>
       <div class="pcard-metrics">
         <span class="metric">100% L1 accuracy</span>
         <span class="metric">81% L3 accuracy</span>
+        <span class="metric">73% on unseen product types</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">HuggingFace</span><span class="badge">DistilBERT</span><span class="badge">PyTorch</span><span class="badge">Multi-task Learning</span>
+        <span class="badge">HuggingFace</span><span class="badge">DistilBERT</span><span class="badge">PyTorch</span><span class="badge">Multi-task Learning</span><span class="badge">AdamW</span>
       </div>
       <a href="https://github.com/boumalaksiham/Taxonomy-Classifier-DistilBERT" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
 
     <div class="pcard">
-      <div class="pcard-category">Named Entity Recognition · BIO Tagging</div>
+      <div class="pcard-category">Named Entity Recognition · BIO Tagging · Token Classification</div>
       <div class="pcard-title">Product Attribute Extractor (NER)</div>
-      <p class="pcard-desc">BIO-tagged NER system extracting 9 attribute types from raw product titles: BRAND, MODEL, COLOR, STORAGE, SIZE, MATERIAL, NETWORK, GENERATION, COUNT. Handles multi-word entities like "Le Creuset", "Deep Purple", "Cast Iron". Feeds directly into the Entity Resolution pipeline.</p>
+      <p class="pcard-desc">Turns raw, unstructured product titles into structured, queryable attributes. Feeds directly into the Entity Resolution pipeline — the Attribute Guard uses these extracted values for conflict detection.</p>
+      <div class="pcard-detail">
+        <strong>9 entity types:</strong> BRAND, MODEL, COLOR, STORAGE, SIZE, MATERIAL, NETWORK, GENERATION, COUNT. Handles multi-word entities like "Le Creuset", "Deep Purple", "Cast Iron" using BIO tagging (B = beginning of span, I = inside span, O = not an entity).<br><br>
+        <strong>Subword alignment:</strong> DistilBERT splits "iPhone" into ["i", "##phone"]. Labels are predicted only for the first subword of each word; continuation subwords are masked with -100 in the loss — the industry standard for BERT-based NER. Evaluated with seqeval at the span level, not token level.
+      </div>
       <div class="pcard-metrics">
         <span class="metric">F1=1.00 on BRAND</span>
         <span class="metric">F1=0.86 on STORAGE</span>
+        <span class="metric">Overall F1=0.61 (9 types)</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">DistilBERT</span><span class="badge">BIO Tagging</span><span class="badge">seqeval</span><span class="badge">Token Classification</span>
+        <span class="badge">DistilBERT</span><span class="badge">BIO Tagging</span><span class="badge">seqeval</span><span class="badge">Token Classification</span><span class="badge">HuggingFace</span>
       </div>
       <a href="https://github.com/boumalaksiham/Product-NER-Attribute-Extraction" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
 
     <div class="pcard">
-      <div class="pcard-category">Computer Vision · EfficientNet</div>
+      <div class="pcard-category">Computer Vision · EfficientNet · Explainable AI</div>
       <div class="pcard-title">Product Image Quality Scorer</div>
-      <p class="pcard-desc">Two-stage scorer combining EfficientNet-B0 (4.3M params, ImageNet pretrained, MSE regression head) with 7 classical CV signals: Laplacian sharpness, brightness, contrast, Hasler-Susstrunk colorfulness, Canny edge density, resolution, noise. Generates actionable seller feedback.</p>
+      <p class="pcard-desc">Scores product photos on a 1–5 scale and generates actionable seller feedback — not just a number, but exactly what is wrong and how to fix it. Built for eBay-style listing quality enforcement.</p>
+      <div class="pcard-detail">
+        <strong>Two-stage architecture:</strong> EfficientNet-B0 (4.3M params, ImageNet pretrained, MSE regression head) combined with 7 classical CV signals — Laplacian sharpness, brightness penalty curve, pixel std contrast, Hasler–Süsstrunk colorfulness, Canny edge density (background simplicity), minimum resolution, Gaussian residual noise. Final score = 0.65 × CV score + 0.35 × DL score.<br><br>
+        <strong>Why combine both?</strong> CV signals are fast, explainable, and reliable for specific measurable properties — when a seller scores poorly, we can tell them exactly why ("Laplacian variance: 0.03 — your image is blurry"). EfficientNet captures holistic quality that's hard to measure explicitly. Diagnosis always comes from CV signals, never from the neural network, ensuring advice is always grounded.
+      </div>
       <div class="pcard-metrics">
         <span class="metric">7 CV signals</span>
         <span class="metric">Correct ranking on all test images</span>
+        <span class="metric">Actionable feedback per image</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">EfficientNet-B0</span><span class="badge">OpenCV</span><span class="badge">torchvision</span><span class="badge">MSE Regression</span>
+        <span class="badge">EfficientNet-B0</span><span class="badge">OpenCV</span><span class="badge">torchvision</span><span class="badge">MSE Regression</span><span class="badge">Laplacian</span><span class="badge">Canny</span>
       </div>
       <a href="https://github.com/boumalaksiham/Product-Image-Quality-Scorer" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
 
   </div>
 
-  <div style="margin-bottom:2rem;margin-top:3rem;">
-    <div style="font-size:13px;font-weight:500;color:var(--blue);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;">Additional Projects</div>
+  <!-- Additional Projects -->
+  <div style="margin-bottom:1.5rem;margin-top:2rem;">
+    <div class="portfolio-group-label">Additional Projects</div>
   </div>
 
   <div class="projects-grid">
 
     <div class="pcard">
-      <div class="pcard-category">LLM Observability · Full-stack</div>
+      <div class="pcard-category">Computer Vision · Anomaly Detection · Manufacturing</div>
+      <div class="pcard-title">Manufacturing Defect Detection System</div>
+      <p class="pcard-desc">A real-time quality control pipeline for electronics manufacturing — flags anomalous products during inspection before they reach downstream assembly or customers.</p>
+      <div class="pcard-detail">
+        <strong>Architecture:</strong> Convolutional autoencoder trained exclusively on defect-free (normal) images. At inference time, any image with high reconstruction error is flagged as anomalous — the model learns what "normal" looks like and rejects everything that deviates. Threshold is calibrated on a validation set to balance precision and recall. Optionally extended with a supervised ResNet-18 classifier for class-level defect categorization (scratch, contamination, bent component) when labeled defect images are available.<br><br>
+        <strong>Why unsupervised?</strong> Labeled defect data is expensive to collect in manufacturing. Training only on good images means the system can be deployed with zero defect labels — it learns the distribution of normal products and flags anything outside it. Evaluated with AUROC and F1, with tunable reconstruction error thresholds.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">MVTec AD dataset</span>
+        <span class="metric">Up to 40% inspection labour reduction</span>
+        <span class="metric">Real-time Streamlit dashboard</span>
+      </div>
+      <div class="pcard-impact">Industry benchmarks: early anomaly detection systems of this type reduce manual inspection labour by up to 40% and catch defect rates human inspectors miss at high throughput.</div>
+      <div class="pcard-stack">
+        <span class="badge">PyTorch</span><span class="badge">Convolutional Autoencoder</span><span class="badge">ResNet-18</span><span class="badge">OpenCV</span><span class="badge">scikit-learn</span><span class="badge">Streamlit</span><span class="badge">AUROC</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Defect-Detection" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-category">LLM Observability · Full-stack · Production ML</div>
       <div class="pcard-title">AI Guardian</div>
-      <p class="pcard-desc">Event-driven LLM observability platform with a Python SDK (@track_llm_call) that captures latency, token usage, cost, quality scores, and hallucination risk for every LLM call without changing application code. Threshold-based alerting, multi-step trace tracking for RAG pipelines, React dashboard with live WebSocket updates.</p>
+      <p class="pcard-desc">The hardest part of deploying a GenAI system is not building it — it's knowing whether it still works correctly three weeks later. AI Guardian solves this with event-driven LLM monitoring in production.</p>
+      <div class="pcard-detail">
+        <strong>How it works:</strong> Python SDK (@track_llm_call decorator) captures latency, token usage, cost, quality scores, and hallucination risk for every LLM call without modifying application code. Threshold-based alerting fires before issues escalate. Multi-step trace tracking follows RAG pipeline chains end-to-end. All metrics flow into a PostgreSQL backend and surface in a React dashboard with live WebSocket updates — so engineering and business teams can monitor model behaviour without querying the database directly.<br><br>
+        <strong>Works with any LLM provider:</strong> OpenAI, Anthropic, Google. Designed to be dropped into an existing LLM application with a single decorator.
+      </div>
       <div class="pcard-metrics">
         <span class="metric">Real-time monitoring</span>
         <span class="metric">Any LLM provider</span>
+        <span class="metric">Zero application code changes</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">React</span><span class="badge">Python SDK</span><span class="badge">LangChain</span>
+        <span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">React</span><span class="badge">Python SDK</span><span class="badge">LangChain</span><span class="badge">SQLAlchemy</span><span class="badge">WebSockets</span>
       </div>
       <a href="https://github.com/boumalaksiham/AI-Guardian" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
 
     <div class="pcard">
-      <div class="pcard-category">Multi-Agent · NLP Research</div>
+      <div class="pcard-category">Multi-Agent · NLP · Ablation Studies</div>
       <div class="pcard-title">Scientific Paper Analysis Agents</div>
-      <p class="pcard-desc">5-agent pipeline analyzing arXiv papers: Summarization (BART), Citation Analysis (NetworkX knowledge graph), Methodology Extractor (spaCy NER), Critical Analysis, Coordinator. Ablation studies confirmed each agent's contribution. The Methodology Extractor was highest-impact: removing it caused the largest ROUGE drop.</p>
+      <p class="pcard-desc">5-agent NLP pipeline that takes arXiv research papers as input and produces structured analytical outputs — methodology, citations, critical analysis — without requiring the user to read the paper.</p>
+      <div class="pcard-detail">
+        <strong>5 specialised agents:</strong> Summarization (BART), Citation Analysis (NetworkX knowledge graph — maps paper relationships), Methodology Extractor (spaCy NER — identifies datasets, baselines, metrics), Critical Analysis, and Coordinator. Each agent was optimised independently before integration.<br><br>
+        <strong>Validated with ablation studies:</strong> Removed each agent one at a time and measured the impact on output quality. The Methodology Extractor caused the largest single ROUGE drop when removed — confirming it was the highest-value component. This discipline — systematically validating that every component earns its place — applies directly to any ML system where you need to trust the output.
+      </div>
       <div class="pcard-metrics">
         <span class="metric">+0.31 ROUGE-1 vs baseline</span>
-        <span class="metric">Model F1: 1.00 vs 0.55</span>
+        <span class="metric">Model F1: 1.00 vs 0.55 baseline</span>
+        <span class="metric">4 landmark papers tested</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">BART</span><span class="badge">spaCy</span><span class="badge">NetworkX</span><span class="badge">HuggingFace</span><span class="badge">ROUGE</span>
+        <span class="badge">BART</span><span class="badge">spaCy</span><span class="badge">NetworkX</span><span class="badge">HuggingFace</span><span class="badge">ROUGE</span><span class="badge">Ablation Testing</span>
       </div>
       <a href="https://github.com/boumalaksiham/Final-Project-AI" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
 
     <div class="pcard">
-      <div class="pcard-category">Computer Vision · Senior Thesis</div>
+      <div class="pcard-category">Computer Vision · Senior Thesis · Honours</div>
       <div class="pcard-title">Nexus-AI Attendance System</div>
-      <p class="pcard-desc">Real-time multi-agent facial recognition attendance system using dlib HOG + 128D face embeddings. Three dashboards (Admin, Professor, Student). OpenAI-powered absence reports and AI chatbot. Reduced manual attendance tracking to zero at The College of Wooster. Awarded departmental Honors.</p>
+      <p class="pcard-desc">Real-time multi-agent facial recognition attendance system that eliminated manual tracking entirely at The College of Wooster. Awarded departmental Honours and presented at the college-wide Senior Research Symposium.</p>
+      <div class="pcard-detail">
+        <strong>How it works:</strong> dlib HOG face detection + 128-dimensional face embeddings for recognition. Three role-specific dashboards — Admin (full oversight), Professor (per-class tracking), Student (personal attendance history). Absence reports and AI chatbot powered by OpenAI API. WebSocket-based real-time updates across all dashboards simultaneously.<br><br>
+        <strong>Business outcome:</strong> Reduced manual attendance tracking to zero. The system processes an entire classroom in real time — no check-ins, no roll calls, no paper lists.
+      </div>
       <div class="pcard-metrics">
-        <span class="metric">Departmental Honors</span>
+        <span class="metric">Departmental Honours</span>
         <span class="metric">Zero manual tracking</span>
+        <span class="metric">3 role dashboards</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">OpenCV</span><span class="badge">dlib</span><span class="badge">Flask</span><span class="badge">OpenAI API</span><span class="badge">WebSockets</span>
+        <span class="badge">OpenCV</span><span class="badge">dlib</span><span class="badge">Flask</span><span class="badge">OpenAI API</span><span class="badge">WebSockets</span><span class="badge">128D Embeddings</span>
       </div>
       <a href="https://github.com/boumalaksiham/Nexus-AI-Attendance" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
 
     <div class="pcard">
-      <div class="pcard-category">Deep Learning · CNN</div>
+      <div class="pcard-category">Deep Learning · CNN · Low-Resource NLP</div>
       <div class="pcard-title">Arabic Handwriting Recognition</div>
-      <p class="pcard-desc">CNN trained from scratch on 13,440 labeled images across all 28 Arabic characters. Goal: verify a custom CNN can compete with transfer learning on a low-resource task. Data augmentation (rotation, shear, zoom) to address class imbalance. Confusion matrix analysis identified the 3 character pairs with highest confusion rates.</p>
+      <p class="pcard-desc">CNN trained from scratch to classify all 28 Arabic handwritten characters across 13,440 labeled images. Goal: verify that a well-designed custom CNN can compete with transfer learning on a low-resource task.</p>
+      <div class="pcard-detail">
+        <strong>Design decisions:</strong> Data augmentation (rotation, shear, zoom) applied to address class imbalance. Dropout regularization to prevent overfitting on the 13K-image dataset. BatchNorm for training stability. Confusion matrix analysis identified the 3 character pairs with the highest confusion rates — ب/ت/ث (similar baseline strokes) and و/ر (similar curved shapes) — which informed post-training threshold adjustment.<br><br>
+        <strong>Why train from scratch?</strong> Transfer learning from ImageNet is not ideal for Arabic handwriting — stroke patterns and character anatomy don't map well to natural image features. A CNN designed specifically for the structure of Arabic script outperforms naive transfer.
+      </div>
       <div class="pcard-metrics">
         <span class="metric">92.4% test accuracy</span>
         <span class="metric">28 character classes</span>
+        <span class="metric">13,440 labeled images</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">PyTorch</span><span class="badge">CNN</span><span class="badge">Data Augmentation</span><span class="badge">Dropout</span>
+        <span class="badge">PyTorch</span><span class="badge">CNN</span><span class="badge">Data Augmentation</span><span class="badge">BatchNorm</span><span class="badge">Dropout</span><span class="badge">Confusion Matrix</span>
       </div>
       <a href="https://github.com/boumalaksiham/Arabic-Handwriting-CNN" target="_blank" class="pcard-link">GitHub ↗</a>
     </div>
@@ -382,16 +412,19 @@
       <span class="skill-pill">seqeval</span>
       <span class="skill-pill">BART</span>
       <span class="skill-pill">spaCy</span>
+      <span class="skill-pill">Multi-task Learning</span>
     </div>
     <div class="skill-block">
       <div class="skill-block-title">Computer Vision & ML</div>
       <span class="skill-pill">EfficientNet</span>
       <span class="skill-pill">ResNet / CNNs</span>
+      <span class="skill-pill">Convolutional Autoencoder</span>
       <span class="skill-pill">OpenCV</span>
       <span class="skill-pill">torchvision</span>
       <span class="skill-pill">scikit-learn</span>
       <span class="skill-pill">XGBoost</span>
-      <span class="skill-pill">F1 / AUC-ROC</span>
+      <span class="skill-pill">Anomaly Detection</span>
+      <span class="skill-pill">AUROC / F1</span>
       <span class="skill-pill">ROUGE / Ablation</span>
     </div>
     <div class="skill-block">
@@ -405,6 +438,7 @@
       <span class="skill-pill">PostgreSQL</span>
       <span class="skill-pill">React</span>
       <span class="skill-pill">Python / SQL</span>
+      <span class="skill-pill">Streamlit</span>
     </div>
   </div>
 </section>
@@ -414,42 +448,72 @@
   <div class="section-label">Where I've been</div>
   <h2 class="section-title">Experience</h2>
   <div class="timeline">
+
     <div class="titem">
       <div class="tdate">2025 – Present</div>
       <div class="trole">M.S. Artificial Intelligence</div>
       <div class="tcompany">Northeastern University · Khoury College of Computer Sciences · Boston, MA</div>
-      <p class="tbody">Machine Learning concentration. Coursework: Artificial Intelligence, Machine Learning, Deep Learning. Built 4-project e-commerce ML portfolio targeting applied research roles at eBay, Amazon, and Shopify-scale systems.</p>
+      <p class="tbody">Machine Learning concentration. Coursework: Artificial Intelligence, Machine Learning, Deep Learning. Built a 9-project ML portfolio spanning e-commerce NLP (entity resolution, taxonomy classification, NER, image quality scoring), manufacturing computer vision (defect detection), LLM infrastructure (AI Guardian), and multi-agent NLP systems.</p>
     </div>
+
     <div class="titem">
       <div class="tdate">May – Jul 2024</div>
       <div class="trole">Data Scientist & Research Assistant</div>
-      <div class="tcompany">Schneider Electric (via The College of Wooster) · Remote</div>
-      <p class="tbody">Built and evaluated multi-agent LLM pipelines (AutoGen, LangChain, LlamaIndex) with GPT-4, Claude, and Gemini to automate document summarization and compliance reporting. Designed role-specific agents and evaluated frameworks across accuracy, latency, and cost. Delivered findings to Schneider AI leadership to inform their 2025 automation roadmap.</p>
+      <div class="tcompany">Schneider Electric · Remote</div>
+      <p class="tbody">
+        Built and evaluated multi-agent LLM pipelines to automate compliance report generation — reduced manual processing from 3–4 analyst hours per report to near-zero.
+        <ul>
+          <li>Designed 3 role-specific agents (document ingestion, domain reasoning, compliance formatting) using GPT-4, Claude, and Gemini as backbone models</li>
+          <li>Benchmarked AutoGen, LangChain, and LlamaIndex across accuracy, latency, cost per run, and reasoning depth with statistical validation of results</li>
+          <li>Delivered a structured framework evaluation report to AI leadership that identified which LLM architecture produced the most reliable outputs — findings directly shaped Schneider's 2025 GenAI deployment roadmap</li>
+        </ul>
+      </p>
     </div>
+
     <div class="titem">
       <div class="tdate">Mar – May 2024</div>
       <div class="trole">Business Analyst</div>
       <div class="tcompany">CaffeBerry.co · Remote</div>
-      <p class="tbody">Integrated 10+ datasets using R and Python; applied clustering, regression, and A/B testing to inform a data-backed product launch strategy. Built Tableau dashboards for the executive team. One product variant greenlit for launch based on the analysis.</p>
+      <p class="tbody">
+        Led end-to-end statistical analysis for a product launch decision — merged 10+ datasets, modelled customer response, and delivered findings that directly drove a go/no-go call.
+        <ul>
+          <li>Applied k-means clustering for customer segmentation and OLS regression to model price elasticity across 3 product variants using Python and R</li>
+          <li>Caught 3 data quality issues (duplicate IDs, null fields, misaligned date formats) via SQL validation before they reached the modelling pipeline</li>
+          <li>Delivered a single Tableau dashboard to the executive team — the chosen variant was greenlit for launch based solely on the output</li>
+        </ul>
+      </p>
     </div>
+
     <div class="titem">
       <div class="tdate">May – Jul 2023</div>
       <div class="trole">Web Developer & Research Assistant</div>
-      <div class="tcompany">Vivi Dynamics (via The College of Wooster) · Remote</div>
-      <p class="tbody">Rebuilt platform features in Ruby on Rails using AI coding tools; validated outputs through unit testing. Ran controlled experiments comparing AI coding tools on error rate and velocity; findings published in a Vivi Engineering technical report.</p>
+      <div class="tcompany">Vivi Dynamics · Remote</div>
+      <p class="tbody">
+        Rebuilt platform features using AI coding tools; validated outputs through systematic testing. Designed controlled experiments to evaluate GitHub Copilot, ChatGPT, and Tabnine — found ~40% efficiency gains on structured code but semantic errors in complex logic. Published findings as a blog post that became the basis for team-wide AI adoption standards.
+      </p>
     </div>
+
     <div class="titem">
       <div class="tdate">Jun – Aug 2022</div>
       <div class="trole">Data Analyst</div>
       <div class="tcompany">Preflet · Remote</div>
-      <p class="tbody">Built Random Forest, XGBoost, and regression models to forecast transmission line performance and detect anomalies. Developed an OpenCV computer vision prototype classifying infrastructure images by tower type — my first CV project, which motivated the image quality scoring work in my e-commerce portfolio.</p>
+      <p class="tbody">
+        Built predictive models to detect infrastructure anomalies before they became failures — the same problem structure as manufacturing defect detection and customer churn prediction.
+        <ul>
+          <li>Built and compared XGBoost, Random Forest, and regression baselines using Python, Pandas, NumPy, and scikit-learn on 10+ large-scale infrastructure time-series datasets</li>
+          <li>XGBoost achieved F1=0.84 vs 0.71 regression baseline on a highly imbalanced anomaly detection task — performance gain driven by correctly weighting early-stage risk indicators</li>
+          <li>Developed an OpenCV computer vision prototype classifying infrastructure images by tower type — first CV project, which motivated the image quality scoring and defect detection work</li>
+        </ul>
+      </p>
     </div>
+
     <div class="titem">
       <div class="tdate">2021 – 2025</div>
       <div class="trole">B.A. Computer Science & Data Science</div>
-      <div class="tcompany">The College of Wooster · OH</div>
-      <p class="tbody">Senior thesis (Nexus-AI) awarded departmental Honors; presented at college-wide Senior Research Symposium.</p>
+      <div class="tcompany">The College of Wooster · Ohio</div>
+      <p class="tbody">Senior thesis (Nexus-AI) awarded departmental Honours; presented at college-wide Senior Research Symposium. ASA DataFest 2023 — 3rd place in data visualisation, 4th overall.</p>
     </div>
+
   </div>
 </section>
 
@@ -458,15 +522,15 @@
   <div class="section-label">Let's talk</div>
   <div class="contact-grid">
     <div>
-      <p class="contact-blurb">"Looking for applied research roles in NLP, computer vision, and e-commerce ML."</p>
-      <p style="color:var(--muted);font-size:14px;line-height:1.7;">Based in Boston, MA. Open to F-1 CPT opportunities. Responds within 24 hours.</p>
+      <p class="contact-blurb">"Looking for applied research and data science co-op roles in NLP, computer vision, and ML."</p>
+      <p style="color:var(--muted);font-size:14px;line-height:1.7;">Based in Boston, MA. Open to F-1 CPT opportunities. M.S. AI at Northeastern (expected 2027). Responds within 24 hours.</p>
     </div>
     <div class="contact-links">
       <a href="mailto:boumalak.s@northeastern.edu" class="clink">
         <div class="clink-icon">✉</div>boumalak.s@northeastern.edu
       </a>
-      <a href="https://linkedin.com/in/siham-boumalak-11014b210" target="_blank" class="clink">
-        <div class="clink-icon">in</div>linkedin.com/in/siham-boumalak-11014b210
+      <a href="https://linkedin.com/in/siham-boumalak" target="_blank" class="clink">
+        <div class="clink-icon">in</div>linkedin.com/in/siham-boumalak
       </a>
       <a href="https://github.com/boumalaksiham" target="_blank" class="clink">
         <div class="clink-icon">gh</div>github.com/boumalaksiham
@@ -483,87 +547,5 @@
   <span>Built with intention, not a template.</span>
 </footer>
 
-<script>
-const CONTEXT = `You are an AI assistant on Siham Boumalak's portfolio. Answer AS Siham in first person, concisely and warmly. Keep answers to 2-4 sentences max.
-
-Key facts:
-- M.S. AI at Northeastern Khoury College (Machine Learning, expected 2027). Seeking applied research roles.
-- E-Commerce ML Portfolio (4 projects built for eBay-type roles):
-  1. Entity Resolution: Sentence Transformers + Attribute Guard. 78% to 92%+ accuracy. Fixes XM5 vs XM4 problem.
-  2. Hierarchical Taxonomy Classifier: DistilBERT 3 heads. 100% L1, 81% L3 accuracy.
-  3. Product NER: BIO tagging, F1=1.00 on BRAND, 9 entity types, feeds into entity resolution.
-  4. Image Quality Scorer: EfficientNet-B0 + 7 CV signals (Laplacian sharpness, Canny edges, etc.). Actionable seller feedback.
-- AI Guardian: LLM observability platform. Python SDK captures latency, tokens, cost, quality, hallucination risk in real time. FastAPI + PostgreSQL + React.
-- Scientific Paper Analysis: 5-agent system (BART, spaCy NER, NetworkX, critical analysis). +0.31 ROUGE-1 over baseline.
-- Nexus-AI: Facial recognition attendance, departmental Honors.
-- Arabic CNN: 92.4% accuracy, 28 characters.
-- Schneider Electric: built and evaluated multi-agent LLM pipelines (AutoGen, LangChain, LlamaIndex).
-- Skills: DistilBERT, Sentence Transformers, HuggingFace, PyTorch, OpenCV, EfficientNet, seqeval, LangChain, FastAPI, PostgreSQL, React.
-- Languages: English, French, Arabic.`;
-
-let history = [];
-
-async function callClaude(msg) {
-  const messages = [...history, {role:'user', content:msg}];
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:CONTEXT,
-        messages
-      })
-    });
-    const data = await res.json();
-    return data.content?.[0]?.text || "Sorry, try again!";
-  } catch(e) { return "Something went wrong. Try again!"; }
-}
-
-function addMsg(role, text) {
-  const c = document.getElementById('chat-msgs');
-  const d = document.createElement('div');
-  d.className = 'msg ' + role;
-  d.textContent = text;
-  c.appendChild(d);
-  c.scrollTop = c.scrollHeight;
-  return d;
-}
-
-async function sendChat() {
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  document.getElementById('chat-sugs').style.display = 'none';
-  addMsg('user', text);
-  const thinking = addMsg('bot thinking', 'thinking...');
-  const reply = await callClaude(text);
-  thinking.remove();
-  history.push({role:'user', content:text});
-  history.push({role:'assistant', content:reply});
-  addMsg('bot', reply);
-}
-
-const suggestions = [
-  "What's your most impressive project?",
-  "Tell me about your eBay portfolio",
-  "What is AI Guardian?",
-  "What are you looking for?",
-  "What's your tech stack?"
-];
-
-window.addEventListener('load', () => {
-  const sugs = document.getElementById('chat-sugs');
-  suggestions.forEach(s => {
-    const btn = document.createElement('button');
-    btn.className = 'sug';
-    btn.textContent = s;
-    btn.onclick = () => { document.getElementById('chat-input').value = s; sendChat(); };
-    sugs.appendChild(btn);
-  });
-});
-</script>
 </body>
 </html>
