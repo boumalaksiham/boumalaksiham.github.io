@@ -198,8 +198,9 @@
   .titem.v .tcompany{color:var(--violet-deep);} .titem.a .tcompany{color:var(--amber-deep);} .titem.r .tcompany{color:var(--rose-deep);}
   .tspark { font-size:12.5px; font-style:italic; color:var(--muted); margin-bottom:0.6rem; max-width:600px; line-height:1.6; }
   .tbody { font-size:13.5px; color:var(--slate); line-height:1.7; max-width:600px; }
-  .tbody ul { padding-left:1.2rem; margin-top:0.5rem; }
-  .tbody ul li { margin-bottom:0.4rem; }
+  ul.tbody { list-style:disc; padding-left:1.2rem; margin-top:0.5rem; margin-bottom:0; }
+  ul.tbody li { margin-bottom:0.45rem; }
+  ul.tbody li:last-child { margin-bottom:0; }
 
   /* CONTACT */
   .contact-section { background:var(--ink); }
@@ -822,7 +823,13 @@
       <div class="tdate">2025 – Present</div>
       <div class="trole">M.S. Artificial Intelligence</div>
       <div class="tcompany">Northeastern University · Khoury College of Computer Sciences · Boston, MA</div>
-      <p class="tbody">Machine Learning concentration. Coursework: Artificial Intelligence, Machine Learning, Deep Learning. Built an 11-project ML portfolio spanning e-commerce NLP, manufacturing computer vision, statistical risk modeling, LLM infrastructure, and multi-agent NLP systems — most of it self-directed.</p>
+      <p class="tspark">Most of it self-directed — nobody assigns an 11-project portfolio.</p>
+      <p class="tbody">Machine Learning concentration, building systems most of which started as personal curiosity rather than a course requirement.</p>
+      <ul class="tbody">
+        <li>Coursework: Artificial Intelligence, Machine Learning, Deep Learning</li>
+        <li>Built an 11-project ML portfolio spanning e-commerce NLP, manufacturing computer vision, and multi-agent systems</li>
+        <li>Most projects self-directed, built to answer a specific question rather than complete an assignment</li>
+      </ul>
     </div>
 
     <div class="titem a">
@@ -830,28 +837,25 @@
       <div class="trole">Data Scientist &amp; Research Assistant</div>
       <div class="tcompany">Schneider Electric · Remote</div>
       <p class="tspark">When the evaluation numbers looked off, I designed my own diagnostic experiment instead of just reporting what I saw.</p>
-      <p class="tbody">
-        Built and evaluated multi-agent LLM pipelines to automate compliance report generation — reduced manual processing from 3–4 analyst hours per report to near-zero.
-        <ul>
-          <li>Designed 3 role-specific agents (document ingestion, domain reasoning, compliance formatting) using GPT-4, Claude, and Gemini as backbone models</li>
-          <li>Benchmarked AutoGen, LangChain, and LlamaIndex across accuracy, latency, cost per run, and reasoning depth with statistical validation of results</li>
-          <li>Delivered a structured framework evaluation report to AI leadership that identified which LLM architecture produced the most reliable outputs — findings directly shaped Schneider's 2025 GenAI deployment roadmap</li>
-        </ul>
-      </p>
+      <p class="tbody">Built and evaluated multi-agent LLM pipelines to automate compliance report generation — reduced manual processing from 3–4 analyst hours per report to near-zero.</p>
+      <ul class="tbody">
+        <li>Designed 3 role-specific agents (document ingestion, domain reasoning, compliance formatting) using GPT-4, Claude, and Gemini as backbone models</li>
+        <li>Benchmarked AutoGen, LangChain, and LlamaIndex across accuracy, latency, cost per run, and reasoning depth with statistical validation of results</li>
+        <li>Delivered a structured framework evaluation report to AI leadership that identified which LLM architecture produced the most reliable outputs — findings directly shaped Schneider's 2025 GenAI deployment roadmap</li>
+      </ul>
     </div>
 
     <div class="titem r">
       <div class="tdate">Mar – May 2024</div>
       <div class="trole">Business Analyst</div>
       <div class="tcompany">CaffeBerry.co · Remote</div>
-      <p class="tbody">
-        Led end-to-end statistical analysis for a product launch decision — merged 10+ datasets, modelled customer response, and delivered findings that directly drove a go/no-go call.
-        <ul>
-          <li>Applied k-means clustering for customer segmentation and OLS regression to model price elasticity across 3 product variants using Python and R</li>
-          <li>Caught 3 data quality issues (duplicate IDs, null fields, misaligned date formats) via SQL validation before they reached the modelling pipeline</li>
-          <li>Delivered a single Tableau dashboard to the executive team — the chosen variant was greenlit for launch based solely on the output</li>
-        </ul>
-      </p>
+      <p class="tspark">The interesting number wasn't the launch decision — it was catching 3 data-quality issues before they reached the model.</p>
+      <p class="tbody">Led end-to-end statistical analysis for a product launch decision — merged 10+ datasets, modelled customer response, and delivered findings that directly drove a go/no-go call.</p>
+      <ul class="tbody">
+        <li>Applied k-means clustering for customer segmentation and OLS regression to model price elasticity across 3 product variants using Python and R</li>
+        <li>Caught 3 data quality issues (duplicate IDs, null fields, misaligned date formats) via SQL validation before they reached the modelling pipeline</li>
+        <li>Delivered a single Tableau dashboard to the executive team — the chosen variant was greenlit for launch based solely on the output</li>
+      </ul>
     </div>
 
     <div class="titem v">
@@ -859,30 +863,38 @@
       <div class="trole">Web Developer &amp; Research Assistant</div>
       <div class="tcompany">Vivi Dynamics · Remote</div>
       <p class="tspark">I deliberately picked a framework I'd never touched, specifically so the experiment would test the tools honestly instead of my own familiarity.</p>
-      <p class="tbody">
-        Rebuilt platform features using AI coding tools; validated outputs through systematic testing. Designed controlled experiments to evaluate GitHub Copilot, ChatGPT, and Tabnine — found ~40% efficiency gains on structured code but semantic errors in complex logic. Published findings as a blog post that became the basis for team-wide AI adoption standards.
-      </p>
+      <p class="tbody">Rebuilt platform features using AI coding tools, validating every output through systematic testing rather than trusting it at face value.</p>
+      <ul class="tbody">
+        <li>Designed controlled experiments evaluating GitHub Copilot, ChatGPT, and Tabnine on real platform feature rebuilds</li>
+        <li>Found ~40% efficiency gains on structured code, but semantic errors surfaced consistently in complex logic</li>
+        <li>Published findings as a blog post that became the basis for team-wide AI adoption standards</li>
+      </ul>
     </div>
 
     <div class="titem a">
       <div class="tdate">Jun – Aug 2022</div>
       <div class="trole">Data Analyst</div>
       <div class="tcompany">Preflet · Remote</div>
-      <p class="tbody">
-        Built predictive models to detect infrastructure anomalies before they became failures — the same problem structure as manufacturing defect detection and customer churn prediction.
-        <ul>
-          <li>Built and compared XGBoost, Random Forest, and regression baselines using Python, Pandas, NumPy, and scikit-learn on 10+ large-scale infrastructure time-series datasets</li>
-          <li>XGBoost achieved F1=0.84 vs 0.71 regression baseline on a highly imbalanced anomaly detection task — performance gain driven by correctly weighting early-stage risk indicators</li>
-          <li>Developed an OpenCV computer vision prototype classifying infrastructure images by tower type — first CV project, which motivated the image quality scoring and defect detection work</li>
-        </ul>
-      </p>
+      <p class="tspark">The real question wasn't which model scored highest — it was which errors were the expensive ones to miss.</p>
+      <p class="tbody">Built predictive models to detect infrastructure anomalies before they became failures — the same problem structure as manufacturing defect detection and customer churn prediction.</p>
+      <ul class="tbody">
+        <li>Built and compared XGBoost, Random Forest, and regression baselines using Python, Pandas, NumPy, and scikit-learn on 10+ large-scale infrastructure time-series datasets</li>
+        <li>XGBoost achieved F1=0.84 vs 0.71 regression baseline on a highly imbalanced anomaly detection task — performance gain driven by correctly weighting early-stage risk indicators</li>
+        <li>Developed an OpenCV computer vision prototype classifying infrastructure images by tower type — first CV project, which motivated the image quality scoring and defect detection work</li>
+      </ul>
     </div>
 
     <div class="titem r">
       <div class="tdate">2021 – 2025</div>
       <div class="trole">B.A. Computer Science &amp; Data Science</div>
       <div class="tcompany">The College of Wooster · Ohio</div>
-      <p class="tbody">Senior thesis (Nexus-AI) awarded departmental Honours; presented at college-wide Senior Research Symposium. ASA DataFest 2023 — 3rd place in data visualisation, 4th overall.</p>
+      <p class="tspark">Two honors theses because one didn't feel like enough.</p>
+      <p class="tbody">Senior thesis (Nexus-AI) built on the same curiosity that shaped everything else in this portfolio — a question, then a working system to answer it.</p>
+      <ul class="tbody">
+        <li>Senior thesis (Nexus-AI) awarded departmental Honours</li>
+        <li>Presented at the college-wide Senior Research Symposium</li>
+        <li>ASA DataFest 2023 — 3rd place in data visualisation, 4th overall</li>
+      </ul>
     </div>
 
   </div>
