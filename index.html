@@ -112,8 +112,26 @@
   /* PROJECTS */
   .projects-section { background:var(--white); }
   .projects-grid { overflow:hidden; }
-  .projects-grid > .pcard { float:left; width:47%; box-sizing:border-box; margin:0 3% 1.75rem 0; }
-  .projects-grid > .pcard:nth-child(2n) { margin-right:0; }
+  .projects-grid > .pcard { float:none; width:100%; margin:0 0 1.75rem 0; overflow:hidden; }
+  .pcard-visual { float:left; width:190px; box-sizing:border-box; padding-right:1.5rem; }
+  .pcard-content { float:left; width:calc(100% - 190px); box-sizing:border-box; }
+  .pcard-monogram {
+    width:40px; height:40px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+    font-family:'Space Mono',monospace; font-weight:700; font-size:13px; color:#fff; margin-bottom:12px;
+  }
+  .pcard.v .pcard-monogram{ background:var(--violet); }
+  .pcard.a .pcard-monogram{ background:var(--amber-deep); }
+  .pcard.r .pcard-monogram{ background:var(--rose); }
+  .mini-viz { background:var(--cream); border:1px solid var(--border); border-radius:9px; padding:13px; }
+  .mini-bar-row { margin-bottom:9px; }
+  .mini-bar-row:last-child { margin-bottom:0; }
+  .mini-bar-label { font-size:9.5px; color:var(--muted); margin-bottom:4px; display:flex; justify-content:space-between; font-weight:500; }
+  .mini-bar-label b { color:var(--ink); font-weight:700; }
+  .mini-bar-track { height:6px; background:#fff; border-radius:3px; overflow:hidden; border:1px solid var(--border); }
+  .mini-bar-fill { height:100%; border-radius:3px; }
+  .pcard.v .mini-bar-fill{ background:linear-gradient(90deg,var(--violet),var(--violet-deep)); }
+  .pcard.a .mini-bar-fill{ background:linear-gradient(90deg,var(--amber),var(--amber-deep)); }
+  .pcard.r .mini-bar-fill{ background:linear-gradient(90deg,var(--rose),var(--rose-deep)); }
   .pcard {
     border:1px solid var(--border); border-radius:8px; padding:1.75rem;
     background:var(--white); transition:all 0.22s; position:relative; overflow:hidden;
@@ -150,7 +168,22 @@
   .skill-block { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:1.75rem; }
   .skill-block-title { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1.2rem; font-weight:600; }
   .skill-block:nth-child(1) .skill-block-title{color:#B9A8FF;} .skill-block:nth-child(2) .skill-block-title{color:#FFCE85;} .skill-block:nth-child(3) .skill-block-title{color:#FF9EBE;}
-  .skill-pill { display:inline-block; font-size:12px; color:var(--paper); margin:3px; padding:4px 10px; background:rgba(255,255,255,0.07); border-radius:5px; border:1px solid rgba(255,255,255,0.1); }
+  .skill-pill { display:none; }
+  .skill-chips { display:flex; flex-wrap:wrap; gap:10px; }
+  .skill-chip {
+    display:flex; align-items:center; gap:9px;
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14);
+    border-radius:24px; padding:6px 14px 6px 6px;
+  }
+  .skill-chip-icon {
+    width:26px; height:26px; border-radius:7px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Mono',monospace; font-size:10px; font-weight:700; color:#170F2E;
+  }
+  .skill-chip-label { font-size:12px; color:var(--paper); font-weight:500; }
+  .skill-block:nth-child(1) .skill-chip-icon { background:#B9A8FF; }
+  .skill-block:nth-child(2) .skill-chip-icon { background:#FFCE85; }
+  .skill-block:nth-child(3) .skill-chip-icon { background:#FF9EBE; }
 
   /* EXPERIENCE */
   .exp-section { background:var(--paper); }
@@ -234,6 +267,8 @@
     section{padding:4rem 1.5rem;}
     .about-grid > div, .contact-grid > div{float:none; width:100%; padding-right:0; margin-bottom:2rem;}
     .projects-grid > .pcard{float:none; width:100%; margin-right:0;}
+    .pcard-visual{float:none; width:100%; padding-right:0; margin-bottom:1rem;}
+    .pcard-content{float:none; width:100%;}
     .skills-grid > .skill-block{float:none; width:100%; margin-right:0;}
     .divider{margin:0 1.5rem;}
     footer{padding:1.5rem;flex-direction:column;gap:0.5rem;text-align:center;}
@@ -329,6 +364,20 @@
   <div class="projects-grid" style="margin-bottom:3.5rem;">
 
     <div class="pcard v">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">ER</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Match Accuracy</span><b>92%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Baseline</span><b>78%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:78%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Entity Resolution · NLP · Semantic Search</div>
       <div class="pcard-title">Product Matching Pipeline</div>
       <p class="pcard-spark">The question that hooked me: two listings can share 95% of their words and still be different products. I wanted to know exactly where similarity should stop counting.</p>
@@ -345,9 +394,24 @@
         <span class="badge">Sentence Transformers</span><span class="badge">all-MiniLM-L6-v2</span><span class="badge">PyTorch</span><span class="badge">scikit-learn</span><span class="badge">Cosine Similarity</span><span class="badge">AUC-ROC</span>
       </div>
       <a href="https://github.com/boumalaksiham/Entity-Resolution-Product-Matching-Pipeline" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard a">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">TX</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>L1 Accuracy</span><b>100%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>L3 Accuracy</span><b>81%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:81%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Text Classification · DistilBERT · Multi-task Learning</div>
       <div class="pcard-title">Hierarchical Taxonomy Classifier</div>
       <p class="pcard-spark">I didn't want three separate models drifting apart from each other — I wanted to know if one shared encoder could actually learn all three levels at once.</p>
@@ -365,9 +429,24 @@
         <span class="badge">HuggingFace</span><span class="badge">DistilBERT</span><span class="badge">PyTorch</span><span class="badge">Multi-task Learning</span><span class="badge">AdamW</span>
       </div>
       <a href="https://github.com/boumalaksiham/Taxonomy-Classifier-DistilBERT" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard r">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">NE</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>BRAND F1</span><b>1.00</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Overall F1</span><b>0.61</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:61%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Named Entity Recognition · BIO Tagging · Token Classification</div>
       <div class="pcard-title">Product Attribute Extractor (NER)</div>
       <p class="pcard-spark">"iPhone" splits into ["i", "##phone"] under the hood — I wanted to understand exactly how that subword split should change where labels get scored.</p>
@@ -385,9 +464,24 @@
         <span class="badge">DistilBERT</span><span class="badge">BIO Tagging</span><span class="badge">seqeval</span><span class="badge">Token Classification</span><span class="badge">HuggingFace</span>
       </div>
       <a href="https://github.com/boumalaksiham/Product-NER-Attribute-Extraction" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard v">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">IQ</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>CV Signal Weight</span><b>65%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:65%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Deep Learning Weight</span><b>35%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:35%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Computer Vision · EfficientNet · Explainable AI</div>
       <div class="pcard-title">Product Image Quality Scorer</div>
       <p class="pcard-spark">A single quality score felt like a black box — I wanted the system to be able to tell a seller exactly what's wrong, not just how bad it is.</p>
@@ -405,6 +499,7 @@
         <span class="badge">EfficientNet-B0</span><span class="badge">OpenCV</span><span class="badge">torchvision</span><span class="badge">MSE Regression</span><span class="badge">Laplacian</span><span class="badge">Canny</span>
       </div>
       <a href="https://github.com/boumalaksiham/Product-Image-Quality-Scorer" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
   </div>
@@ -416,6 +511,20 @@
   <div class="projects-grid">
 
     <div class="pcard a">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">DD</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>AUROC</span><b>0.94</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:94%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Labor Saved</span><b>~40%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:40%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Computer Vision · Anomaly Detection · Manufacturing</div>
       <div class="pcard-title">Manufacturing Defect Detection System</div>
       <p class="pcard-spark">Labeled defect data is expensive and rare — I got curious whether a model could learn to flag "wrong" having only ever seen "right."</p>
@@ -434,9 +543,24 @@
         <span class="badge">PyTorch</span><span class="badge">Convolutional Autoencoder</span><span class="badge">ResNet-18</span><span class="badge">OpenCV</span><span class="badge">scikit-learn</span><span class="badge">Streamlit</span><span class="badge">AUROC</span>
       </div>
       <a href="https://github.com/boumalaksiham/Defect-Detection" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard r">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">AG</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Hallucination Det.</span><b>0.87</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:87%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Alert Precision</span><b>95%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:95%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">LLM Observability · Full-stack · Production ML</div>
       <div class="pcard-title">AI Guardian</div>
       <p class="pcard-spark">Nobody assigned this. The question that hooked me wasn't "does it work" but "how would I even know if it silently stopped working."</p>
@@ -454,9 +578,24 @@
         <span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">React</span><span class="badge">Python SDK</span><span class="badge">LangChain</span><span class="badge">SQLAlchemy</span><span class="badge">WebSockets</span>
       </div>
       <a href="https://github.com/boumalaksiham/AI-Guardian" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard v">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">PA</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>ROUGE (multi-agent)</span><b>0.50</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:91%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>ROUGE (baseline)</span><b>0.19</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:35%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Multi-Agent · NLP · Ablation Studies</div>
       <div class="pcard-title">Scientific Paper Analysis Agents</div>
       <p class="pcard-spark">I didn't just want the 5-agent pipeline to work — I wanted to know which agent was actually earning its place, so I pulled them out one at a time to find out.</p>
@@ -474,9 +613,24 @@
         <span class="badge">BART</span><span class="badge">spaCy</span><span class="badge">NetworkX</span><span class="badge">HuggingFace</span><span class="badge">ROUGE</span><span class="badge">Ablation Testing</span>
       </div>
       <a href="https://github.com/boumalaksiham/Final-Project-AI" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard a">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">CR</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Random Forest AUC</span><b>0.79</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:79%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Logistic Reg. AUC</span><b>0.74</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:74%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Statistical Modeling · Fairness Analysis</div>
       <div class="pcard-title">Credit Risk Classification</div>
       <p class="pcard-spark">The most accurate model wasn't the fairest one — I wanted to know exactly how much accuracy that fairness gap was actually costing, not just that it existed.</p>
@@ -494,9 +648,24 @@
         <span class="badge">Python (scikit-learn, SciPy)</span><span class="badge">R (caret, ggplot2)</span><span class="badge">Fairness Analysis</span>
       </div>
       <a href="https://github.com/boumalaksiham" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard r">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">BI</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Accuracy Validated</span><b>100%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Pipeline Speedup</span><b>71×</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:95%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Data Visualization · Self-Service Analytics</div>
       <div class="pcard-title">Business Intelligence Dashboard</div>
       <p class="pcard-spark">Non-technical stakeholders had a 541,909-row dataset and no way into it — I wanted to know how fast I could make that gap disappear.</p>
@@ -514,9 +683,24 @@
         <span class="badge">Python (pandas, NumPy)</span><span class="badge">Gradio</span><span class="badge">Plotly</span><span class="badge">Power BI</span><span class="badge">Tableau</span>
       </div>
       <a href="https://github.com/boumalaksiham" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard v">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">NX</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Face Rec. Accuracy</span><b>98%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:98%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Manual Tracking Elim.</span><b>100%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:100%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Computer Vision · Senior Thesis · Honours</div>
       <div class="pcard-title">Nexus-AI Attendance System</div>
       <p class="pcard-spark">One script doing everything felt fragile — I got curious whether splitting detection, verification, and logging into agents that only talk through defined interfaces would make it easier to trust.</p>
@@ -534,9 +718,24 @@
         <span class="badge">OpenCV</span><span class="badge">dlib</span><span class="badge">Flask</span><span class="badge">OpenAI API</span><span class="badge">WebSockets</span><span class="badge">128D Embeddings</span>
       </div>
       <a href="https://github.com/boumalaksiham/Nexus-AI-Attendance" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
     <div class="pcard a">
+      <div class="pcard-visual">
+        <div class="pcard-monogram">AR</div>
+        <div class="mini-viz">
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Test Accuracy</span><b>92.4%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="mini-bar-row">
+          <div class="mini-bar-label"><span>Val Accuracy</span><b>92.0%</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:92%"></div></div>
+        </div>
+        </div>
+      </div>
+      <div class="pcard-content">
       <div class="pcard-category">Deep Learning · CNN · Low-Resource NLP</div>
       <div class="pcard-title">Arabic Handwriting Recognition</div>
       <p class="pcard-spark">Transfer learning is the easy button — I wanted to know what a CNN designed specifically for Arabic script could do without leaning on it at all.</p>
@@ -554,6 +753,7 @@
         <span class="badge">PyTorch</span><span class="badge">CNN</span><span class="badge">Data Augmentation</span><span class="badge">BatchNorm</span><span class="badge">Dropout</span><span class="badge">Confusion Matrix</span>
       </div>
       <a href="https://github.com/boumalaksiham/Arabic-Handwriting-CNN" target="_blank" class="pcard-link">GitHub ↗</a>
+      </div>
     </div>
 
   </div>
@@ -566,42 +766,48 @@
   <div class="skills-grid">
     <div class="skill-block">
       <div class="skill-block-title">NLP &amp; Deep Learning</div>
-      <span class="skill-pill">BERT / DistilBERT</span>
-      <span class="skill-pill">Sentence Transformers</span>
-      <span class="skill-pill">HuggingFace</span>
-      <span class="skill-pill">PyTorch</span>
-      <span class="skill-pill">Fine-tuning</span>
-      <span class="skill-pill">BIO Tagging / NER</span>
-      <span class="skill-pill">seqeval</span>
-      <span class="skill-pill">BART</span>
-      <span class="skill-pill">spaCy</span>
-      <span class="skill-pill">Multi-task Learning</span>
+      <div class="skill-chips">
+        <span class="skill-chip"><span class="skill-chip-icon">BT</span><span class="skill-chip-label">BERT / DistilBERT</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">ST</span><span class="skill-chip-label">Sentence Transformers</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">HF</span><span class="skill-chip-label">HuggingFace</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">Py</span><span class="skill-chip-label">PyTorch</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">FT</span><span class="skill-chip-label">Fine-tuning</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">IO</span><span class="skill-chip-label">BIO Tagging / NER</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">SQ</span><span class="skill-chip-label">seqeval</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">BA</span><span class="skill-chip-label">BART</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">sp</span><span class="skill-chip-label">spaCy</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">MT</span><span class="skill-chip-label">Multi-task Learning</span></span>
+      </div>
     </div>
     <div class="skill-block">
       <div class="skill-block-title">Computer Vision &amp; ML</div>
-      <span class="skill-pill">EfficientNet</span>
-      <span class="skill-pill">ResNet / CNNs</span>
-      <span class="skill-pill">Convolutional Autoencoder</span>
-      <span class="skill-pill">OpenCV</span>
-      <span class="skill-pill">torchvision</span>
-      <span class="skill-pill">scikit-learn</span>
-      <span class="skill-pill">XGBoost</span>
-      <span class="skill-pill">Anomaly Detection</span>
-      <span class="skill-pill">AUROC / F1</span>
-      <span class="skill-pill">ROUGE / Ablation</span>
+      <div class="skill-chips">
+        <span class="skill-chip"><span class="skill-chip-icon">EN</span><span class="skill-chip-label">EfficientNet</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">RN</span><span class="skill-chip-label">ResNet / CNNs</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">AE</span><span class="skill-chip-label">Convolutional Autoencoder</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">CV</span><span class="skill-chip-label">OpenCV</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">tv</span><span class="skill-chip-label">torchvision</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">sk</span><span class="skill-chip-label">scikit-learn</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">XG</span><span class="skill-chip-label">XGBoost</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">AD</span><span class="skill-chip-label">Anomaly Detection</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">F1</span><span class="skill-chip-label">AUROC / F1</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">RG</span><span class="skill-chip-label">ROUGE / Ablation</span></span>
+      </div>
     </div>
     <div class="skill-block">
       <div class="skill-block-title">LLM, Infra &amp; Data</div>
-      <span class="skill-pill">LangChain</span>
-      <span class="skill-pill">AutoGen</span>
-      <span class="skill-pill">LlamaIndex</span>
-      <span class="skill-pill">OpenAI API</span>
-      <span class="skill-pill">RAG</span>
-      <span class="skill-pill">FastAPI</span>
-      <span class="skill-pill">PostgreSQL</span>
-      <span class="skill-pill">React</span>
-      <span class="skill-pill">Python / SQL</span>
-      <span class="skill-pill">Streamlit</span>
+      <div class="skill-chips">
+        <span class="skill-chip"><span class="skill-chip-icon">LC</span><span class="skill-chip-label">LangChain</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">AG</span><span class="skill-chip-label">AutoGen</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">LI</span><span class="skill-chip-label">LlamaIndex</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">AI</span><span class="skill-chip-label">OpenAI API</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon" style="font-size:8px;">RAG</span><span class="skill-chip-label">RAG</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">FA</span><span class="skill-chip-label">FastAPI</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">PG</span><span class="skill-chip-label">PostgreSQL</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">Rx</span><span class="skill-chip-label">React</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">Py</span><span class="skill-chip-label">Python / SQL</span></span>
+        <span class="skill-chip"><span class="skill-chip-icon">ST</span><span class="skill-chip-label">Streamlit</span></span>
+      </div>
     </div>
   </div>
 </section>
