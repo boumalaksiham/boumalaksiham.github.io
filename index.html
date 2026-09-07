@@ -52,28 +52,6 @@
     padding:9rem 4rem 5rem;
     overflow:hidden;
   }
-  .hero-net-wrap { width:320px; height:320px; margin-top:2.5rem; perspective:1400px; pointer-events:none; }
-  .hero-net { width:100%; height:100%; opacity:0.65; transform-style:preserve-3d; animation: wheelSpin 9s linear infinite; }
-  @keyframes wheelSpin {
-    from { transform: rotateY(0deg); }
-    to   { transform: rotateY(360deg); }
-  }
-  .hero-net circle { animation: nodeGlow 3.2s ease-in-out infinite; transform-origin:center; transform-box:fill-box; }
-  .hero-net circle:nth-of-type(1){ animation-delay:0s; }
-  .hero-net circle:nth-of-type(2){ animation-delay:0.4s; }
-  .hero-net circle:nth-of-type(3){ animation-delay:0.8s; }
-  .hero-net circle:nth-of-type(4){ animation-delay:1.2s; }
-  .hero-net circle:nth-of-type(5){ animation-delay:1.6s; }
-  .hero-net circle:nth-of-type(6){ animation-delay:2.0s; }
-  .hero-net circle:nth-of-type(7){ animation-delay:2.4s; }
-  .hero-net circle:nth-of-type(8){ animation-delay:2.8s; }
-  @keyframes nodeGlow {
-    0%,100% { opacity:0.75; transform:scale(1); }
-    50%      { opacity:1; transform:scale(1.3); }
-  }
-  .hero-net line.spoke { stroke-dasharray:5 6; animation: flowLine 2s linear infinite; }
-  .hero-net line.rim { opacity:0.6; }
-  @keyframes flowLine { to { stroke-dashoffset:-44; } }
   .hero-copy { position:relative; z-index:1; }
   .hero-visual { position:relative; z-index:1; }
   .hero-copy { float:left; width:54%; box-sizing:border-box; padding-right:2rem; }
@@ -287,27 +265,6 @@
       <a href="https://github.com/boumalaksiham" target="_blank" class="btn btn-outline">GitHub ↗</a>
     </div>
 
-    <div class="hero-net-wrap">
-    <svg class="hero-net" viewBox="0 0 700 700" preserveAspectRatio="xMidYMid meet">
-      <g stroke="#D9CFF7" stroke-width="1.3" fill="none">
-        <circle class="rim" cx="350" cy="350" r="230" />
-        <line class="spoke" x1="350" y1="350" x2="350" y2="120"/>
-        <line class="spoke" x1="350" y1="350" x2="549" y2="235"/>
-        <line class="spoke" x1="350" y1="350" x2="549" y2="465"/>
-        <line class="spoke" x1="350" y1="350" x2="350" y2="580"/>
-        <line class="spoke" x1="350" y1="350" x2="151" y2="465"/>
-        <line class="spoke" x1="350" y1="350" x2="151" y2="235"/>
-      </g>
-      <circle cx="350" cy="350" r="10" fill="#7C5CFF"/>
-      <circle cx="350" cy="120" r="7" fill="#FFB84D"/>
-      <circle cx="549" cy="235" r="6.5" fill="#FF6B9D"/>
-      <circle cx="549" cy="465" r="7" fill="#7C5CFF"/>
-      <circle cx="350" cy="580" r="6.5" fill="#FFB84D"/>
-      <circle cx="151" cy="465" r="6" fill="#FF6B9D"/>
-      <circle cx="151" cy="235" r="7" fill="#7C5CFF"/>
-      <circle cx="450" cy="350" r="4.5" fill="#FFB84D"/>
-    </svg>
-    </div>
   </div>
 
   <div class="hero-visual">
