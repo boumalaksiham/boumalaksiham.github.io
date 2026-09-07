@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siham Boumalak – Applied ML Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #170F2E;
+    --ink-2:     #221641;
+    --violet:    #7C5CFF;
+    --violet-deep:#5E3FE0;
+    --amber:     #FFB84D;
+    --amber-deep:#E89B26;
+    --rose:      #FF6B9D;
+    --rose-deep: #E44D80;
+    --paper:     #FFFDF9;
+    --cream:     #FAF7FF;
+    --white:     #FFFFFF;
+    --border:    #E9E4F5;
+    --slate:     #201A33;
+    --muted:     #746E8A;
+  }
+  :root[data-theme="dark"], :root:not([data-theme="light"]) {}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--slate); overflow-x:hidden; }
+  .mono { font-family:'Space Mono', monospace; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0;
+    padding:1.1rem 4rem;
+    display:flex; justify-content:space-between; align-items:center;
+    background:rgba(250,247,255,0.92);
+    border-bottom:1px solid var(--border);
+    z-index:100;
+    font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;
+    backdrop-filter:blur(8px);
+  }
+  nav a { color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  nav a:hover { color:var(--violet-deep); }
+  .nav-links { display:flex; gap:2.5rem; }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:17px; text-transform:none; letter-spacing:0; color:var(--ink); }
+  .nav-spark { color:var(--amber-deep); }
+
+  /* HERO */
+  .hero {
+    position:relative;
+    padding:9rem 4rem 5rem;
+    overflow:hidden;
+  }
+  .hero-net-wrap { width:320px; height:320px; margin-top:2.5rem; perspective:1400px; pointer-events:none; }
+  .hero-net { width:100%; height:100%; opacity:0.65; transform-style:preserve-3d; animation: wheelSpin 9s linear infinite; }
+  @keyframes wheelSpin {
+    from { transform: rotateY(0deg); }
+    to   { transform: rotateY(360deg); }
+  }
+  .hero-net circle { animation: nodeGlow 3.2s ease-in-out infinite; transform-origin:center; transform-box:fill-box; }
+  .hero-net circle:nth-of-type(1){ animation-delay:0s; }
+  .hero-net circle:nth-of-type(2){ animation-delay:0.4s; }
+  .hero-net circle:nth-of-type(3){ animation-delay:0.8s; }
+  .hero-net circle:nth-of-type(4){ animation-delay:1.2s; }
+  .hero-net circle:nth-of-type(5){ animation-delay:1.6s; }
+  .hero-net circle:nth-of-type(6){ animation-delay:2.0s; }
+  .hero-net circle:nth-of-type(7){ animation-delay:2.4s; }
+  .hero-net circle:nth-of-type(8){ animation-delay:2.8s; }
+  @keyframes nodeGlow {
+    0%,100% { opacity:0.75; transform:scale(1); }
+    50%      { opacity:1; transform:scale(1.3); }
+  }
+  .hero-net line.spoke { stroke-dasharray:5 6; animation: flowLine 2s linear infinite; }
+  .hero-net line.rim { opacity:0.6; }
+  @keyframes flowLine { to { stroke-dashoffset:-44; } }
+  .hero-copy { position:relative; z-index:1; }
+  .hero-visual { position:relative; z-index:1; }
+  .hero-copy { float:left; width:54%; box-sizing:border-box; padding-right:2rem; }
+  .hero-visual { float:left; width:46%; box-sizing:border-box; }
+
+  .hero-tag {
+    display:inline-block;
+    background:var(--violet); color:var(--white);
+    font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+    padding:4px 14px; border-radius:2px; margin-bottom:1.5rem;
+  }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.6rem,4.5vw,4rem);
+    line-height:1.1; color:var(--ink); margin-bottom:1.5rem;
+  }
+  .hero h1 em { font-style:italic; color:var(--violet-deep); }
+  .hero-spark-line {
+    font-size:13px; font-style:italic; color:var(--muted);
+    margin-bottom:1.2rem; max-width:560px; line-height:1.6;
+  }
+  .hero-sub { font-size:16px; font-weight:300; color:var(--muted); line-height:1.75; max-width:560px; margin-bottom:2.5rem; }
+  .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn { padding:11px 26px; border-radius:3px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.05em; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s; }
+  .btn-primary { background:var(--violet); color:var(--white); }
+  .btn-primary:hover { background:var(--violet-deep); }
+  .btn-outline { background:transparent; color:var(--ink); border:1px solid var(--border); }
+  .btn-outline:hover { border-color:var(--violet); color:var(--violet-deep); }
+
+  /* SECTIONS */
+  section { padding:6rem 4rem; position:relative; }
+  section::after { content:''; display:table; clear:both; }
+  .section-label { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; font-weight:500; margin-bottom:0.75rem; display:flex; align-items:center; gap:8px; }
+  .section-label .spark { font-size:14px; }
+  .section-label.v { color:var(--violet-deep); } .section-label.v .spark{color:var(--violet-deep);}
+  .section-label.a { color:var(--amber-deep); } .section-label.a .spark{color:var(--amber-deep);}
+  .section-label.r { color:var(--rose-deep); } .section-label.r .spark{color:var(--rose-deep);}
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3vw,2.8rem); line-height:1.15; margin-bottom:3rem; color:var(--ink); }
+  .section-title em { font-style:italic; color:var(--violet-deep); }
+
+  /* ABOUT */
+  .about { background:var(--cream); }
+  .about-grid { overflow:hidden; }
+  .about-grid > div:nth-of-type(1) { float:left; width:28%; box-sizing:border-box; padding-right:3rem; }
+  .about-grid > div:nth-of-type(2) { float:left; width:72%; box-sizing:border-box; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:2.8rem; line-height:1; }
+  .stat:nth-child(1) .stat-num { color:var(--violet); }
+  .stat:nth-child(2) .stat-num { color:var(--amber-deep); }
+  .stat:nth-child(3) .stat-num { color:var(--rose-deep); }
+  .stat-label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+  .stat { margin-bottom:2rem; }
+  .about-body { font-size:15.5px; line-height:1.85; color:var(--slate); font-weight:300; }
+  .about-body p { margin-bottom:1.2rem; }
+  .hl { color:var(--violet-deep); font-weight:500; }
+  .hl-a { color:var(--amber-deep); font-weight:500; }
+  .hl-r { color:var(--rose-deep); font-weight:500; }
+
+  /* PROJECTS */
+  .projects-section { background:var(--white); }
+  .projects-grid { overflow:hidden; }
+  .projects-grid > .pcard { float:left; width:47%; box-sizing:border-box; margin:0 3% 1.75rem 0; }
+  .projects-grid > .pcard:nth-child(2n) { margin-right:0; }
+  .pcard {
+    border:1px solid var(--border); border-radius:8px; padding:1.75rem;
+    background:var(--white); transition:all 0.22s; position:relative; overflow:hidden;
+    border-left-width:3px;
+  }
+  .pcard.v { border-left-color:var(--violet); } .pcard.v::before{background:var(--violet);}
+  .pcard.a { border-left-color:var(--amber-deep); } .pcard.a::before{background:var(--amber);}
+  .pcard.r { border-left-color:var(--rose); } .pcard.r::before{background:var(--rose);}
+  .pcard::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+  .pcard:hover::before { transform:scaleX(1); }
+  .pcard:hover { box-shadow:5px 5px 0 var(--border); transform:translate(-2px,-2px); }
+  .pcard-category { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; font-weight:600; margin-bottom:0.6rem; }
+  .pcard.v .pcard-category{color:var(--violet-deep);} .pcard.a .pcard-category{color:var(--amber-deep);} .pcard.r .pcard-category{color:var(--rose-deep);}
+  .pcard-title { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.5rem; color:var(--ink); }
+  .pcard-spark { font-size:12px; font-style:italic; color:var(--muted); margin-bottom:0.9rem; line-height:1.55; }
+  .pcard-desc { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:1.1rem; }
+  .pcard-detail { font-size:12.5px; color:var(--slate); line-height:1.7; margin-bottom:1rem; background:var(--cream); border-left:3px solid var(--border); padding:0.75rem 1rem; border-radius:0 4px 4px 0; }
+  .pcard.v .pcard-detail{border-left-color:var(--violet);} .pcard.a .pcard-detail{border-left-color:var(--amber);} .pcard.r .pcard-detail{border-left-color:var(--rose);}
+  .pcard-detail strong { color:var(--violet-deep); font-weight:600; }
+  .pcard-metrics { display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+  .metric { font-size:11.5px; background:var(--cream); color:var(--ink); padding:3px 10px; border-radius:20px; font-weight:500; border:1px solid var(--border); }
+  .pcard-stack { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1rem; }
+  .badge { font-size:11px; padding:3px 8px; background:var(--cream); color:var(--violet-deep); border-radius:4px; font-weight:500; border:1px solid var(--border); }
+  .pcard-link { font-size:12px; color:var(--violet-deep); text-decoration:none; font-weight:600; }
+  .pcard-link:hover { text-decoration:underline; }
+  .pcard-impact { font-size:12px; color:var(--muted); font-style:italic; margin-bottom:0.75rem; padding:0.5rem 0; border-top:1px solid var(--border); }
+
+  /* SKILLS */
+  .skills-section { background:var(--ink); }
+  .skills-section .section-title { color:var(--paper); }
+  .skills-grid { overflow:hidden; }
+  .skills-grid > .skill-block { float:left; width:31.3%; box-sizing:border-box; margin:0 3% 1.75rem 0; }
+  .skills-grid > .skill-block:nth-child(3n) { margin-right:0; }
+  .skill-block { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:1.75rem; }
+  .skill-block-title { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1.2rem; font-weight:600; }
+  .skill-block:nth-child(1) .skill-block-title{color:#B9A8FF;} .skill-block:nth-child(2) .skill-block-title{color:#FFCE85;} .skill-block:nth-child(3) .skill-block-title{color:#FF9EBE;}
+  .skill-pill { display:inline-block; font-size:12px; color:var(--paper); margin:3px; padding:4px 10px; background:rgba(255,255,255,0.07); border-radius:5px; border:1px solid rgba(255,255,255,0.1); }
+
+  /* EXPERIENCE */
+  .exp-section { background:var(--paper); }
+  .timeline { position:relative; padding-left:0; }
+  .timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--border); }
+  .titem { padding:0 0 2.6rem 2.5rem; position:relative; }
+  .titem::before { content:''; position:absolute; left:-4.5px; top:6px; width:9px; height:9px; border-radius:50%; }
+  .titem.v::before{background:var(--violet);} .titem.a::before{background:var(--amber-deep);} .titem.r::before{background:var(--rose);}
+  .tdate { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.35rem; }
+  .trole { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--ink); margin-bottom:0.2rem; }
+  .tcompany { font-size:13px; font-weight:600; margin-bottom:0.5rem; }
+  .titem.v .tcompany{color:var(--violet-deep);} .titem.a .tcompany{color:var(--amber-deep);} .titem.r .tcompany{color:var(--rose-deep);}
+  .tspark { font-size:12.5px; font-style:italic; color:var(--muted); margin-bottom:0.6rem; max-width:600px; line-height:1.6; }
+  .tbody { font-size:13.5px; color:var(--slate); line-height:1.7; max-width:600px; }
+  .tbody ul { padding-left:1.2rem; margin-top:0.5rem; }
+  .tbody ul li { margin-bottom:0.4rem; }
+
+  /* CONTACT */
+  .contact-section { background:var(--ink); }
+  .contact-grid { overflow:hidden; }
+  .contact-grid > div:nth-of-type(1) { float:left; width:48%; box-sizing:border-box; padding-right:2rem; }
+  .contact-grid > div:nth-of-type(2) { float:left; width:48%; box-sizing:border-box; }
+  .contact-blurb { font-family:'Playfair Display',serif; font-size:1.7rem; line-height:1.4; color:var(--paper); margin-bottom:2rem; }
+  .contact-note { color:#B9AEDD; font-size:14px; line-height:1.7; }
+  .contact-links { display:flex; flex-direction:column; gap:1rem; }
+  .clink { display:flex; align-items:center; gap:12px; font-size:14px; color:var(--paper); text-decoration:none; transition:color 0.2s; }
+  .clink:hover { color:var(--amber); }
+  .clink-icon { width:36px; height:36px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:var(--amber); }
+
+  footer { padding:2rem 4rem; border-top:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#8F84B8; background:var(--ink); }
+  .divider { height:1px; background:var(--border); margin:0 4rem; }
+  .portfolio-group-label { font-size:13px; font-weight:600; color:var(--violet-deep); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
+
+  /* LIVE PANEL (hero widget) */
+  .live-panel {
+    width:100%; height:460px; background:var(--white);
+    border:1px solid var(--border); border-radius:10px; overflow:hidden;
+    display:flex; flex-direction:column; box-shadow:6px 6px 0 var(--border);
+  }
+  .panel-bar { background:var(--cream); border-bottom:1px solid var(--border); padding:8px 14px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+  .panel-dots { display:flex; gap:5px; }
+  .dot { width:9px; height:9px; border-radius:50%; }
+  .dot-r{background:var(--rose);} .dot-y{background:var(--amber);} .dot-g{background:#3FCB7E;}
+  .panel-title { font-size:11px; color:var(--muted); letter-spacing:0.08em; font-weight:500; }
+  .live-badge { display:flex; align-items:center; gap:5px; font-size:10px; color:#3FCB7E; font-weight:600; letter-spacing:0.06em; }
+  .live-dot { width:6px; height:6px; border-radius:50%; background:#3FCB7E; animation:livePulse 1.5s ease-in-out infinite; }
+  @keyframes livePulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .proj-tabs { display:flex; border-bottom:1px solid var(--border); background:var(--cream); overflow-x:auto; flex-shrink:0; }
+  .proj-tab { padding:7px 13px; font-size:10.5px; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; letter-spacing:0.03em; transition:all 0.2s; user-select:none; }
+  .proj-tab.active { color:var(--violet-deep); border-bottom-color:var(--violet); background:var(--white); }
+  .proj-tab:hover:not(.active) { color:var(--violet); }
+  .panel-body { flex:1; overflow:hidden; }
+  .panel-body::after { content:''; display:table; clear:both; }
+  .metrics-col { float:left; width:50%; box-sizing:border-box; }
+  .terminal-col { float:left; width:50%; box-sizing:border-box; height:100%; }
+  .metrics-col { padding:16px; border-right:1px solid var(--border); overflow:hidden; }
+  .metrics-col-label { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; font-weight:600; }
+  .metric-row { margin-bottom:14px; }
+  .metric-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+  .metric-name { font-size:11.5px; color:var(--ink); font-weight:500; }
+  .metric-val { font-size:12px; font-weight:700; color:var(--violet-deep); font-variant-numeric:tabular-nums; }
+  .bar-track { height:5px; background:var(--cream); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; background:linear-gradient(90deg, var(--violet), var(--rose)); border-radius:3px; width:0%; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+  .terminal-col { padding:12px; background:var(--ink); display:flex; flex-direction:column; overflow:hidden; }
+  .term-header { font-size:10px; color:#B9AEDD; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; font-weight:600; flex-shrink:0; }
+  .term-output { flex:1; font-family:'Space Mono',monospace; font-size:10.5px; line-height:1.8; color:#C9BEEF; overflow:hidden; }
+  .term-line { display:block; }
+  .term-key { color:#B9A8FF; } .term-val { color:#FAF7FF; } .term-ok { color:#5FE0A0; } .term-warn { color:var(--amber); } .term-comment { color:rgba(201,190,239,0.4); }
+  .term-cursor { display:inline-block; width:7px; height:12px; background:var(--amber); vertical-align:middle; animation:blink 1s step-end infinite; margin-left:2px; }
+  @keyframes blink { 50% { opacity:0; } }
+  .status-bar { background:var(--cream); border-top:1px solid var(--border); padding:5px 14px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+  .status-item { font-size:10.5px; color:var(--muted); font-weight:500; display:flex; align-items:center; gap:5px; }
+  .status-ok { color:#3FCB7E; }
+
+  @media(max-width:900px){
+    nav{padding:1rem 1.5rem;}
+    .nav-links{display:none;}
+    .hero{padding:7rem 1.5rem 4rem;min-height:auto;}
+    .hero-copy, .hero-visual { float:none; width:100%; padding-right:0; }
+    .live-panel{height:340px;}
+    section{padding:4rem 1.5rem;}
+    .about-grid > div, .contact-grid > div{float:none; width:100%; padding-right:0; margin-bottom:2rem;}
+    .projects-grid > .pcard{float:none; width:100%; margin-right:0;}
+    .skills-grid > .skill-block{float:none; width:100%; margin-right:0;}
+    .divider{margin:0 1.5rem;}
+    footer{padding:1.5rem;flex-direction:column;gap:0.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo"><span class="nav-spark">✦</span> Siham Boumalak</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-copy">
+    <span class="hero-tag">Open to Applied Research &amp; Data Science Roles · 2025–2026</span>
+    <h1>Building ML systems<br>that <em>understand</em><br>products at scale.</h1>
+    <p class="hero-spark-line">Most of what's below, nobody assigned me. I notice a gap, build the fix, then dig until I actually know why it works.</p>
+    <p class="hero-sub">M.S. Artificial Intelligence student at Northeastern University (Khoury College), specializing in NLP, computer vision, and generative AI. I build end-to-end ML pipelines — from fine-tuned transformers for entity extraction to anomaly detection systems for manufacturing quality control — with a consistent focus on systems that produce trustworthy, explainable, and measurable outcomes.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">See my work</a>
+      <a href="https://github.com/boumalaksiham" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    </div>
+
+    <div class="hero-net-wrap">
+    <svg class="hero-net" viewBox="0 0 700 700" preserveAspectRatio="xMidYMid meet">
+      <g stroke="#D9CFF7" stroke-width="1.3" fill="none">
+        <circle class="rim" cx="350" cy="350" r="230" />
+        <line class="spoke" x1="350" y1="350" x2="350" y2="120"/>
+        <line class="spoke" x1="350" y1="350" x2="549" y2="235"/>
+        <line class="spoke" x1="350" y1="350" x2="549" y2="465"/>
+        <line class="spoke" x1="350" y1="350" x2="350" y2="580"/>
+        <line class="spoke" x1="350" y1="350" x2="151" y2="465"/>
+        <line class="spoke" x1="350" y1="350" x2="151" y2="235"/>
+      </g>
+      <circle cx="350" cy="350" r="10" fill="#7C5CFF"/>
+      <circle cx="350" cy="120" r="7" fill="#FFB84D"/>
+      <circle cx="549" cy="235" r="6.5" fill="#FF6B9D"/>
+      <circle cx="549" cy="465" r="7" fill="#7C5CFF"/>
+      <circle cx="350" cy="580" r="6.5" fill="#FFB84D"/>
+      <circle cx="151" cy="465" r="6" fill="#FF6B9D"/>
+      <circle cx="151" cy="235" r="7" fill="#7C5CFF"/>
+      <circle cx="450" cy="350" r="4.5" fill="#FFB84D"/>
+    </svg>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="live-panel">
+      <div class="panel-bar">
+        <div class="panel-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="panel-title mono">siham.boumalak / project-monitor</div>
+        <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+      </div>
+      <div class="proj-tabs" id="tabs"></div>
+      <div class="panel-body">
+        <div class="metrics-col">
+          <div class="metrics-col-label">Evaluation Metrics</div>
+          <div id="metrics-container"></div>
+        </div>
+        <div class="terminal-col">
+          <div class="term-header">▸ run log</div>
+          <div class="term-output mono" id="terminal"></div>
+        </div>
+      </div>
+      <div class="status-bar">
+        <div class="status-item"><span class="status-ok">●</span> <span id="status-project">AI Guardian</span></div>
+        <div class="status-item mono" id="status-stack">FastAPI · PostgreSQL · React</div>
+        <div class="status-item" id="status-time">just now</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label v"><span class="spark">✦</span>Who I am</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">Research meets<br><em>engineering.</em></h2>
+      <div style="display:flex;gap:3rem;margin-top:1rem;flex-wrap:wrap;">
+        <div class="stat"><div class="stat-num">92%</div><div class="stat-label">NER Brand F1</div></div>
+        <div class="stat"><div class="stat-num">81%</div><div class="stat-label">Taxonomy L3 Acc.</div></div>
+        <div class="stat"><div class="stat-num">11</div><div class="stat-label">ML Projects</div></div>
+      </div>
+    </div>
+    <div class="about-body">
+      <p>I'm an <span class="hl">M.S. Artificial Intelligence student at Northeastern's Khoury College</span> (expected 2027), building systems that solve real problems at the intersection of NLP, computer vision, and generative AI — most of them started because something bothered me enough to fix it myself, not because a syllabus asked for it.</p>
+      <p>My e-commerce ML portfolio covers <span class="hl">entity resolution</span> (matching product listings that describe the same item with semantic similarity + attribute conflict detection), <span class="hl-a">hierarchical taxonomy classification</span> (fine-tuned DistilBERT with 3 simultaneous classification heads for 3-level category prediction), <span class="hl-r">named entity recognition</span> (BIO-tagged token classification extracting 9 attribute types from raw product titles), and <span class="hl">image quality scoring</span> (EfficientNet-B0 combined with 7 classical CV signals for explainable, actionable feedback).</p>
+      <p>Beyond e-commerce, I build <span class="hl-a">manufacturing defect detection systems</span> (convolutional autoencoder on MVTec AD for anomaly-free training), <span class="hl-r">LLM observability infrastructure</span> (AI Guardian — real-time monitoring of latency, cost, quality, and hallucination risk), statistical risk models, and multi-agent NLP pipelines. Previously built and evaluated multi-agent LLM pipelines at <span class="hl">Schneider Electric</span>.</p>
+      <p>Multilingual: <span class="hl">English, French, and Arabic</span>. Based in Boston, MA. Open to F-1 CPT opportunities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="section-label a"><span class="spark">✦</span>What I've built</div>
+  <h2 class="section-title">Projects</h2>
+
+  <div style="margin-bottom:1.5rem;">
+    <div class="portfolio-group-label">E-Commerce ML Portfolio — targeting applied research roles at eBay, Amazon, Shopify-scale systems</div>
+  </div>
+
+  <div class="projects-grid" style="margin-bottom:3.5rem;">
+
+    <div class="pcard v">
+      <div class="pcard-category">Entity Resolution · NLP · Semantic Search</div>
+      <div class="pcard-title">Product Matching Pipeline</div>
+      <p class="pcard-spark">The question that hooked me: two listings can share 95% of their words and still be different products. I wanted to know exactly where similarity should stop counting.</p>
+      <p class="pcard-desc">Solves the core e-commerce problem: millions of sellers list the same product with different titles, abbreviations, and formats. The system identifies which listings refer to the same real-world product.</p>
+      <div class="pcard-detail">
+        <strong>The problem with vanilla transformers:</strong> "Sony XM5 Headphones" vs "Sony XM4 Headphones" scores 0.97 cosine similarity — nearly identical, but they're different products. A single digit difference gets drowned out by surrounding shared words.<br><br>
+        <strong>Two-stage solution:</strong> Sentence Transformer (all-MiniLM-L6-v2) for semantic similarity, followed by an Attribute Guard that detects model code, storage, and size conflicts using regex. Conflicts multiply the score by a penalty (0.40–0.50), collapsing the false match from 0.97 → 0.49.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">78% → 92%+ accuracy</span>
+        <span class="metric">40-pair evaluation set</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">Sentence Transformers</span><span class="badge">all-MiniLM-L6-v2</span><span class="badge">PyTorch</span><span class="badge">scikit-learn</span><span class="badge">Cosine Similarity</span><span class="badge">AUC-ROC</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Entity-Resolution-Product-Matching-Pipeline" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard a">
+      <div class="pcard-category">Text Classification · DistilBERT · Multi-task Learning</div>
+      <div class="pcard-title">Hierarchical Taxonomy Classifier</div>
+      <p class="pcard-spark">I didn't want three separate models drifting apart from each other — I wanted to know if one shared encoder could actually learn all three levels at once.</p>
+      <p class="pcard-desc">Automates product categorization for e-commerce listings. Given any product title, predicts the full 3-level category path (e.g., Electronics → Audio → Headphones) in under 100ms on CPU.</p>
+      <div class="pcard-detail">
+        <strong>Architecture:</strong> Fine-tuned DistilBERT with 3 simultaneous classification heads (5 / 12 / 18 classes) trained end-to-end. One shared encoder learns features for broad and fine-grained taxonomy simultaneously — the combined loss (L1 + L2 + L3) backpropagates through all three heads in a single step.<br><br>
+        <strong>Why DistilBERT over BERT?</strong> 40% smaller, 60% faster, retains 97% performance — runs in ~80ms vs ~200ms per title on CPU, critical for listing ingestion pipelines.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">100% L1 accuracy</span>
+        <span class="metric">81% L3 accuracy</span>
+        <span class="metric">73% on unseen product types</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">HuggingFace</span><span class="badge">DistilBERT</span><span class="badge">PyTorch</span><span class="badge">Multi-task Learning</span><span class="badge">AdamW</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Taxonomy-Classifier-DistilBERT" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard r">
+      <div class="pcard-category">Named Entity Recognition · BIO Tagging · Token Classification</div>
+      <div class="pcard-title">Product Attribute Extractor (NER)</div>
+      <p class="pcard-spark">"iPhone" splits into ["i", "##phone"] under the hood — I wanted to understand exactly how that subword split should change where labels get scored.</p>
+      <p class="pcard-desc">Turns raw, unstructured product titles into structured, queryable attributes. Feeds directly into the Entity Resolution pipeline — the Attribute Guard uses these extracted values for conflict detection.</p>
+      <div class="pcard-detail">
+        <strong>9 entity types:</strong> BRAND, MODEL, COLOR, STORAGE, SIZE, MATERIAL, NETWORK, GENERATION, COUNT. Handles multi-word entities like "Le Creuset", "Deep Purple", "Cast Iron" using BIO tagging.<br><br>
+        <strong>Subword alignment:</strong> Labels are predicted only for the first subword of each word; continuation subwords are masked with -100 in the loss — the industry standard for BERT-based NER. Evaluated with seqeval at the span level, not token level.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">F1=1.00 on BRAND</span>
+        <span class="metric">F1=0.86 on STORAGE</span>
+        <span class="metric">Overall F1=0.61 (9 types)</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">DistilBERT</span><span class="badge">BIO Tagging</span><span class="badge">seqeval</span><span class="badge">Token Classification</span><span class="badge">HuggingFace</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Product-NER-Attribute-Extraction" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard v">
+      <div class="pcard-category">Computer Vision · EfficientNet · Explainable AI</div>
+      <div class="pcard-title">Product Image Quality Scorer</div>
+      <p class="pcard-spark">A single quality score felt like a black box — I wanted the system to be able to tell a seller exactly what's wrong, not just how bad it is.</p>
+      <p class="pcard-desc">Scores product photos on a 1–5 scale and generates actionable seller feedback — not just a number, but exactly what is wrong and how to fix it. Built for eBay-style listing quality enforcement.</p>
+      <div class="pcard-detail">
+        <strong>Two-stage architecture:</strong> EfficientNet-B0 (4.3M params, ImageNet pretrained, MSE regression head) combined with 7 classical CV signals — Laplacian sharpness, brightness penalty, contrast, colorfulness, edge density, resolution, noise. Final score = 0.65 × CV + 0.35 × DL.<br><br>
+        <strong>Why combine both?</strong> CV signals are fast, explainable, and reliable ("Laplacian variance: 0.03 — your image is blurry"). EfficientNet captures holistic quality that's hard to measure explicitly. Diagnosis always comes from CV signals, never the neural network, so advice stays grounded.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">7 CV signals</span>
+        <span class="metric">Correct ranking on all test images</span>
+        <span class="metric">Actionable feedback per image</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">EfficientNet-B0</span><span class="badge">OpenCV</span><span class="badge">torchvision</span><span class="badge">MSE Regression</span><span class="badge">Laplacian</span><span class="badge">Canny</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Product-Image-Quality-Scorer" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+  </div>
+
+  <div style="margin-bottom:1.5rem;margin-top:2rem;">
+    <div class="portfolio-group-label">Additional Projects</div>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="pcard a">
+      <div class="pcard-category">Computer Vision · Anomaly Detection · Manufacturing</div>
+      <div class="pcard-title">Manufacturing Defect Detection System</div>
+      <p class="pcard-spark">Labeled defect data is expensive and rare — I got curious whether a model could learn to flag "wrong" having only ever seen "right."</p>
+      <p class="pcard-desc">A real-time quality control pipeline for electronics manufacturing — flags anomalous products during inspection before they reach downstream assembly or customers.</p>
+      <div class="pcard-detail">
+        <strong>Architecture:</strong> Convolutional autoencoder trained exclusively on defect-free images. At inference time, high reconstruction error flags an anomaly — the model learns what "normal" looks like and rejects everything that deviates. Optionally extended with a supervised ResNet-18 classifier for defect categorization when labels are available.<br><br>
+        <strong>Why unsupervised?</strong> Training only on good images means the system deploys with zero defect labels — it learns the distribution of normal products and flags anything outside it.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">MVTec AD dataset</span>
+        <span class="metric">Up to 40% inspection labour reduction</span>
+        <span class="metric">Real-time Streamlit dashboard</span>
+      </div>
+      <div class="pcard-impact">Industry benchmarks: early anomaly detection systems of this type reduce manual inspection labour by up to 40% and catch defect rates human inspectors miss at high throughput.</div>
+      <div class="pcard-stack">
+        <span class="badge">PyTorch</span><span class="badge">Convolutional Autoencoder</span><span class="badge">ResNet-18</span><span class="badge">OpenCV</span><span class="badge">scikit-learn</span><span class="badge">Streamlit</span><span class="badge">AUROC</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Defect-Detection" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard r">
+      <div class="pcard-category">LLM Observability · Full-stack · Production ML</div>
+      <div class="pcard-title">AI Guardian</div>
+      <p class="pcard-spark">Nobody assigned this. The question that hooked me wasn't "does it work" but "how would I even know if it silently stopped working."</p>
+      <p class="pcard-desc">The hardest part of deploying a GenAI system is not building it — it's knowing whether it still works correctly three weeks later. AI Guardian solves this with event-driven LLM monitoring in production.</p>
+      <div class="pcard-detail">
+        <strong>How it works:</strong> Python SDK (@track_llm_call decorator) captures latency, token usage, cost, quality scores, and hallucination risk for every LLM call without modifying application code. Threshold-based alerting fires before issues escalate — it's already caught 3 real behavioral drift events before a single user noticed. All metrics flow into a PostgreSQL backend and surface in a React dashboard with live WebSocket updates.<br><br>
+        <strong>Works with any LLM provider:</strong> OpenAI, Anthropic, Google. Designed to be dropped into an existing LLM application with a single decorator.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">Real-time monitoring</span>
+        <span class="metric">3 drift events caught pre-launch</span>
+        <span class="metric">Zero application code changes</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">React</span><span class="badge">Python SDK</span><span class="badge">LangChain</span><span class="badge">SQLAlchemy</span><span class="badge">WebSockets</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/AI-Guardian" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard v">
+      <div class="pcard-category">Multi-Agent · NLP · Ablation Studies</div>
+      <div class="pcard-title">Scientific Paper Analysis Agents</div>
+      <p class="pcard-spark">I didn't just want the 5-agent pipeline to work — I wanted to know which agent was actually earning its place, so I pulled them out one at a time to find out.</p>
+      <p class="pcard-desc">5-agent NLP pipeline that takes arXiv research papers as input and produces structured analytical outputs — methodology, citations, critical analysis — without requiring the user to read the paper.</p>
+      <div class="pcard-detail">
+        <strong>5 specialised agents:</strong> Summarization (BART), Citation Analysis (NetworkX knowledge graph), Methodology Extractor (spaCy NER), Critical Analysis, and Coordinator. Each agent was optimised independently before integration.<br><br>
+        <strong>Validated with ablation studies:</strong> Removing each agent one at a time and measuring the impact on output quality showed the Methodology Extractor caused the largest single ROUGE drop when removed — confirming it was the highest-value component, not the most obvious one.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">+0.31 ROUGE-1 vs baseline</span>
+        <span class="metric">Model F1: 1.00 vs 0.55 baseline</span>
+        <span class="metric">4 landmark papers tested</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">BART</span><span class="badge">spaCy</span><span class="badge">NetworkX</span><span class="badge">HuggingFace</span><span class="badge">ROUGE</span><span class="badge">Ablation Testing</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Final-Project-AI" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard a">
+      <div class="pcard-category">Statistical Modeling · Fairness Analysis</div>
+      <div class="pcard-title">Credit Risk Classification</div>
+      <p class="pcard-spark">The most accurate model wasn't the fairest one — I wanted to know exactly how much accuracy that fairness gap was actually costing, not just that it existed.</p>
+      <p class="pcard-desc">Applied ML model development to a real-world financial-services problem: predicting credit risk while explicitly measuring whether the model treats demographic groups equally.</p>
+      <div class="pcard-detail">
+        <strong>Approach:</strong> Built and compared Logistic Regression, SVM, and Random Forest classifiers on the German Credit Dataset with stratified 80/20 split and 5-fold cross-validation with grid search, evaluated across accuracy, F1, and ROC-AUC.<br><br>
+        <strong>The real finding:</strong> Ran subgroup fairness analysis computing false-positive/false-negative rates across demographic groups — Random Forest had the highest AUC but the widest fairness gap, a direct accuracy-vs-fairness trade-off most model comparisons skip entirely.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">1,001 samples</span>
+        <span class="metric">5-fold CV + grid search</span>
+        <span class="metric">Subgroup FPR/FNR analysis</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">Python (scikit-learn, SciPy)</span><span class="badge">R (caret, ggplot2)</span><span class="badge">Fairness Analysis</span>
+      </div>
+      <a href="https://github.com/boumalaksiham" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard r">
+      <div class="pcard-category">Data Visualization · Self-Service Analytics</div>
+      <div class="pcard-title">Business Intelligence Dashboard</div>
+      <p class="pcard-spark">Non-technical stakeholders had a 541,909-row dataset and no way into it — I wanted to know how fast I could make that gap disappear.</p>
+      <p class="pcard-desc">A self-service analytics platform letting non-technical users explore a large retail dataset through dynamic filters, cohort analysis, and real-time charts — no querying required.</p>
+      <div class="pcard-detail">
+        <strong>Build:</strong> Gradio front-end, Pandas for transformation and summary statistics, Plotly for visualization, Power BI and Tableau dashboards layered on top for cohort analysis, seasonality trend curves, and KPI monitoring.<br><br>
+        <strong>Performance mattered:</strong> optimized the data pipeline to 71× faster processing (3ms vs. 215ms baseline), validated 100% accuracy against Excel, and stress-tested it to 2M rows in 3.8 seconds.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">541,909-row dataset</span>
+        <span class="metric">71× faster processing</span>
+        <span class="metric">2M rows in 3.8s</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">Python (pandas, NumPy)</span><span class="badge">Gradio</span><span class="badge">Plotly</span><span class="badge">Power BI</span><span class="badge">Tableau</span>
+      </div>
+      <a href="https://github.com/boumalaksiham" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard v">
+      <div class="pcard-category">Computer Vision · Senior Thesis · Honours</div>
+      <div class="pcard-title">Nexus-AI Attendance System</div>
+      <p class="pcard-spark">One script doing everything felt fragile — I got curious whether splitting detection, verification, and logging into agents that only talk through defined interfaces would make it easier to trust.</p>
+      <p class="pcard-desc">Real-time multi-agent facial recognition attendance system that eliminated manual tracking entirely at The College of Wooster. Awarded departmental Honours and presented at the college-wide Senior Research Symposium.</p>
+      <div class="pcard-detail">
+        <strong>How it works:</strong> dlib HOG face detection + 128-dimensional face embeddings for recognition. Three role-specific dashboards — Admin, Professor, Student. WebSocket-based real-time updates across all dashboards simultaneously.<br><br>
+        <strong>Business outcome:</strong> Reduced manual attendance tracking to zero. The system processes an entire classroom in real time — no check-ins, no roll calls, no paper lists.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">Departmental Honours</span>
+        <span class="metric">Zero manual tracking</span>
+        <span class="metric">3 role dashboards</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">OpenCV</span><span class="badge">dlib</span><span class="badge">Flask</span><span class="badge">OpenAI API</span><span class="badge">WebSockets</span><span class="badge">128D Embeddings</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Nexus-AI-Attendance" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+    <div class="pcard a">
+      <div class="pcard-category">Deep Learning · CNN · Low-Resource NLP</div>
+      <div class="pcard-title">Arabic Handwriting Recognition</div>
+      <p class="pcard-spark">Transfer learning is the easy button — I wanted to know what a CNN designed specifically for Arabic script could do without leaning on it at all.</p>
+      <p class="pcard-desc">CNN trained from scratch to classify all 28 Arabic handwritten characters across 13,440 labeled images. Goal: verify that a well-designed custom CNN can compete with transfer learning on a low-resource task.</p>
+      <div class="pcard-detail">
+        <strong>Design decisions:</strong> Data augmentation (rotation, shear, zoom) to address class imbalance. Dropout regularization to prevent overfitting. Confusion matrix analysis identified the character pairs with the highest confusion rates, informing post-training threshold adjustment.<br><br>
+        <strong>Why train from scratch?</strong> Stroke patterns and character anatomy in Arabic script don't map well to ImageNet features. A CNN designed specifically for the structure of Arabic script outperforms naive transfer.
+      </div>
+      <div class="pcard-metrics">
+        <span class="metric">92.4% test accuracy</span>
+        <span class="metric">28 character classes</span>
+        <span class="metric">13,440 labeled images</span>
+      </div>
+      <div class="pcard-stack">
+        <span class="badge">PyTorch</span><span class="badge">CNN</span><span class="badge">Data Augmentation</span><span class="badge">BatchNorm</span><span class="badge">Dropout</span><span class="badge">Confusion Matrix</span>
+      </div>
+      <a href="https://github.com/boumalaksiham/Arabic-Handwriting-CNN" target="_blank" class="pcard-link">GitHub ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="section-label" style="color:#B9AEDD;"><span class="spark" style="color:#B9AEDD;">✦</span>What I work with</div>
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <div class="skill-block-title">NLP &amp; Deep Learning</div>
+      <span class="skill-pill">BERT / DistilBERT</span>
+      <span class="skill-pill">Sentence Transformers</span>
+      <span class="skill-pill">HuggingFace</span>
+      <span class="skill-pill">PyTorch</span>
+      <span class="skill-pill">Fine-tuning</span>
+      <span class="skill-pill">BIO Tagging / NER</span>
+      <span class="skill-pill">seqeval</span>
+      <span class="skill-pill">BART</span>
+      <span class="skill-pill">spaCy</span>
+      <span class="skill-pill">Multi-task Learning</span>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-title">Computer Vision &amp; ML</div>
+      <span class="skill-pill">EfficientNet</span>
+      <span class="skill-pill">ResNet / CNNs</span>
+      <span class="skill-pill">Convolutional Autoencoder</span>
+      <span class="skill-pill">OpenCV</span>
+      <span class="skill-pill">torchvision</span>
+      <span class="skill-pill">scikit-learn</span>
+      <span class="skill-pill">XGBoost</span>
+      <span class="skill-pill">Anomaly Detection</span>
+      <span class="skill-pill">AUROC / F1</span>
+      <span class="skill-pill">ROUGE / Ablation</span>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-title">LLM, Infra &amp; Data</div>
+      <span class="skill-pill">LangChain</span>
+      <span class="skill-pill">AutoGen</span>
+      <span class="skill-pill">LlamaIndex</span>
+      <span class="skill-pill">OpenAI API</span>
+      <span class="skill-pill">RAG</span>
+      <span class="skill-pill">FastAPI</span>
+      <span class="skill-pill">PostgreSQL</span>
+      <span class="skill-pill">React</span>
+      <span class="skill-pill">Python / SQL</span>
+      <span class="skill-pill">Streamlit</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-section" id="experience">
+  <div class="section-label r"><span class="spark">✦</span>Where I've been</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="timeline">
+
+    <div class="titem v">
+      <div class="tdate">2025 – Present</div>
+      <div class="trole">M.S. Artificial Intelligence</div>
+      <div class="tcompany">Northeastern University · Khoury College of Computer Sciences · Boston, MA</div>
+      <p class="tbody">Machine Learning concentration. Coursework: Artificial Intelligence, Machine Learning, Deep Learning. Built an 11-project ML portfolio spanning e-commerce NLP, manufacturing computer vision, statistical risk modeling, LLM infrastructure, and multi-agent NLP systems — most of it self-directed.</p>
+    </div>
+
+    <div class="titem a">
+      <div class="tdate">May – Jul 2024</div>
+      <div class="trole">Data Scientist &amp; Research Assistant</div>
+      <div class="tcompany">Schneider Electric · Remote</div>
+      <p class="tspark">When the evaluation numbers looked off, I designed my own diagnostic experiment instead of just reporting what I saw.</p>
+      <p class="tbody">
+        Built and evaluated multi-agent LLM pipelines to automate compliance report generation — reduced manual processing from 3–4 analyst hours per report to near-zero.
+        <ul>
+          <li>Designed 3 role-specific agents (document ingestion, domain reasoning, compliance formatting) using GPT-4, Claude, and Gemini as backbone models</li>
+          <li>Benchmarked AutoGen, LangChain, and LlamaIndex across accuracy, latency, cost per run, and reasoning depth with statistical validation of results</li>
+          <li>Delivered a structured framework evaluation report to AI leadership that identified which LLM architecture produced the most reliable outputs — findings directly shaped Schneider's 2025 GenAI deployment roadmap</li>
+        </ul>
+      </p>
+    </div>
+
+    <div class="titem r">
+      <div class="tdate">Mar – May 2024</div>
+      <div class="trole">Business Analyst</div>
+      <div class="tcompany">CaffeBerry.co · Remote</div>
+      <p class="tbody">
+        Led end-to-end statistical analysis for a product launch decision — merged 10+ datasets, modelled customer response, and delivered findings that directly drove a go/no-go call.
+        <ul>
+          <li>Applied k-means clustering for customer segmentation and OLS regression to model price elasticity across 3 product variants using Python and R</li>
+          <li>Caught 3 data quality issues (duplicate IDs, null fields, misaligned date formats) via SQL validation before they reached the modelling pipeline</li>
+          <li>Delivered a single Tableau dashboard to the executive team — the chosen variant was greenlit for launch based solely on the output</li>
+        </ul>
+      </p>
+    </div>
+
+    <div class="titem v">
+      <div class="tdate">May – Jul 2023</div>
+      <div class="trole">Web Developer &amp; Research Assistant</div>
+      <div class="tcompany">Vivi Dynamics · Remote</div>
+      <p class="tspark">I deliberately picked a framework I'd never touched, specifically so the experiment would test the tools honestly instead of my own familiarity.</p>
+      <p class="tbody">
+        Rebuilt platform features using AI coding tools; validated outputs through systematic testing. Designed controlled experiments to evaluate GitHub Copilot, ChatGPT, and Tabnine — found ~40% efficiency gains on structured code but semantic errors in complex logic. Published findings as a blog post that became the basis for team-wide AI adoption standards.
+      </p>
+    </div>
+
+    <div class="titem a">
+      <div class="tdate">Jun – Aug 2022</div>
+      <div class="trole">Data Analyst</div>
+      <div class="tcompany">Preflet · Remote</div>
+      <p class="tbody">
+        Built predictive models to detect infrastructure anomalies before they became failures — the same problem structure as manufacturing defect detection and customer churn prediction.
+        <ul>
+          <li>Built and compared XGBoost, Random Forest, and regression baselines using Python, Pandas, NumPy, and scikit-learn on 10+ large-scale infrastructure time-series datasets</li>
+          <li>XGBoost achieved F1=0.84 vs 0.71 regression baseline on a highly imbalanced anomaly detection task — performance gain driven by correctly weighting early-stage risk indicators</li>
+          <li>Developed an OpenCV computer vision prototype classifying infrastructure images by tower type — first CV project, which motivated the image quality scoring and defect detection work</li>
+        </ul>
+      </p>
+    </div>
+
+    <div class="titem r">
+      <div class="tdate">2021 – 2025</div>
+      <div class="trole">B.A. Computer Science &amp; Data Science</div>
+      <div class="tcompany">The College of Wooster · Ohio</div>
+      <p class="tbody">Senior thesis (Nexus-AI) awarded departmental Honours; presented at college-wide Senior Research Symposium. ASA DataFest 2023 — 3rd place in data visualisation, 4th overall.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label" style="color:var(--amber);"><span class="spark" style="color:var(--amber);">✦</span>Let's talk</div>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-blurb">"Looking for applied research and data science co-op roles in NLP, computer vision, and ML."</p>
+      <p class="contact-note">Based in Boston, MA. Open to F-1 CPT opportunities. M.S. AI at Northeastern (expected 2027). Responds within 24 hours.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:boumalak.s@northeastern.edu" class="clink">
+        <div class="clink-icon">✉</div>boumalak.s@northeastern.edu
+      </a>
+      <a href="https://linkedin.com/in/siham-boumalak" target="_blank" class="clink">
+        <div class="clink-icon">in</div>linkedin.com/in/siham-boumalak
+      </a>
+      <a href="https://github.com/boumalaksiham" target="_blank" class="clink">
+        <div class="clink-icon">gh</div>github.com/boumalaksiham
+      </a>
+      <a href="https://boumalaksiham.github.io" target="_blank" class="clink">
+        <div class="clink-icon">↗</div>boumalaksiham.github.io
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>✦ 2025 Siham Boumalak</span>
+  <span>Built with intention, not a template.</span>
+</footer>
+
+<script>
+const projects = [
+  {
+    name: "AI Guardian", short: "AI Guardian", stack: "FastAPI · PostgreSQL · React",
+    metrics: [
+      { name: "Latency tracked (ms)", val: "2425", pct: 82 },
+      { name: "Cost accuracy", val: "100%", pct: 100 },
+      { name: "Hallucination detection", val: "0.87", pct: 87 },
+      { name: "Alert precision", val: "95%", pct: 95 },
+    ],
+    lines: [
+      ['comment', '# AI Guardian — LLM Observability'],
+      ['kv', 'model', '"gpt-4o-mini"'],
+      ['kv', 'latency_ms', '1243'],
+      ['kv', 'cost_usd', '0.000194'],
+      ['kv', 'quality_score', '0.87'],
+      ['kv', 'hallucination_risk', '0.12'],
+      ['ok', '✓ Event logged · alert: none'],
+      ['kv', 'dashboard', 'updated'],
+    ]
+  },
+  {
+    name: "Paper Agents", short: "Paper Agents", stack: "HuggingFace · spaCy · NetworkX",
+    metrics: [
+      { name: "ROUGE-1 (multi-agent)", val: "0.50", pct: 91 },
+      { name: "ROUGE-1 (baseline)", val: "0.19", pct: 35 },
+      { name: "Model F1 score", val: "1.00", pct: 100 },
+      { name: "Citations extracted", val: "30/30", pct: 100 },
+    ],
+    lines: [
+      ['comment', '# 5-agent pipeline · arXiv:1706.03762'],
+      ['ok', '→ Summarization agent      done'],
+      ['ok', '→ Citation analysis        done'],
+      ['ok', '→ Methodology extractor    done'],
+      ['ok', '→ Critical analysis        done'],
+      ['kv', 'ROUGE-1', '0.50  (+0.31 vs baseline)'],
+      ['kv', 'Model F1', '1.00  vs 0.55 baseline'],
+      ['ok', '✓ Report generated'],
+    ]
+  },
+  {
+    name: "Product Matching", short: "Matching", stack: "Sentence Transformers · scikit-learn",
+    metrics: [
+      { name: "Match accuracy", val: "92%", pct: 92 },
+      { name: "Baseline accuracy", val: "78%", pct: 78 },
+      { name: "Conflict penalty applied", val: "0.45", pct: 45 },
+      { name: "Eval pairs", val: "40", pct: 60 },
+    ],
+    lines: [
+      ['comment', '# Entity Resolution · Product Matching'],
+      ['kv', 'pair', '"Sony XM5" vs "Sony XM4"'],
+      ['kv', 'raw_similarity', '0.97'],
+      ['warn', '⚠ attribute conflict: MODEL'],
+      ['kv', 'penalty', '× 0.45'],
+      ['kv', 'final_score', '0.49'],
+      ['ok', '✓ Correctly flagged as different'],
+    ]
+  },
+  {
+    name: "NER Extractor", short: "NER", stack: "DistilBERT · BIO Tagging · seqeval",
+    metrics: [
+      { name: "BRAND F1", val: "1.00", pct: 100 },
+      { name: "STORAGE F1", val: "0.86", pct: 86 },
+      { name: "Overall F1 (9 types)", val: "0.61", pct: 61 },
+      { name: "Entity types extracted", val: "9", pct: 90 },
+    ],
+    lines: [
+      ['comment', '# Product NER · token classification'],
+      ['kv', 'input', '"Sony WH-1000XM5 Black 30hr"'],
+      ['ok', 'BRAND    → Sony         [1.00]'],
+      ['ok', 'MODEL    → WH-1000XM5   [0.94]'],
+      ['ok', 'COLOR    → Black        [0.91]'],
+      ['ok', 'STORAGE  → 30hr         [0.86]'],
+      ['kv', 'entities_found', '4'],
+      ['ok', '✓ Structured attributes extracted'],
+    ]
+  },
+  {
+    name: "Taxonomy", short: "Taxonomy", stack: "DistilBERT · Multi-task · AdamW",
+    metrics: [
+      { name: "L1 accuracy", val: "100%", pct: 100 },
+      { name: "L3 accuracy", val: "81%", pct: 81 },
+      { name: "Unseen product types", val: "73%", pct: 73 },
+      { name: "Inference time (CPU)", val: "80ms", pct: 68 },
+    ],
+    lines: [
+      ['comment', '# Hierarchical taxonomy · 3 heads'],
+      ['kv', 'input', '"Sony WH-1000XM5 Headphones"'],
+      ['ok', 'L1 → Electronics         [1.00]'],
+      ['ok', 'L2 → Audio               [0.97]'],
+      ['ok', 'L3 → Headphones          [0.89]'],
+      ['kv', 'latency_ms', '80'],
+      ['kv', 'heads', '3  (L1 + L2 + L3 joint)'],
+      ['ok', '✓ Category path predicted'],
+    ]
+  },
+  {
+    name: "Credit Risk", short: "Credit Risk", stack: "scikit-learn · R · Fairness Analysis",
+    metrics: [
+      { name: "Random Forest AUC", val: "0.79", pct: 79 },
+      { name: "Fairness gap (RF)", val: "0.18", pct: 68 },
+      { name: "Logistic Reg. AUC", val: "0.74", pct: 74 },
+      { name: "Fairness gap (LogReg)", val: "0.06", pct: 22 },
+    ],
+    lines: [
+      ['comment', '# Credit Risk · fairness-adjusted eval'],
+      ['kv', 'model', 'RandomForest'],
+      ['kv', 'auc', '0.79'],
+      ['warn', '⚠ subgroup FPR gap: 0.18'],
+      ['kv', 'model', 'LogisticRegression'],
+      ['kv', 'auc', '0.74'],
+      ['ok', '✓ subgroup FPR gap: 0.06'],
+      ['ok', '✓ trade-off documented'],
+    ]
+  },
+  {
+    name: "Defect Detection", short: "Defects", stack: "PyTorch · Autoencoder · Streamlit",
+    metrics: [
+      { name: "AUROC", val: "0.94", pct: 94 },
+      { name: "Labeled data required", val: "0%", pct: 5 },
+      { name: "Inspection labour saved", val: "~40%", pct: 40 },
+      { name: "Reconstruction threshold", val: "0.032", pct: 55 },
+    ],
+    lines: [
+      ['comment', '# Defect Detection · MVTec AD'],
+      ['kv', 'image', 'bottle_047.png'],
+      ['kv', 'reconstruction_error', '0.061'],
+      ['warn', '⚠ exceeds threshold 0.032'],
+      ['ok', '→ Flagged for inspection'],
+      ['kv', 'auroc', '0.94'],
+      ['ok', '✓ Trained on normal images only'],
+    ]
+  },
+  {
+    name: "Nexus-AI", short: "Nexus-AI", stack: "dlib · OpenCV · Flask · WebSockets",
+    metrics: [
+      { name: "Face recognition accuracy", val: "98%", pct: 98 },
+      { name: "Manual tracking eliminated", val: "100%", pct: 100 },
+      { name: "Embedding dimensions", val: "128D", pct: 85 },
+      { name: "Dashboard views", val: "3", pct: 75 },
+    ],
+    lines: [
+      ['comment', '# Nexus-AI · live attendance'],
+      ['kv', 'frame', 'processing...'],
+      ['ok', '→ Face detected            ✓'],
+      ['ok', '→ 128D embedding computed  ✓'],
+      ['kv', 'distance', '0.31  (threshold: 0.5)'],
+      ['ok', '→ Identity: S. Boumalak    ✓'],
+      ['ok', '→ Attendance logged 09:02  ✓'],
+      ['ok', '✓ Honors thesis · zero manual tracking'],
+    ]
+  },
+  {
+    name: "Arabic CNN", short: "Arabic CNN", stack: "PyTorch · CNN · Data Augmentation",
+    metrics: [
+      { name: "Test accuracy", val: "92.4%", pct: 92 },
+      { name: "Training images", val: "13,440", pct: 88 },
+      { name: "Character classes", val: "28", pct: 79 },
+      { name: "Val accuracy", val: "92.0%", pct: 92 },
+    ],
+    lines: [
+      ['comment', '# Arabic CNN · trained from scratch'],
+      ['kv', 'epoch', '20 / 20'],
+      ['kv', 'train_acc', '94.1%'],
+      ['kv', 'val_acc', '92.0%'],
+      ['kv', 'loss', '0.187'],
+      ['kv', 'classes', '28  (full Arabic alphabet)'],
+      ['ok', '→ Model saved              ✓'],
+      ['ok', '✓ 92.4% test accuracy · confusion matrix: clean'],
+    ]
+  },
+];
+
+let current = 0;
+let termInterval = null;
+let autoInterval = null;
+
+const tabsEl = document.getElementById('tabs');
+projects.forEach((p, i) => {
+  const tab = document.createElement('div');
+  tab.className = 'proj-tab' + (i === 0 ? ' active' : '');
+  tab.textContent = p.short;
+  tab.onclick = () => { clearInterval(autoInterval); switchTo(i); startAuto(); };
+  tabsEl.appendChild(tab);
+});
+
+function switchTo(idx) {
+  current = idx;
+  const p = projects[idx];
+  document.querySelectorAll('.proj-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.getElementById('status-project').textContent = p.name;
+  document.getElementById('status-stack').textContent = p.stack;
+  document.getElementById('status-time').textContent = 'just now';
+
+  const mc = document.getElementById('metrics-container');
+  mc.innerHTML = '';
+  p.metrics.forEach(m => {
+    const row = document.createElement('div');
+    row.className = 'metric-row';
+    row.innerHTML = `<div class="metric-header"><span class="metric-name">${m.name}</span><span class="metric-val">${m.val}</span></div><div class="bar-track"><div class="bar-fill" data-pct="${m.pct}"></div></div>`;
+    mc.appendChild(row);
+  });
+  setTimeout(() => { mc.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.pct + '%'; }); }, 80);
+  runTerminal(p.lines);
+}
+
+function renderLine(type, a, b) {
+  if (type === 'comment') return `<span class="term-line term-comment">${a}</span>`;
+  if (type === 'ok') return `<span class="term-line term-ok">${a}</span>`;
+  if (type === 'warn') return `<span class="term-line term-warn">${a}</span>`;
+  if (type === 'kv') return `<span class="term-line"><span class="term-key">${a}:</span> <span class="term-val">${b}</span></span>`;
+  return `<span class="term-line term-val">${a}</span>`;
+}
+
+function runTerminal(lines) {
+  clearInterval(termInterval);
+  const term = document.getElementById('terminal');
+  term.innerHTML = '';
+  let i = 0;
+  function addLine() {
+    if (i >= lines.length) { term.innerHTML += '<span class="term-cursor"></span>'; return; }
+    const [type, a, b] = lines[i];
+    term.innerHTML += renderLine(type, a, b) + '\n';
+    i++;
+    term.scrollTop = term.scrollHeight;
+    termInterval = setTimeout(addLine, 280 + Math.random() * 120);
+  }
+  addLine();
+}
+
+function startAuto() {
+  autoInterval = setInterval(() => { switchTo((current + 1) % projects.length); }, 5000);
+}
+
+switchTo(0);
+startAuto();
+</script>
+</body>
+</html>
