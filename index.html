@@ -292,7 +292,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-copy">
-    <span class="hero-tag">Open to Applied Research &amp; Data Science Roles · 2025–2026</span>
+    <span class="hero-tag">Open to Applied Research, ML &amp; Data Science Roles · 2026–2027</span>
     <h1>Building ML systems<br>that <em>understand</em><br>products at scale.</h1>
     <p class="hero-spark-line">Most of what's below, nobody assigned me. I notice a gap, build the fix, then dig until I actually know why it works.</p>
     <p class="hero-sub">M.S. Artificial Intelligence student at Northeastern University (Khoury College), specializing in NLP, computer vision, and generative AI. I build end-to-end ML pipelines — from fine-tuned transformers for entity extraction to anomaly detection systems for manufacturing quality control — with a consistent focus on systems that produce trustworthy, explainable, and measurable outcomes.</p>
@@ -339,7 +339,7 @@
     <div>
       <h2 class="section-title">Research meets<br><em>engineering.</em></h2>
       <div style="display:flex;gap:3rem;margin-top:1rem;flex-wrap:wrap;">
-        <div class="stat"><div class="stat-num">92%</div><div class="stat-label">NER Brand F1</div></div>
+        <div class="stat"><div class="stat-num">9</div><div class="stat-label">NER Entity Types</div></div>
         <div class="stat"><div class="stat-num">81%</div><div class="stat-label">Taxonomy L3 Acc.</div></div>
         <div class="stat"><div class="stat-num">11</div><div class="stat-label">ML Projects</div></div>
       </div>
@@ -347,7 +347,7 @@
     <div class="about-body">
       <p>I'm an <span class="hl">M.S. Artificial Intelligence student at Northeastern's Khoury College</span> (expected 2027), building systems that solve real problems at the intersection of NLP, computer vision, and generative AI — most of them started because something bothered me enough to fix it myself, not because a syllabus asked for it.</p>
       <p>My e-commerce ML portfolio covers <span class="hl">entity resolution</span> (matching product listings that describe the same item with semantic similarity + attribute conflict detection), <span class="hl-a">hierarchical taxonomy classification</span> (fine-tuned DistilBERT with 3 simultaneous classification heads for 3-level category prediction), <span class="hl-r">named entity recognition</span> (BIO-tagged token classification extracting 9 attribute types from raw product titles), and <span class="hl">image quality scoring</span> (EfficientNet-B0 combined with 7 classical CV signals for explainable, actionable feedback).</p>
-      <p>Beyond e-commerce, I build <span class="hl-a">manufacturing defect detection systems</span> (convolutional autoencoder on MVTec AD for anomaly-free training), <span class="hl-r">LLM observability infrastructure</span> (AI Guardian — real-time monitoring of latency, cost, quality, and hallucination risk), statistical risk models, and multi-agent NLP pipelines. Previously built and evaluated multi-agent LLM pipelines at <span class="hl">Schneider Electric</span>.</p>
+      <p>Beyond e-commerce, I build <span class="hl-a">manufacturing defect detection systems</span> (convolutional autoencoder on MVTec AD for anomaly-free training), <span class="hl-r">LLM observability infrastructure</span> (AI Guardian — tracking latency, token usage, cost, heuristic quality signals, alerts, and multi-step workflow traces), statistical risk models, and multi-agent NLP pipelines. Previously built and evaluated multi-agent LLM pipelines at <span class="hl">Schneider Electric</span>.</p>
       <p>Multilingual: <span class="hl">English, French, and Arabic</span>. Based in Boston, MA. Open to F-1 CPT opportunities.</p>
     </div>
   </div>
@@ -416,10 +416,10 @@
       <div class="pcard-category">Text Classification · DistilBERT · Multi-task Learning</div>
       <div class="pcard-title">Hierarchical Taxonomy Classifier</div>
       <p class="pcard-spark">I didn't want three separate models drifting apart from each other — I wanted to know if one shared encoder could actually learn all three levels at once.</p>
-      <p class="pcard-desc">Automates product categorization for e-commerce listings. Given any product title, predicts the full 3-level category path (e.g., Electronics → Audio → Headphones) in under 100ms on CPU.</p>
+      <p class="pcard-desc">Automates product categorization for e-commerce listings. Given a product title, the model predicts the full three-level category path (for example, Electronics → Audio → Headphones) using a shared DistilBERT encoder designed for CPU inference.</p>
       <div class="pcard-detail">
         <strong>Architecture:</strong> Fine-tuned DistilBERT with 3 simultaneous classification heads (5 / 12 / 18 classes) trained end-to-end. One shared encoder learns features for broad and fine-grained taxonomy simultaneously — the combined loss (L1 + L2 + L3) backpropagates through all three heads in a single step.<br><br>
-        <strong>Why DistilBERT over BERT?</strong> 40% smaller, 60% faster, retains 97% performance — runs in ~80ms vs ~200ms per title on CPU, critical for listing ingestion pipelines.
+        <strong>Evaluation context:</strong> Trained on 77 products and evaluated on a 16-product held-out test set. A separate unseen-product-type test measured how well the learned hierarchy transferred beyond the training categories.
       </div>
       <div class="pcard-metrics">
         <span class="metric">100% L1 accuracy</span>
@@ -486,14 +486,14 @@
       <div class="pcard-category">Computer Vision · EfficientNet · Explainable AI</div>
       <div class="pcard-title">Product Image Quality Scorer</div>
       <p class="pcard-spark">A single quality score felt like a black box — I wanted the system to be able to tell a seller exactly what's wrong, not just how bad it is.</p>
-      <p class="pcard-desc">Scores product photos on a 1–5 scale and generates actionable seller feedback — not just a number, but exactly what is wrong and how to fix it. Built for eBay-style listing quality enforcement.</p>
+      <p class="pcard-desc">Prototype for seller-facing product-image quality assessment. It scores product photos on a 1–5 scale and generates actionable feedback about what may be wrong and how to improve it.</p>
       <div class="pcard-detail">
         <strong>Two-stage architecture:</strong> EfficientNet-B0 (4.3M params, ImageNet pretrained, MSE regression head) combined with 7 classical CV signals — Laplacian sharpness, brightness penalty, contrast, colorfulness, edge density, resolution, noise. Final score = 0.65 × CV + 0.35 × DL.<br><br>
         <strong>Why combine both?</strong> CV signals are fast, explainable, and reliable ("Laplacian variance: 0.03 — your image is blurry"). EfficientNet captures holistic quality that's hard to measure explicitly. Diagnosis always comes from CV signals, never the neural network, so advice stays grounded.
       </div>
       <div class="pcard-metrics">
         <span class="metric">7 CV signals</span>
-        <span class="metric">Correct ranking on all test images</span>
+        <span class="metric">Correct ranking on synthetic test set</span>
         <span class="metric">Actionable feedback per image</span>
       </div>
       <div class="pcard-stack">
@@ -516,32 +516,31 @@
         <div class="pcard-monogram">DD</div>
         <div class="mini-viz">
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>AUROC</span><b>0.94</b></div>
-          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:94%"></div></div>
+          <div class="mini-bar-label"><span>Training Images</span><b>Normal only</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:100%"></div></div>
         </div>
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>Labor Saved</span><b>~40%</b></div>
-          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:40%"></div></div>
+          <div class="mini-bar-label"><span>Defect Labels</span><b>Not required</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:12%"></div></div>
         </div>
         </div>
       </div>
       <div class="pcard-content">
       <div class="pcard-category">Computer Vision · Anomaly Detection · Manufacturing</div>
-      <div class="pcard-title">Manufacturing Defect Detection System</div>
+      <div class="pcard-title">Manufacturing Defect Detection Prototype</div>
       <p class="pcard-spark">Labeled defect data is expensive and rare — I got curious whether a model could learn to flag "wrong" having only ever seen "right."</p>
-      <p class="pcard-desc">A real-time quality control pipeline for electronics manufacturing — flags anomalous products during inspection before they reach downstream assembly or customers.</p>
+      <p class="pcard-desc">An unsupervised anomaly-detection prototype for manufacturing quality control, designed to flag products that differ from the defect-free examples used during training.</p>
       <div class="pcard-detail">
         <strong>Architecture:</strong> Convolutional autoencoder trained exclusively on defect-free images. At inference time, high reconstruction error flags an anomaly — the model learns what "normal" looks like and rejects everything that deviates. Optionally extended with a supervised ResNet-18 classifier for defect categorization when labels are available.<br><br>
         <strong>Why unsupervised?</strong> Training only on good images means the system deploys with zero defect labels — it learns the distribution of normal products and flags anything outside it.
       </div>
       <div class="pcard-metrics">
-        <span class="metric">MVTec AD dataset</span>
-        <span class="metric">Up to 40% inspection labour reduction</span>
-        <span class="metric">Real-time Streamlit dashboard</span>
+        <span class="metric">MVTec AD</span>
+        <span class="metric">Convolutional autoencoder</span>
+        <span class="metric">Unsupervised anomaly detection</span>
       </div>
-      <div class="pcard-impact">Industry benchmarks: early anomaly detection systems of this type reduce manual inspection labour by up to 40% and catch defect rates human inspectors miss at high throughput.</div>
       <div class="pcard-stack">
-        <span class="badge">PyTorch</span><span class="badge">Convolutional Autoencoder</span><span class="badge">ResNet-18</span><span class="badge">OpenCV</span><span class="badge">scikit-learn</span><span class="badge">Streamlit</span><span class="badge">AUROC</span>
+        <span class="badge">PyTorch</span><span class="badge">Convolutional Autoencoder</span><span class="badge">ResNet-18</span><span class="badge">OpenCV</span><span class="badge">scikit-learn</span><span class="badge">Streamlit</span>
       </div>
       <a href="https://github.com/boumalaksiham/Defect-Detection" target="_blank" class="pcard-link">GitHub ↗</a>
       </div>
@@ -552,33 +551,34 @@
         <div class="pcard-monogram">AG</div>
         <div class="mini-viz">
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>Hallucination Det.</span><b>0.87</b></div>
-          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:87%"></div></div>
+          <div class="mini-bar-label"><span>Alert Conditions</span><b>5</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:83%"></div></div>
         </div>
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>Alert Precision</span><b>95%</b></div>
-          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:95%"></div></div>
+          <div class="mini-bar-label"><span>Dashboard Refresh</span><b>10s</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:90%"></div></div>
         </div>
         </div>
       </div>
       <div class="pcard-content">
-      <div class="pcard-category">LLM Observability · Full-stack · Production ML</div>
+      <div class="pcard-category">LLM Observability · Full-Stack ML Systems · AI Infrastructure</div>
       <div class="pcard-title">AI Guardian</div>
-      <p class="pcard-spark">Nobody assigned this. The question that hooked me wasn't "does it work" but "how would I even know if it silently stopped working."</p>
-      <p class="pcard-desc">The hardest part of deploying a GenAI system is not building it — it's knowing whether it still works correctly three weeks later. AI Guardian solves this with event-driven LLM monitoring in production.</p>
+      <p class="pcard-spark">The question that hooked me wasn't just "does the model work?" — it was "how would I know when its behavior, latency, or cost starts changing after deployment?"</p>
+      <p class="pcard-desc">Full-stack observability platform for instrumenting LLM applications and analyzing model latency, token usage, estimated cost, failures, heuristic quality signals, operational alerts, and multi-step workflow traces.</p>
       <div class="pcard-detail">
-        <strong>How it works:</strong> Python SDK (@track_llm_call decorator) captures latency, token usage, cost, quality scores, and hallucination risk for every LLM call without modifying application code. Threshold-based alerting fires before issues escalate — it's already caught 3 real behavioral drift events before a single user noticed. All metrics flow into a PostgreSQL backend and surface in a React dashboard with live WebSocket updates.<br><br>
-        <strong>Works with any LLM provider:</strong> OpenAI, Anthropic, Google. Designed to be dropped into an existing LLM application with a single decorator.
+        <strong>How it works:</strong> A reusable Python SDK instruments LLM calls and sends structured telemetry to a FastAPI backend. Events are persisted in PostgreSQL, enriched with cost and heuristic quality signals, evaluated against configurable alert thresholds, and surfaced through a React dashboard. SDK telemetry is delivered in the background so observability failures do not interrupt the host application.<br><br>
+        <strong>Workflow observability:</strong> Multi-step RAG and agent workflows can share a persistent trace ID. Trace finalization aggregates step count, latency, token usage, cost, success status, and per-step metadata, making it possible to inspect an entire AI workflow rather than isolated model calls.
       </div>
       <div class="pcard-metrics">
-        <span class="metric">Real-time monitoring</span>
-        <span class="metric">3 drift events caught pre-launch</span>
-        <span class="metric">Zero application code changes</span>
+        <span class="metric">Persistent workflow tracing</span>
+        <span class="metric">Background telemetry</span>
+        <span class="metric">5 configurable alert conditions</span>
+        <span class="metric">10s dashboard refresh</span>
       </div>
       <div class="pcard-stack">
-        <span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">React</span><span class="badge">Python SDK</span><span class="badge">LangChain</span><span class="badge">SQLAlchemy</span><span class="badge">WebSockets</span>
+        <span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">React</span><span class="badge">Python SDK</span><span class="badge">LangChain</span><span class="badge">SQLAlchemy</span><span class="badge">httpx</span>
       </div>
-      <a href="https://github.com/boumalaksiham/AI-Guardian" target="_blank" class="pcard-link">GitHub ↗</a>
+      <a href="https://github.com/boumalaksiham/ai-guardian" target="_blank" class="pcard-link">GitHub ↗</a>
       </div>
     </div>
 
@@ -587,28 +587,28 @@
         <div class="pcard-monogram">PA</div>
         <div class="mini-viz">
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>ROUGE (multi-agent)</span><b>0.50</b></div>
+          <div class="mini-bar-label"><span>ROUGE-1</span><b>0.50</b></div>
           <div class="mini-bar-track"><div class="mini-bar-fill" style="width:91%"></div></div>
         </div>
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>ROUGE (baseline)</span><b>0.19</b></div>
+          <div class="mini-bar-label"><span>Baseline</span><b>0.19</b></div>
           <div class="mini-bar-track"><div class="mini-bar-fill" style="width:35%"></div></div>
         </div>
         </div>
       </div>
       <div class="pcard-content">
-      <div class="pcard-category">Multi-Agent · NLP · Ablation Studies</div>
-      <div class="pcard-title">Scientific Paper Analysis Agents</div>
-      <p class="pcard-spark">I didn't just want the 5-agent pipeline to work — I wanted to know which agent was actually earning its place, so I pulled them out one at a time to find out.</p>
-      <p class="pcard-desc">5-agent NLP pipeline that takes arXiv research papers as input and produces structured analytical outputs — methodology, citations, critical analysis — without requiring the user to read the paper.</p>
+      <div class="pcard-category">Multi-Agent NLP · Information Extraction · Evaluation</div>
+      <div class="pcard-title">Scientific Paper Triage System</div>
+      <p class="pcard-spark">I didn't just want the pipeline to produce an answer — I wanted to measure which components were contributing, where the system failed, and whether a modular architecture actually improved the output.</p>
+      <p class="pcard-desc">Modular NLP system that analyzes scientific papers and generates structured research-triage reports containing summaries, methodology, citations, limitations, relevance scores, and cross-paper citation relationships.</p>
       <div class="pcard-detail">
-        <strong>5 specialised agents:</strong> Summarization (BART), Citation Analysis (NetworkX knowledge graph), Methodology Extractor (spaCy NER), Critical Analysis, and Coordinator. Each agent was optimised independently before integration.<br><br>
-        <strong>Validated with ablation studies:</strong> Removing each agent one at a time and measuring the impact on output quality showed the Methodology Extractor caused the largest single ROUGE drop when removed — confirming it was the highest-value component, not the most obvious one.
+        <strong>Architecture:</strong> Five specialized analysis components handle summarization (BART), citation analysis (NetworkX), methodology extraction (spaCy), critical analysis, and relevance/TL;DR generation. A sixth coordinator component combines their outputs into structured Markdown and JSON reports.<br><br>
+        <strong>Evaluation:</strong> Compared the modular pipeline against a simpler monolithic baseline using ROUGE and extraction F1, then performed component-level ablation experiments and a qualitative generalization study on five unseen papers. The experiments also exposed long-document summarization as the system's primary bottleneck.
       </div>
       <div class="pcard-metrics">
-        <span class="metric">+0.31 ROUGE-1 vs baseline</span>
+        <span class="metric">ROUGE-1: 0.50 vs 0.19 baseline</span>
         <span class="metric">Model F1: 1.00 vs 0.55 baseline</span>
-        <span class="metric">4 landmark papers tested</span>
+        <span class="metric">5 unseen-paper evaluation</span>
       </div>
       <div class="pcard-stack">
         <span class="badge">BART</span><span class="badge">spaCy</span><span class="badge">NetworkX</span><span class="badge">HuggingFace</span><span class="badge">ROUGE</span><span class="badge">Ablation Testing</span>
@@ -692,12 +692,12 @@
         <div class="pcard-monogram">NX</div>
         <div class="mini-viz">
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>Face Rec. Accuracy</span><b>98%</b></div>
-          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:98%"></div></div>
+          <div class="mini-bar-label"><span>Face Samples / Student</span><b>20</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:100%"></div></div>
         </div>
         <div class="mini-bar-row">
-          <div class="mini-bar-label"><span>Manual Tracking Elim.</span><b>100%</b></div>
-          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:100%"></div></div>
+          <div class="mini-bar-label"><span>Dashboard Roles</span><b>3</b></div>
+          <div class="mini-bar-track"><div class="mini-bar-fill" style="width:75%"></div></div>
         </div>
         </div>
       </div>
@@ -705,15 +705,16 @@
       <div class="pcard-category">Computer Vision · Senior Thesis · Honours</div>
       <div class="pcard-title">Nexus-AI Attendance System</div>
       <p class="pcard-spark">One script doing everything felt fragile — I got curious whether splitting detection, verification, and logging into agents that only talk through defined interfaces would make it easier to trust.</p>
-      <p class="pcard-desc">Real-time multi-agent facial recognition attendance system that eliminated manual tracking entirely at The College of Wooster. Awarded departmental Honours and presented at the college-wide Senior Research Symposium.</p>
+      <p class="pcard-desc">Senior-thesis prototype designed to automate classroom attendance using live facial recognition, specialized software agents, and role-specific dashboards. Awarded departmental Honours and presented at the college-wide Senior Research Symposium.</p>
       <div class="pcard-detail">
         <strong>How it works:</strong> dlib HOG face detection + 128-dimensional face embeddings for recognition. Three role-specific dashboards — Admin, Professor, Student. WebSocket-based real-time updates across all dashboards simultaneously.<br><br>
-        <strong>Business outcome:</strong> Reduced manual attendance tracking to zero. The system processes an entire classroom in real time — no check-ins, no roll calls, no paper lists.
+        <strong>Evaluation:</strong> Controlled testing showed that recognition performance depended strongly on lighting, distance, face angle, and occlusion. These findings shaped the thesis recommendations for stronger enrollment data, camera placement, and future liveness safeguards.
       </div>
       <div class="pcard-metrics">
+        <span class="metric">20 face samples / student</span>
+        <span class="metric">128D face embeddings</span>
+        <span class="metric">3 role-based dashboards</span>
         <span class="metric">Departmental Honours</span>
-        <span class="metric">Zero manual tracking</span>
-        <span class="metric">3 role dashboards</span>
       </div>
       <div class="pcard-stack">
         <span class="badge">OpenCV</span><span class="badge">dlib</span><span class="badge">Flask</span><span class="badge">OpenAI API</span><span class="badge">WebSockets</span><span class="badge">128D Embeddings</span>
@@ -926,7 +927,7 @@
 </section>
 
 <footer>
-  <span>✦ 2025 Siham Boumalak</span>
+  <span>✦ 2026 Siham Boumalak</span>
   <span>Built with intention, not a template.</span>
 </footer>
 
@@ -935,10 +936,10 @@ const projects = [
   {
     name: "AI Guardian", short: "AI Guardian", stack: "FastAPI · PostgreSQL · React",
     metrics: [
-      { name: "Latency tracked (ms)", val: "2425", pct: 82 },
-      { name: "Cost accuracy", val: "100%", pct: 100 },
-      { name: "Hallucination detection", val: "0.87", pct: 87 },
-      { name: "Alert precision", val: "95%", pct: 95 },
+      { name: "Alert conditions", val: "5", pct: 83 },
+      { name: "Dashboard refresh", val: "10s", pct: 90 },
+      { name: "Persistent tracing", val: "Enabled", pct: 100 },
+      { name: "Background telemetry", val: "Enabled", pct: 100 },
     ],
     lines: [
       ['comment', '# AI Guardian — LLM Observability'],
@@ -947,20 +948,20 @@ const projects = [
       ['kv', 'cost_usd', '0.000194'],
       ['kv', 'quality_score', '0.87'],
       ['kv', 'hallucination_risk', '0.12'],
-      ['ok', '✓ Event logged · alert: none'],
-      ['kv', 'dashboard', 'updated'],
+      ['ok', '✓ Event persisted · alert: none'],
+      ['ok', '✓ Trace updated'],
     ]
   },
   {
     name: "Paper Agents", short: "Paper Agents", stack: "HuggingFace · spaCy · NetworkX",
     metrics: [
-      { name: "ROUGE-1 (multi-agent)", val: "0.50", pct: 91 },
+      { name: "ROUGE-1 (pipeline)", val: "0.50", pct: 91 },
       { name: "ROUGE-1 (baseline)", val: "0.19", pct: 35 },
-      { name: "Model F1 score", val: "1.00", pct: 100 },
-      { name: "Citations extracted", val: "30/30", pct: 100 },
+      { name: "Model F1", val: "1.00", pct: 100 },
+      { name: "Unseen papers tested", val: "5", pct: 83 },
     ],
     lines: [
-      ['comment', '# 5-agent pipeline · arXiv:1706.03762'],
+      ['comment', '# Multi-component paper triage · arXiv:1706.03762'],
       ['ok', '→ Summarization agent      done'],
       ['ok', '→ Citation analysis        done'],
       ['ok', '→ Methodology extractor    done'],
@@ -1013,7 +1014,7 @@ const projects = [
       { name: "L1 accuracy", val: "100%", pct: 100 },
       { name: "L3 accuracy", val: "81%", pct: 81 },
       { name: "Unseen product types", val: "73%", pct: 73 },
-      { name: "Inference time (CPU)", val: "80ms", pct: 68 },
+      { name: "Held-out products", val: "16", pct: 64 },
     ],
     lines: [
       ['comment', '# Hierarchical taxonomy · 3 heads'],
@@ -1021,7 +1022,7 @@ const projects = [
       ['ok', 'L1 → Electronics         [1.00]'],
       ['ok', 'L2 → Audio               [0.97]'],
       ['ok', 'L3 → Headphones          [0.89]'],
-      ['kv', 'latency_ms', '80'],
+      ['kv', 'held_out_products', '16'],
       ['kv', 'heads', '3  (L1 + L2 + L3 joint)'],
       ['ok', '✓ Category path predicted'],
     ]
@@ -1048,38 +1049,39 @@ const projects = [
   {
     name: "Defect Detection", short: "Defects", stack: "PyTorch · Autoencoder · Streamlit",
     metrics: [
-      { name: "AUROC", val: "0.94", pct: 94 },
-      { name: "Labeled data required", val: "0%", pct: 5 },
-      { name: "Inspection labour saved", val: "~40%", pct: 40 },
-      { name: "Reconstruction threshold", val: "0.032", pct: 55 },
+      { name: "Training images", val: "Normal only", pct: 100 },
+      { name: "Defect labels required", val: "0", pct: 5 },
+      { name: "Learning setup", val: "Unsupervised", pct: 92 },
+      { name: "Evaluation dataset", val: "MVTec AD", pct: 82 },
     ],
     lines: [
       ['comment', '# Defect Detection · MVTec AD'],
       ['kv', 'image', 'bottle_047.png'],
-      ['kv', 'reconstruction_error', '0.061'],
-      ['warn', '⚠ exceeds threshold 0.032'],
-      ['ok', '→ Flagged for inspection'],
-      ['kv', 'auroc', '0.94'],
+      ['kv', 'training_data', 'normal images only'],
+      ['kv', 'method', 'reconstruction error'],
+      ['warn', '⚠ anomaly candidate detected'],
+      ['ok', '→ Flagged for review'],
+      ['kv', 'dataset', 'MVTec AD'],
       ['ok', '✓ Trained on normal images only'],
     ]
   },
   {
     name: "Nexus-AI", short: "Nexus-AI", stack: "dlib · OpenCV · Flask · WebSockets",
     metrics: [
-      { name: "Face recognition accuracy", val: "98%", pct: 98 },
-      { name: "Manual tracking eliminated", val: "100%", pct: 100 },
+      { name: "Face samples per student", val: "20", pct: 100 },
       { name: "Embedding dimensions", val: "128D", pct: 85 },
       { name: "Dashboard views", val: "3", pct: 75 },
+      { name: "Departmental Honors", val: "Awarded", pct: 100 },
     ],
     lines: [
       ['comment', '# Nexus-AI · live attendance'],
       ['kv', 'frame', 'processing...'],
       ['ok', '→ Face detected            ✓'],
       ['ok', '→ 128D embedding computed  ✓'],
-      ['kv', 'distance', '0.31  (threshold: 0.5)'],
+      ['kv', 'distance', '0.31  (threshold: 0.6)'],
       ['ok', '→ Identity: S. Boumalak    ✓'],
       ['ok', '→ Attendance logged 09:02  ✓'],
-      ['ok', '✓ Honors thesis · zero manual tracking'],
+      ['ok', '✓ Departmental Honors thesis prototype'],
     ]
   },
   {
