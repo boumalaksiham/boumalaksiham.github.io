@@ -81,4 +81,42 @@
     describePrivacy();
     if (!saved) $('#privacy-status').textContent = 'Analytics are off for this visit. Your browser could not save the preference for future visits.';
   });
+
+  const listingA = $('#listing-a');
+  const listingB = $('#listing-b');
+  const pairs = {
+    same: ['Sony WH-1000XM5 Black', 'Sony Black WH-1000XM5'],
+    model: ['Sony WH-1000XM5 Black', 'Sony WH-1000XM4 Black'],
+    storage: ['Apple iPhone 15 128GB Black', 'Apple iPhone 15 256GB Black']
+  };
+  const words = (title) => new Set(title.toLowerCase().match(/[a-z0-9]+(?:-[a-z0-9]+)*/g) || []);
+  const attributes = (title) => {
+    const text = title.toLowerCase();
+    const storage = text.match(/\b(\d+)\s*(gb|tb)\b/);
+    const model = text.match(/\bwh-?1000xm\d+\b|\biphone\s+\d+(?:\s+pro(?:\s+max)?)?\b|\bgalaxy\s+s\d+(?:\s+ultra)?\b/);
+    const color = text.match(/\b(black|white|blue|red|green|silver|gold|pink|purple)\b/);
+    return { model: model?.[0].replace(/[^a-z0-9]/g, ''), storage: storage ? Number(storage[1]) * (storage[2] === 'tb' ? 1024 : 1) : undefined, color: color?.[0] };
+  };
+  const compareTitles = () => {
+    const a = words(listingA.value), b = words(listingB.value);
+    const union = new Set([...a, ...b]);
+    const shared = [...a].filter(word => b.has(word)).length;
+    const overlap = union.size ? Math.round(100 * shared / union.size) : 0;
+    const aa = attributes(listingA.value), bb = attributes(listingB.value);
+    const conflicts = Object.keys(aa).filter(key => aa[key] !== undefined && bb[key] !== undefined && aa[key] !== bb[key]);
+    $('#demo-overlap').textContent = `${overlap}%`;
+    $('#demo-meter-fill').style.width = `${overlap}%`;
+    $('#demo-conflicts').textContent = String(conflicts.length);
+    const result = $('#demo-result');
+    result.classList.toggle('has-conflict', conflicts.length > 0);
+    result.textContent = !a.size || !b.size ? 'Enter two product titles to compare.' : conflicts.length ? `Attribute conflict: ${conflicts.join(' and ')}.` : 'No conflict found in the supported attributes. This does not confirm a match.';
+  };
+  if (listingA && listingB) {
+    [listingA, listingB].forEach(input => input.addEventListener('input', compareTitles));
+    $$('[data-pair]').forEach(button => button.addEventListener('click', () => {
+      [listingA.value, listingB.value] = pairs[button.dataset.pair];
+      compareTitles();
+    }));
+    compareTitles();
+  }
 })();
