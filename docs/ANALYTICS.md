@@ -15,14 +15,17 @@ Official references: [collect data](https://docs.umami.is/docs/collect-data), [t
 
 | Event | Attached property |
 |---|---|
-| `project_repository` | Repository slug |
-| `project_documentation` | Repository slug |
-| `evaluation_artifact` | Repository slug |
-| `case_study_open` | Repository slug |
-| `project_filter` | Selected category |
+| `project_repository` | `project`: repository slug |
+| `project_documentation` | `project`: repository slug |
+| `evaluation_artifact` | `project`: repository slug |
+| `case_study_open` | `project`: repository slug |
+| `project_filter` | `category`: selected category |
+| `guardian_demo_run` | `scenario`: `workflow` or `single` |
 | `github_profile` | None |
 | `contact_email` | None |
 | `contact_linkedin` | None |
+
+The Guardian event records the selected example only; it does not include edited text, prompts, outputs, or measured model usage. Opening the workflow disclosure alone does not emit `case_study_open`; that event applies to implementation/project-note disclosures with the `case-study` class.
 
 A contact click does not establish that a message was sent. Project search terms are not sent, and the implementation does not call `umami.identify`. It cannot tell you a visitor's name or LinkedIn identity.
 

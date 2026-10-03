@@ -1,53 +1,69 @@
-# Siham Boumalak — Portfolio
+# Siham Boumalak — Research & Projects
 
-A static, responsive portfolio organized around project questions, technical decisions, and evaluation evidence. The homepage features AI Guardian, gene expression classification, and breast cancer transcriptomics, followed by a searchable collection of 13 projects.
+[Live portfolio](https://boumalaksiham.github.io/)
+
+A static portfolio built with HTML, CSS, and browser JavaScript. The page presents an introduction, research experience, project examples, a searchable project directory, education and teaching background, and contact links.
+
+## Page structure
+
+| Section | Contents |
+|---|---|
+| Research | Current Northeastern apprenticeship, Schneider Electric research internship, and Nexus-AI honors thesis |
+| Projects | AI Guardian, leukemia classification, and breast cancer transcriptomics |
+| More projects | 13 curated repository entries, with topic filters and local text search |
+| About | Education and teaching background |
+| Contact | Gmail web compose addressed to `boumaleksiham@gmail.com`, plus LinkedIn |
+
+The directory is maintained manually; adding a GitHub repository does not automatically add it to this page. Featured projects also appear in the directory so they remain discoverable through filters.
 
 ## Local preview
 
-From the repository root:
+Run from the repository root with Python installed:
 
 ```bash
 python -m http.server 8000
 ```
 
-Open `http://localhost:8000`. No build step or package installation is required. Project links and case-study disclosures work without JavaScript; search, filters, and the Privacy dialog use JavaScript.
+Open http://localhost:8000. No package installation or build step is required.
+
+Navigation, repository links, image links, and native detail disclosures work without JavaScript. Project filters, search, the AI Guardian replay, and the Privacy dialog require JavaScript.
 
 ## Files
 
-| File | Purpose |
+| Path | Purpose |
 |---|---|
-| [index.html](index.html) | Content, semantic markup, and project output images |
-| [assets/style.css](assets/style.css) | Layout, responsive styles, and reduced-motion handling |
-| [assets/app.js](assets/app.js) | Project discovery,  privacy preferences, and analytics events |
-| [assets/config.js](assets/config.js) | Optional public analytics configuration; disabled by default |
-| [docs/ANALYTICS.md](docs/ANALYTICS.md) | Owner setup and tracking details |
+| [index.html](index.html) | Page content, navigation, project cards, disclosures, and image captions |
+| [assets/style.css](assets/style.css) | Lavender styling, layouts, responsive rules, and reduced-motion support |
+| [assets/app.js](assets/app.js) | Search/filter behavior, Guardian fixtures, privacy controls, and optional analytics |
+| [assets/config.js](assets/config.js) | Public analytics configuration; empty and disabled by default |
+| [docs/ANALYTICS.md](docs/ANALYTICS.md) | Analytics configuration, events, and verification |
+
+## AI Guardian demonstration
+
+The example is inside the AI Guardian project entry. “Try an example workflow” opens a browser-only replay of a return-policy question. It displays fixture prompts and outputs, token counts, call durations, and a short interpretation of the trace.
+
+These are synthetic examples, not live model responses or measurements from the AI Guardian backend. The replay makes no model/API calls. Each run resets its metrics; Reset cancels pending replay steps. The example policy comparison is not a factuality or safety guarantee.
+
+“Implementation notes” explains the actual project architecture and limitations. The full implementation lives in the linked AI Guardian repository; this portfolio contains a small illustrative replay.
+
+## Visual evidence
+
+- `assets/guardian-preview.jpg`: actual AI Guardian React interface rendered with synthetic API fixtures. It does not show live traffic or benchmark results.
+- `assets/leukemia-pca.png`: saved PCA figure from gene-expression-classification.
+- `assets/breast-volcano.png`: saved volcano plot from breast_cancer_transcriptomics.
+
+Clicking a figure opens the original image. Preserve captions, alternative text, and source context when replacing assets.
 
 ## Content maintenance
 
-Update project content against each repository's documentation. The collection is curated, rather than automatically synchronized. Do not present incomplete checkouts or design plans as runnable completed systems.
+Keep research status, repository links, setup limitations, and evaluation claims aligned with the underlying work. Ongoing research is distinct from completed public project artifacts. A design-only or incomplete repository should retain its status label.
 
-The featured visuals are real project artifacts:
+When updating CSS or JavaScript, update the corresponding version query in `index.html` to refresh cached assets. Preview narrow and wide layouts, keyboard navigation, disclosures, filters, search, replay/reset behavior, and contact links before publishing.
 
-- `assets/guardian-preview.jpg`: the actual AI Guardian React interface, rendered with explicitly synthetic API fixture data for preview. It is not a screenshot of live traffic or measured performance.
-- `assets/leukemia-pca.png`: the original saved PCA figure from gene-expression-classification.
-- `assets/breast-volcano.png`: the original saved volcano plot from breast_cancer_transcriptomics.
+## Analytics and privacy
 
-Figures can be opened at full resolution by clicking them. Keep source attribution, alternative text, and limitations in sync when updating these assets. No AI-generated illustrations or simulated execution logs are used.
-
-## Checks before publishing
-
-Check layouts at narrow and wide widths, keyboard focus, case-study disclosures, project filters and search, the Privacy dialog, all project links, and the browser console. Analytics should make no requests with the default empty configuration.
+Optional Umami tracking is disabled with the current empty configuration. Search terms remain in the browser; the site does not identify visitors by name. See [analytics documentation](docs/ANALYTICS.md) before connecting a tracker.
 
 ## Hosting
 
-This repository follows GitHub's user-site convention. Inspect Pages configuration and its deployment status before changing hosting settings. Intended public URL: https://boumalaksiham.github.io/.
-
-## Interactive AI Guardian preview
-
-The header replays synthetic LLM telemetry for a three-step assistant workflow or a single response. Request counts, sample token totals, and average sample latency update as the event timeline fills. The timings and tokens are fixtures, not measurements of a live model. No model API or backend is called. Reset cancels any pending replay and clears the local state.
-
-The previous product-matching preview can be restored from commit `af5b94d9e231e7ca7ca9f503c040e542407ea457`. Restore only the widget and its associated styles and logic when reverting; preserve subsequent unrelated changes.
-
-The hero preview now uses a concrete return-policy question, exposes each fixture input and output, and explains the slowest call and token usage. Each replay resets its metrics. These are illustrative fixtures, not live model calls or factuality validation.
-
-The homepage groups AI Guardian into one project spotlight beside the introduction. Its interactive example and actual dashboard/implementation notes are expandable. The following showcase focuses on classification and transcriptomics, avoiding a second AI Guardian feature.
+The site is served through GitHub Pages from this repository. Check the Pages deployment workflow for the commit being reviewed. A successful commit alone does not prove deployment has finished; browser caching may also show an older version.
