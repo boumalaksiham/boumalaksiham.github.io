@@ -88,3 +88,32 @@
 .site-header nav{flex-wrap:wrap}
 @media(max-width:800px){.research-layout{grid-template-columns:1fr}.research-current{padding:24px}.site-header{flex-wrap:wrap}.site-header nav{gap:13px}}
 @media(max-width:520px){.research-section h3{font-size:22px}.research-prior article{padding:20px}.site-header nav{justify-content:flex-start;gap:10px 16px!important}.site-header nav a{font-size:11px}}
+
+/* One page hierarchy: introduction, research, projects, background. */
+.hero{display:block;padding-top:72px;padding-bottom:64px}
+.hero-copy{position:static;max-width:850px}
+.hero h1{max-width:none}
+.hero .intro-focus{font-size:.55em;margin-top:14px}
+.hero-description{max-width:660px}
+.hero-actions{flex-wrap:wrap}
+.section-heading{margin-bottom:30px}
+.research-layout{grid-template-columns:1fr 1fr;gap:28px}
+.research-current{background:transparent;border:0;border-left:3px solid #7c5cff;border-radius:0;padding:0 28px 0 24px}
+.research-prior article{background:transparent;border:0;border-top:1px solid #ded5ea;border-radius:0;padding:22px 0 0}
+.research-prior{gap:24px}
+.research-section h3{font-size:24px}
+.research-section .research-question{font-size:17px!important}
+.research-method>div{padding:12px 0}
+.guardian-feature{align-items:start}
+.guardian-feature .guardian-demo{padding:0;border:0;box-shadow:none;background:transparent;min-width:0}
+.guardian-feature .demo-intro{font-size:15px;line-height:1.75;color:#62596f}
+.guardian-feature .spotlight-subtitle{font-size:14px;margin:8px 0 15px}
+.guardian-feature .project-output{margin:0}
+.guardian-feature .case-study{margin-top:12px}
+.guardian-feature .guardian-walkthrough{margin-top:20px}
+.guardian-feature .demo-source{font-size:12px}
+.guardian-feature .feature-number{margin-bottom:20px}
+.guardian-feature h3#demo-title{font-size:36px;line-height:1.2}
+.guardian-feature .guardian-built{font-size:11px}
+@media(max-width:800px){.hero{padding-top:48px;padding-bottom:45px}.research-layout{grid-template-columns:1fr}.research-current{padding-right:0}.guardian-feature .project-output{margin-top:15px}}
+@media(max-width:520px){.hero .eyebrow{font-size:10px;line-height:1.6}.hero h1{font-size:42px}.hero .intro-focus{font-size:26px}.guardian-feature h3#demo-title{font-size:30px}.research-current{padding-left:18px}.research-section h3{font-size:22px}}
