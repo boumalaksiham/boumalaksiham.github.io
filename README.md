@@ -42,6 +42,8 @@ Check layouts at narrow and wide widths, keyboard focus, case-study disclosures,
 
 This repository follows GitHub's user-site convention. Inspect Pages configuration and its deployment status before changing hosting settings. Intended public URL: https://boumalaksiham.github.io/.
 
-## Interactive header demo
+## Interactive AI Guardian preview
 
-The product-comparison dashboard computes Jaccard word overlap and simple model, storage, and color conflicts in the browser. It uses editable titles and three example pairs. This is an explanatory rules demo, not inference with the repository's embedding model or a calibrated match probability. Unknown attributes are not treated as matches, and the interface does not confirm product identity. Input text is not sent to a server or recorded by analytics.
+The header replays synthetic LLM telemetry for a three-step assistant workflow or a single response. Request counts, sample token totals, and average sample latency update as the event timeline fills. The timings and tokens are fixtures, not measurements of a live model. No model API or backend is called. Reset cancels any pending replay and clears the local state.
+
+The previous product-matching preview can be restored from commit `af5b94d9e231e7ca7ca9f503c040e542407ea457`. Restore only the widget and its associated styles and logic when reverting; preserve subsequent unrelated changes.

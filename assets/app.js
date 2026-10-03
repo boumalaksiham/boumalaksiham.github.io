@@ -82,46 +82,93 @@
     if (!saved) $('#privacy-status').textContent = 'Analytics are off for this visit. Your browser could not save the preference for future visits.';
   });
 
-  const listingA = $('#listing-a');
-  const listingB = $('#listing-b');
-  const pairs = {
-    same: ['Sony WH-1000XM5 Black', 'Sony Black WH-1000XM5'],
-    model: ['Sony WH-1000XM5 Black', 'Sony WH-1000XM4 Black'],
-    storage: ['Apple iPhone 15 128GB Black', 'Apple iPhone 15 256GB Black']
-  };
-  const words = (title) => new Set(title.toLowerCase().match(/[a-z0-9]+(?:-[a-z0-9]+)*/g) || []);
-  const attributes = (title) => {
-    const text = title.toLowerCase();
-    const storage = text.match(/\b(\d+)\s*(gb|tb)\b/);
-    const model = text.match(/\bwh-?1000xm\d+\b|\biphone\s+\d+(?:\s+pro(?:\s+max)?)?\b|\bgalaxy\s+s\d+(?:\s+ultra)?\b/);
-    const color = text.match(/\b(black|white|blue|red|green|silver|gold|pink|purple)\b/);
-    return { model: model?.[0].replace(/[^a-z0-9]/g, ''), storage: storage ? Number(storage[1]) * (storage[2] === 'tb' ? 1024 : 1) : undefined, color: color?.[0] };
-  };
-  const compareTitles = () => {
-    const a = words(listingA.value), b = words(listingB.value);
-    const union = new Set([...a, ...b]);
-    const shared = [...a].filter(word => b.has(word)).length;
-    const overlap = union.size ? Math.round(100 * shared / union.size) : 0;
-    const aa = attributes(listingA.value), bb = attributes(listingB.value);
-    const conflicts = Object.keys(aa).filter(key => aa[key] !== undefined && bb[key] !== undefined && aa[key] !== bb[key]);
-    $('#demo-overlap').textContent = `${overlap}%`;
-    $('#demo-meter-fill').style.width = `${overlap}%`;
-    $('#demo-conflicts').textContent = String(conflicts.length);
-    const result = $('#demo-result');
-    result.classList.toggle('has-conflict', conflicts.length > 0);
-    const explain = (key) => key === 'storage'
-      ? `Different storage: ${aa.storage} GB vs ${bb.storage} GB.`
-      : key === 'color' ? `Different colors: ${aa.color} vs ${bb.color}.` : 'Different model numbers were found in the titles.';
-    result.textContent = !a.size || !b.size ? 'Enter two store listings to compare.' : conflicts.length
-      ? `${conflicts.map(explain).join(' ')} These listings should not be automatically merged.`
-      : 'No differences found in the attributes this demo checks. Similar titles alone do not prove these are the same item.';
-  };
-  if (listingA && listingB) {
-    [listingA, listingB].forEach(input => input.addEventListener('input', compareTitles));
-    $$('[data-pair]').forEach(button => button.addEventListener('click', () => {
-      [listingA.value, listingB.value] = pairs[button.dataset.pair];
-      compareTitles();
-    }));
-    compareTitles();
+
+  const runButton = $('#guardian-run');
+  const resetButton = $('#guardian-reset');
+  const scenario = $('#guardian-scenario');
+  if (runButton && resetButton && scenario) {
+    const samples = {
+      workflow: [
+        { name: 'Retrieve relevant context', prompt: 'Find notes for the question', tokens: 240, latency: 420 },
+        { name: 'Generate assistant response', prompt: 'Answer using the retrieved notes', tokens: 680, latency: 1180 },
+        { name: 'Check the response', prompt: 'Review the answer against the notes', tokens: 190, latency: 310 }
+      ],
+      single: [{ name: 'Generate assistant response', prompt: 'Summarize a short document', tokens: 410, latency: 850 }]
+    };
+    let events = [];
+    let generation = 0;
+    let runCount = 0;
+    let timer = null;
+    const paint = () => {
+      $('#guardian-count').textContent = String(events.length);
+      $('#guardian-tokens').textContent = events.reduce((sum, event) => sum + event.tokens, 0).toLocaleString();
+      $('#guardian-latency').textContent = events.length ? Math.round(events.reduce((sum, event) => sum + event.latency, 0) / events.length) + ' ms' : '—';
+    };
+    const unlock = () => { runButton.disabled = false; scenario.disabled = false; };
+    resetButton.addEventListener('click', () => {
+      generation += 1;
+      clearTimeout(timer);
+      events = [];
+      runCount = 0;
+      $('#guardian-feed').replaceChildren();
+      const empty = document.createElement('li');
+      empty.className = 'guardian-empty';
+      empty.textContent = 'Run an example to see its requests appear here.';
+      $('#guardian-feed').appendChild(empty);
+      $('#guardian-trace').textContent = 'Ready to run';
+      $('#guardian-status').textContent = 'No events yet.';
+      unlock();
+      paint();
+    });
+    runButton.addEventListener('click', () => {
+      const currentGeneration = ++generation;
+      const selected = samples[scenario.value];
+      const traceId = 'demo-' + String(++runCount).padStart(2, '0');
+      runButton.disabled = true;
+      scenario.disabled = true;
+      $('#guardian-feed').replaceChildren();
+      $('#guardian-trace').textContent = traceId;
+      track('guardian_demo_run', { scenario: scenario.value });
+      let step = 0;
+      const next = () => {
+        if (currentGeneration !== generation) return;
+        if (step === selected.length) {
+          $('#guardian-status').textContent = selected.length + ' sample ' + (selected.length === 1 ? 'request' : 'requests') + ' recorded under trace ' + traceId + '.';
+          unlock();
+          return;
+        }
+        const event = selected[step];
+        const row = document.createElement('li');
+        row.className = 'guardian-event pending';
+        const heading = document.createElement('div');
+        heading.className = 'guardian-event-heading';
+        const name = document.createElement('strong');
+        name.textContent = event.name;
+        const badge = document.createElement('span');
+        badge.textContent = 'In progress';
+        heading.append(name, badge);
+        const detail = document.createElement('p');
+        detail.textContent = event.prompt;
+        const bar = document.createElement('div');
+        bar.className = 'guardian-event-bar';
+        const fill = document.createElement('span');
+        bar.appendChild(fill);
+        row.append(heading, detail, bar);
+        $('#guardian-feed').appendChild(row);
+        $('#guardian-status').textContent = 'Replaying step ' + (step + 1) + ' of ' + selected.length + '…';
+        timer = setTimeout(() => {
+          if (currentGeneration !== generation) return;
+          row.classList.remove('pending');
+          badge.textContent = 'Tracked';
+          detail.textContent = event.tokens + ' sample tokens · ' + event.latency + ' ms sample latency';
+          fill.style.width = Math.round(event.latency / 1200 * 100) + '%';
+          events.push({ ...event, traceId });
+          paint();
+          step += 1;
+          next();
+        }, 650);
+      };
+      next();
+    });
   }
 })();
