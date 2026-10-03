@@ -89,11 +89,11 @@
   if (runButton && resetButton && scenario) {
     const samples = {
       workflow: [
-        { name: 'Retrieve relevant context', prompt: 'Find notes for the question', tokens: 240, latency: 420 },
-        { name: 'Generate assistant response', prompt: 'Answer using the retrieved notes', tokens: 680, latency: 1180 },
-        { name: 'Check the response', prompt: 'Review the answer against the notes', tokens: 190, latency: 310 }
+        { name: '1. Extract the policy', prompt: 'Extract the return window and conditions from the store policy.', output: '30-day return window. Opened items accepted. Proof of purchase required.', tokens: 240, latency: 420 },
+        { name: '2. Draft the answer', prompt: 'Use the policy to answer: can opened headphones be returned after 20 days?', output: 'Yes. The return is within 30 days, and opened items are accepted. Bring proof of purchase.', tokens: 680, latency: 1180 },
+        { name: '3. Compare answer with policy', prompt: 'Compare the draft with the supplied policy and identify missing conditions.', output: 'The draft includes the return window, opened-item condition, and proof-of-purchase requirement.', tokens: 190, latency: 310 }
       ],
-      single: [{ name: 'Generate assistant response', prompt: 'Summarize a short document', tokens: 410, latency: 850 }]
+      single: [{ name: '1. Summarize the policy', prompt: 'Summarize: returns within 30 days; opened items accepted with proof of purchase.', output: 'Return opened or unopened items within 30 days with proof of purchase.', tokens: 410, latency: 850 }]
     };
     let events = [];
     let generation = 0;
@@ -123,6 +123,8 @@
     runButton.addEventListener('click', () => {
       const currentGeneration = ++generation;
       const selected = samples[scenario.value];
+      events = [];
+      paint();
       const traceId = 'demo-' + String(++runCount).padStart(2, '0');
       runButton.disabled = true;
       scenario.disabled = true;
@@ -133,7 +135,7 @@
       const next = () => {
         if (currentGeneration !== generation) return;
         if (step === selected.length) {
-          $('#guardian-status').textContent = selected.length + ' sample ' + (selected.length === 1 ? 'request' : 'requests') + ' recorded under trace ' + traceId + '.';
+          $('#guardian-status').textContent = scenario.value === 'workflow' ? 'What this trace reveals: drafting the answer took 1,180 ms, the slowest call, and used 680 of 1,110 tokens. A developer can start investigating that step. The policy check is an example model output, not a verified safety guarantee.' : 'What this trace reveals: the summary used one model call, 410 sample tokens, and 850 ms. Guardian records the call; the assistant produces the answer.';
           unlock();
           return;
         }
@@ -148,19 +150,23 @@
         badge.textContent = 'In progress';
         heading.append(name, badge);
         const detail = document.createElement('p');
-        detail.textContent = event.prompt;
+        detail.textContent = 'Input: ' + event.prompt;
         const bar = document.createElement('div');
         bar.className = 'guardian-event-bar';
         const fill = document.createElement('span');
         bar.appendChild(fill);
-        row.append(heading, detail, bar);
+        const output = document.createElement('p');
+        output.className = 'guardian-output-text';
+        const telemetry = document.createElement('small');
+        row.append(heading, detail, output, telemetry, bar);
         $('#guardian-feed').appendChild(row);
         $('#guardian-status').textContent = 'Replaying step ' + (step + 1) + ' of ' + selected.length + '…';
         timer = setTimeout(() => {
           if (currentGeneration !== generation) return;
           row.classList.remove('pending');
           badge.textContent = 'Tracked';
-          detail.textContent = event.tokens + ' sample tokens · ' + event.latency + ' ms sample latency';
+          output.textContent = 'Output: ' + event.output;
+          telemetry.textContent = 'Recorded by Guardian: ' + event.tokens + ' tokens · ' + event.latency + ' ms (sample data)';
           fill.style.width = Math.round(event.latency / 1200 * 100) + '%';
           events.push({ ...event, traceId });
           paint();

@@ -47,3 +47,5 @@ This repository follows GitHub's user-site convention. Inspect Pages configurati
 The header replays synthetic LLM telemetry for a three-step assistant workflow or a single response. Request counts, sample token totals, and average sample latency update as the event timeline fills. The timings and tokens are fixtures, not measurements of a live model. No model API or backend is called. Reset cancels any pending replay and clears the local state.
 
 The previous product-matching preview can be restored from commit `af5b94d9e231e7ca7ca9f503c040e542407ea457`. Restore only the widget and its associated styles and logic when reverting; preserve subsequent unrelated changes.
+
+The hero preview now uses a concrete return-policy question, exposes each fixture input and output, and explains the slowest call and token usage. Each replay resets its metrics. These are illustrative fixtures, not live model calls or factuality validation.
