@@ -37,20 +37,6 @@
   $$('.case-study').forEach((details) => details.addEventListener('toggle', () => {
     if (details.open) track('case_study_open', { project: details.dataset.project });
   }));
-  const stages = {
-    capture: ['Python SDK → API', 'Capture the context.', 'The SDK records structured events and delivers telemetry in the background. Shared trace IDs connect steps in a workflow.'],
-    persist: ['API → PostgreSQL', 'Keep the workflow together.', 'The backend stores events and trace context in PostgreSQL, so related steps can be inspected after the original call completes.'],
-    inspect: ['Stored events → dashboard', 'Inspect behavior, not just output.', 'The dashboard surfaces usage, latency, cost estimates, and heuristic alerts. These signals support investigation; they do not prove factual correctness.']
-  };
-  $$('.stage').forEach((button) => button.addEventListener('click', () => {
-    $$('.stage').forEach((stage) => { const active = stage === button; stage.classList.toggle('active', active); stage.setAttribute('aria-pressed', String(active)); });
-    const [label, title, text] = stages[button.dataset.stage];
-    const description = $('#stage-description');
-    description.querySelector('.mini-label').textContent = label;
-    description.querySelector('h4').textContent = title;
-    description.querySelector('p').textContent = text;
-    track('architecture_step', { step: button.dataset.stage });
-  }));
   let category = 'All';
   const cards = $$('.project-card');
   const search = $('#project-search');

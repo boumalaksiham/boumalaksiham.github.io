@@ -19,7 +19,6 @@ Official references: [collect data](https://docs.umami.is/docs/collect-data), [t
 | `project_documentation` | Repository slug |
 | `evaluation_artifact` | Repository slug |
 | `case_study_open` | Repository slug |
-| `architecture_step` | Selected stage |
 | `project_filter` | Selected category |
 | `github_profile` | None |
 | `contact_email` | None |
