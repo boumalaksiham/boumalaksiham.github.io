@@ -109,7 +109,12 @@
     $('#demo-conflicts').textContent = String(conflicts.length);
     const result = $('#demo-result');
     result.classList.toggle('has-conflict', conflicts.length > 0);
-    result.textContent = !a.size || !b.size ? 'Enter two product titles to compare.' : conflicts.length ? `Attribute conflict: ${conflicts.join(' and ')}.` : 'No conflict found in the supported attributes. This does not confirm a match.';
+    const explain = (key) => key === 'storage'
+      ? `Different storage: ${aa.storage} GB vs ${bb.storage} GB.`
+      : key === 'color' ? `Different colors: ${aa.color} vs ${bb.color}.` : 'Different model numbers were found in the titles.';
+    result.textContent = !a.size || !b.size ? 'Enter two store listings to compare.' : conflicts.length
+      ? `${conflicts.map(explain).join(' ')} These listings should not be automatically merged.`
+      : 'No differences found in the attributes this demo checks. Similar titles alone do not prove these are the same item.';
   };
   if (listingA && listingB) {
     [listingA, listingB].forEach(input => input.addEventListener('input', compareTitles));
