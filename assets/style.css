@@ -42,3 +42,28 @@
 .guardian-event small{display:block;color:#71677e;line-height:1.5;font-size:11px}
 .guardian-feed{max-height:420px;overflow-y:auto;overscroll-behavior:contain}
 .guardian-status{line-height:1.65}
+
+/* A single project spotlight, followed by distinct analysis projects. */
+.hero{align-items:start}
+.hero-copy{position:sticky;top:110px}
+.guardian-demo h2{font-size:34px;margin-top:18px}
+.spotlight-subtitle{font-size:14px;color:#62596f;margin:5px 0 12px}
+.spotlight-tags{margin:17px 0 20px;gap:7px}
+.guardian-walkthrough{border:1px solid #d9caf8;border-radius:9px;background:#faf7ff;margin:14px 0}
+.guardian-walkthrough>summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:#5e3fe0;font-size:13px;font-weight:600;padding:15px;list-style:none}
+.guardian-walkthrough>summary::-webkit-details-marker{display:none}
+.guardian-walkthrough>summary span{font-size:21px;animation:details-bounce 1.9s ease-in-out infinite}
+.guardian-walkthrough[open]>summary{border-bottom:1px solid #e4daf7}
+.guardian-walkthrough[open]>summary span{animation:none;transform:rotate(180deg)}
+.walkthrough-body{padding:16px}
+.walkthrough-body h3{font-size:17px;line-height:1.4;margin:0 0 12px}
+.guardian-demo .case-study{margin-top:10px}
+.guardian-demo .case-study summary{font-size:13px;padding:14px 15px;background:transparent;box-shadow:none}
+.guardian-demo .case-grid{display:grid;grid-template-columns:1fr;gap:20px;padding:20px 15px}
+.guardian-demo .case-grid h4{font-size:13px;margin:0 0 7px}
+.guardian-demo .case-grid p{font-size:12px;line-height:1.7}
+.guardian-demo .project-output{margin:16px 12px 0}
+.guardian-demo .project-output figcaption{font-size:10px;line-height:1.6}
+.guardian-demo .demo-source{font-size:12px;margin-top:18px}
+@media(max-width:800px){.hero-copy{position:static}.guardian-demo{max-width:none}}
+@media(prefers-reduced-motion:reduce){.guardian-walkthrough>summary span{animation:none}}

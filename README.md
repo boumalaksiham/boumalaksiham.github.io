@@ -49,3 +49,5 @@ The header replays synthetic LLM telemetry for a three-step assistant workflow o
 The previous product-matching preview can be restored from commit `af5b94d9e231e7ca7ca9f503c040e542407ea457`. Restore only the widget and its associated styles and logic when reverting; preserve subsequent unrelated changes.
 
 The hero preview now uses a concrete return-policy question, exposes each fixture input and output, and explains the slowest call and token usage. Each replay resets its metrics. These are illustrative fixtures, not live model calls or factuality validation.
+
+The homepage groups AI Guardian into one project spotlight beside the introduction. Its interactive example and actual dashboard/implementation notes are expandable. The following showcase focuses on classification and transcriptomics, avoiding a second AI Guardian feature.
